@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { LinksService } from './links.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 
 describe('LinksService', () => {
   let service: LinksService;
@@ -32,8 +32,11 @@ describe('LinksService', () => {
       expect(value).toEqual(expectedLinks);
       done();
     });
-    var request = httpTestingController.expectOne("https://localhost:5051/api/")
-    request.flush(expectedLinks);
+    var request = httpTestingController.match("https://localhost:5051/api/")
+    expect(request.length).toBe(2);
+    request.forEach((r: TestRequest) => {
+      r.flush(expectedLinks);
+    });
   });
 
   it("return links as logged in user", (done =>{
@@ -49,7 +52,31 @@ describe('LinksService', () => {
       expect(value).toEqual(expectedLinks);
       done();
     });
-    var request = httpTestingController.expectOne("https://localhost:5051/api/")
-    request.flush(expectedLinks);
+    var request = httpTestingController.match("https://localhost:5051/api/")
+    expect(request.length).toBe(2);
+    request.forEach((r: TestRequest) => {
+      r.flush(expectedLinks);
+    });
+  }));
+
+  it("cache links after retreiving them", (done =>{
+    const expectedLinks = new Map<string, string>([
+      ["login", "https://localhost:5051/api/login"],
+      ["logout", "https://localhost:5051/api/logout"],
+      ["tasks", "https://localhost:5051/api/tasks"],
+      ["checklists", "https://localhost:5051/api/checklists"],
+      ["relations", "https://localhost:5051/api/checklists/tasks"],
+    ]);
+    service.getLinks().subscribe((links: Map<string, string>) =>{
+      service.getLinks().subscribe((cachedLinks: Map<string, string>) =>{
+        expect(cachedLinks).toEqual(expectedLinks);
+        done();
+      });
+    });
+    var request = httpTestingController.match("https://localhost:5051/api/")
+    expect(request.length).toBe(2);
+    request.forEach((r: TestRequest) => {
+      r.flush(expectedLinks);
+    });
   }));
 });
