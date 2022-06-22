@@ -35,4 +35,21 @@ describe('LinksService', () => {
     var request = httpTestingController.expectOne("https://localhost:5051/api/")
     request.flush(expectedLinks);
   });
+
+  it("return links as logged in user", (done =>{
+    const expectedLinks = new Map<string, string>([
+      ["login", "https://localhost:5051/api/login"],
+      ["logout", "https://localhost:5051/api/logout"],
+      ["tasks", "https://localhost:5051/api/tasks"],
+      ["checklists", "https://localhost:5051/api/checklists"],
+      ["relations", "https://localhost:5051/api/checklists/tasks"],
+    ]);
+    const links = service.getLinks();
+    links.subscribe((value: Map<string, string>) =>{
+      expect(value).toEqual(expectedLinks);
+      done();
+    });
+    var request = httpTestingController.expectOne("https://localhost:5051/api/")
+    request.flush(expectedLinks);
+  }));
 });
