@@ -17,7 +17,7 @@ export class LinksService {
    }
 
   getLinks(): Observable<Map<string, string>> {
-    if(this.cachedLinks.size > 0)
+    if(this.includesAllLinks(this.cachedLinks))
     {
       return of(this.cachedLinks);
     }
@@ -26,5 +26,9 @@ export class LinksService {
       this.cachedLinks = new Map([...this.cachedLinks, ...links]);
     });
     return response;
+  }
+
+  private includesAllLinks(links: Map<string, string>) {
+    return links.size > 1;
   }
 }

@@ -79,4 +79,38 @@ describe('LinksService', () => {
       r.flush(expectedLinks);
     });
   }));
+
+  it("add cached links after login", (done =>{
+    const anonymousLinks = new Map<string, string>([
+      ["login", "https://localhost:5051/api/login"]
+    ]);
+    const userLinks = new Map<string, string>([
+      ["login", "https://localhost:5051/api/login"],
+      ["logout", "https://localhost:5051/api/logout"],
+      ["tasks", "https://localhost:5051/api/tasks"],
+      ["checklists", "https://localhost:5051/api/checklists"],
+      ["relations", "https://localhost:5051/api/checklists/tasks"],
+    ]);
+    service.getLinks().subscribe((anonyousLinks: Map<string, string>) =>{
+      service.getLinks().subscribe((userLinks: Map<string, string>) => {
+        service.getLinks().subscribe((cachedLinks: Map<string, string>) => {
+          expect(cachedLinks).toEqual(userLinks); 
+          done();
+        });
+        const thirdFetch = httpTestingController.match("https://localhost:5051/api/")
+        expect(thirdFetch.length).toBe(0);
+      });
+      const secondFetch = httpTestingController.match("https://localhost:5051/api/")
+      expect(secondFetch.length).toBe(2);
+      secondFetch.forEach((r: TestRequest) => {
+        r.flush(userLinks);
+      });
+    })
+    const firstFetch = httpTestingController.match("https://localhost:5051/api/")
+    expect(firstFetch.length).toBe(2);
+    firstFetch.forEach((r: TestRequest) => {
+      r.flush(anonymousLinks);
+    });
+  }));
+
 });
