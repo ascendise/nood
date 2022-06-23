@@ -34,11 +34,8 @@ describe('LinksService', () => {
       expect(value).toEqual(expectedLinks);
       done();
     });
-    var request = httpTestingController.match(baseUri)
-    expect(request.length).toBe(2);
-    request.forEach((r: TestRequest) => {
-      r.flush(expectedLinks);
-    });
+    var request = httpTestingController.expectOne(baseUri)
+    request.flush(expectedLinks);
   });
 
   it("return links as logged in user", (done =>{
@@ -54,11 +51,8 @@ describe('LinksService', () => {
       expect(value).toEqual(expectedLinks);
       done();
     });
-    var request = httpTestingController.match(baseUri)
-    expect(request.length).toBe(2);
-    request.forEach((r: TestRequest) => {
-      r.flush(expectedLinks);
-    });
+    var request = httpTestingController.expectOne(baseUri)
+    request.flush(expectedLinks);
   }));
 
   it("cache links after retreiving them", (done =>{
@@ -75,11 +69,8 @@ describe('LinksService', () => {
         done();
       });
     });
-    var request = httpTestingController.match(baseUri)
-    expect(request.length).toBe(2);
-    request.forEach((r: TestRequest) => {
-      r.flush(expectedLinks);
-    });
+    var request = httpTestingController.expectOne(baseUri);
+    request.flush(expectedLinks);
   }));
 
   it("add cached links after login", (done =>{
@@ -96,23 +87,16 @@ describe('LinksService', () => {
     service.getLinks().subscribe((anonymousLinks: Map<string, string>) =>{
       service.getLinks().subscribe((userLinks: Map<string, string>) => {
         service.getLinks().subscribe((cachedLinks: Map<string, string>) => {
-          expect(cachedLinks).toEqual(userLinks); 
+          expect(cachedLinks).toEqual(userLinks);
           done();
         });
-        const ignoredRequest = httpTestingController.match(baseUri)
-        expect(ignoredRequest.length).toBe(0);
+        httpTestingController.expectNone(baseUri)
       });
-      const userLinksRequest = httpTestingController.match(baseUri)
-      expect(userLinksRequest.length).toBe(2);
-      userLinksRequest.forEach((r: TestRequest) => {
-        r.flush(userLinks);
-      });
+      const userLinksRequest = httpTestingController.expectOne(baseUri)
+      userLinksRequest.flush(userLinks);
     })
-    const anonymousLinksRequest = httpTestingController.match(baseUri)
-    expect(anonymousLinksRequest.length).toBe(2);
-    anonymousLinksRequest.forEach((r: TestRequest) => {
-      r.flush(anonymousLinks);
-    });
+    const anonymousLinksRequest = httpTestingController.expectOne(baseUri);
+    anonymousLinksRequest.flush(anonymousLinks);
   }));
 
 });
