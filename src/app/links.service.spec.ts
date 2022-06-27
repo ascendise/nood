@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { LinksService } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { enableProdMode } from '@angular/core';
+import { first } from 'rxjs';
 
 describe('LinksService', () => {
   let service: LinksService;
@@ -25,20 +27,17 @@ describe('LinksService', () => {
     expect(service).toBeTruthy();
   })
 
-  it("return links as anonymous user", (done) =>{
+  it("return links as anonymous user", async () =>{
     const expectedLinks = new Map<string, string>([
       ["login", `${baseUri}login`]
     ]);
-    const links = service.getLinks();
-    links.subscribe((value: Map<string, string>) =>{
-      expect(value).toEqual(expectedLinks);
-      done();
-    });
+    const linksRequest = service.getLinks();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedLinks);
+    expect(await linksRequest).toEqual(expectedLinks);
   });
 
-  it("return links as logged in user", (done =>{
+  it("return links as logged in user", async () =>{
     const expectedLinks = new Map<string, string>([
       ["login", `${baseUri}login`],
       ["logout", `${baseUri}logout`],
@@ -46,16 +45,13 @@ describe('LinksService', () => {
       ["checklists", `${baseUri}checklists`],
       ["relations", `${baseUri}tasks`],
     ]);
-    const links = service.getLinks();
-    links.subscribe((value: Map<string, string>) =>{
-      expect(value).toEqual(expectedLinks);
-      done();
-    });
+    const linksRequest = service.getLinks();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedLinks);
-  }));
+    expect(await linksRequest).toEqual(expectedLinks);
+  });
 
-  it("cache links after retreiving them", (done =>{
+  it("cache links after retreiving them", async () =>{
     const expectedLinks = new Map<string, string>([
       ["login", `${baseUri}login`],
       ["logout", `${baseUri}logout`],
@@ -63,40 +59,36 @@ describe('LinksService', () => {
       ["checklists", `${baseUri}checklists`],
       ["relations", `${baseUri}tasks`],
     ]);
-    service.getLinks().subscribe((links: Map<string, string>) =>{
-      service.getLinks().subscribe((cachedLinks: Map<string, string>) =>{
-        expect(cachedLinks).toEqual(expectedLinks);
-        done();
-      });
-    });
-    var request = httpTestingController.expectOne(baseUri);
+    const firstFetchLinks = service.getLinks();
+    const request = httpTestingController.expectOne(baseUri);
     request.flush(expectedLinks);
-  }));
+    await firstFetchLinks;
+    const links = await service.getLinks();
+    expect(links).toEqual(expectedLinks);
+  });
 
-  it("add cached links after login", (done =>{
-    const anonymousLinks = new Map<string, string>([
+  it("add cached links after login", async () =>{
+    const expectedAnonLinks = new Map<string, string>([
       ["login", `${baseUri}login`]
     ]);
-    const userLinks = new Map<string, string>([
+    const expectedUserLinks = new Map<string, string>([
       ["login", `${baseUri}login`],
       ["logout", `${baseUri}logout`],
       ["tasks", `${baseUri}tasks`],
       ["checklists", `${baseUri}checklists`],
       ["relations", `${baseUri}tasks`],
     ]);
-    service.getLinks().subscribe((anonymousLinks: Map<string, string>) =>{
-      service.getLinks().subscribe((userLinks: Map<string, string>) => {
-        service.getLinks().subscribe((cachedLinks: Map<string, string>) => {
-          expect(cachedLinks).toEqual(userLinks);
-          done();
-        });
-        httpTestingController.expectNone(baseUri)
-      });
-      const userLinksRequest = httpTestingController.expectOne(baseUri)
-      userLinksRequest.flush(userLinks);
-    })
+    const anonymousLinks = service.getLinks();
     const anonymousLinksRequest = httpTestingController.expectOne(baseUri);
-    anonymousLinksRequest.flush(anonymousLinks);
-  }));
+    anonymousLinksRequest.flush(expectedAnonLinks);
+    await expectedAnonLinks;
+    const userLinks = service.getLinks();
+    const userLinksRequest = httpTestingController.expectOne(baseUri)
+    userLinksRequest.flush(expectedUserLinks);
+    await userLinks;
+    const cachedLinks = await service.getLinks();
+    httpTestingController.expectNone(baseUri)
+    expect(cachedLinks).toEqual(expectedUserLinks);
+  });
 
 });
