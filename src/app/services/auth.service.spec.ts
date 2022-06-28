@@ -50,4 +50,14 @@ describe('AuthService', () => {
     requests.flush(expectedProviders);
     expect(await providers).toEqual(expectedProviders);
   });
+
+  it('check if logged in: is logged in', async () => {
+    const links = new Map<string, string>([
+      ["login", "http://localhost:5051/api/login"],
+      ["logout", "http://localhost:5051/api/logout"]
+    ]);
+    linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
+    const isLoggedIn = await service.IsLoggedIn();
+    expect(isLoggedIn).toBeTrue();
+  });
 });
