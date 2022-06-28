@@ -60,4 +60,13 @@ describe('AuthService', () => {
     const isLoggedIn = await service.IsLoggedIn();
     expect(isLoggedIn).toBeTrue();
   });
+
+  it('check if logged in: is not logged in', async () => {
+    const links = new Map<string, string>([
+      ["login", "http://localhost:5051/api/login"]
+    ]);
+    linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
+    const isLoggedIn = await service.IsLoggedIn();
+    expect(isLoggedIn).toBeFalse();
+  });
 });
