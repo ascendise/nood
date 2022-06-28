@@ -27,7 +27,7 @@ export class AuthService {
     return lastValueFrom(this.httpClient.get<Map<string, string>>(loginLink));
   }
 
-  async IsLoggedIn() : Promise<boolean> {
+  async isLoggedIn() : Promise<boolean> {
     const links = await this.linksService.getLinks();
     return links.get("logout") !== undefined;
   }
