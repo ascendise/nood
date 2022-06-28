@@ -24,6 +24,6 @@ export class AuthService {
     {
       loginLink = "";
     }
-    return await lastValueFrom(this.httpClient.get<Map<string, string>>(loginLink));
+    return lastValueFrom(this.httpClient.get<Map<string, string>>(loginLink));
   }
 }

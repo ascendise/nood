@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { LinksService } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { of } from "rxjs";
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -41,13 +40,14 @@ describe('AuthService', () => {
     ]);
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const providers = service.getProviders();
-    const request = httpTestingController.expectOne(loginLink);
+    await new Promise(resolve => setTimeout(resolve, 1));
+    const requests = httpTestingController.expectOne(loginLink);
     const expectedProviders = new Map<string, string>([
       ["google", "http://localhost:5051/api/login/google"],
       ["facebook", "http://localhost:5051/api/login/facebook"],
       ["github", "http://localhost:5051/api/login/github"]
-    ])
-    request.flush(expectedProviders);
+    ]);
+    requests.flush(expectedProviders);
     expect(await providers).toEqual(expectedProviders);
   });
 });
