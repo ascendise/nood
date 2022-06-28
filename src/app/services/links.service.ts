@@ -7,13 +7,10 @@ import { lastValueFrom, Observable, of, shareReplay } from 'rxjs';
 })
 export class LinksService {
 
-  private readonly baseUrl: string = "https://localhost:5051/api/";
-  private readonly httpClient: HttpClient;
+  private readonly baseUrl: string = 'https://localhost:5051/api/';
   private cachedLinks: Map<string, string> | null = null;
 
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
-   }
+  constructor(private httpClient: HttpClient) { }
 
   async getLinks(): Promise<Map<string, string>> {
     if(this.cachedLinks)

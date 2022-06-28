@@ -9,6 +9,8 @@ describe('AuthService', () => {
   let linksServiceSpy: jasmine.SpyObj<LinksService>;
   let httpTestingController: HttpTestingController;
 
+  const baseUri = 'https://localhost:5051/api';
+
   beforeEach(() => {
     const spy = jasmine.createSpyObj('LinksService', ['getLinks']);
     TestBed.configureTestingModule({
@@ -34,18 +36,18 @@ describe('AuthService', () => {
   });
 
   it('get providers', async () => {
-    const loginLink = "http://localhost:5051/api/login";
+    const loginLink = `${baseUri}/login`;
     const links = new Map<string, string>([
-      ["login", loginLink]
+      ['login', loginLink]
     ]);
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const providers = service.getProviders();
     await new Promise(resolve => setTimeout(resolve, 1));
     const requests = httpTestingController.expectOne(loginLink);
     const expectedProviders = new Map<string, string>([
-      ["google", "http://localhost:5051/api/login/google"],
-      ["facebook", "http://localhost:5051/api/login/facebook"],
-      ["github", "http://localhost:5051/api/login/github"]
+      ['google', `${baseUri}/login/google`],
+      ['facebook', `${baseUri}/login/facebook`],
+      ['github', `${baseUri}/login/github`]
     ]);
     requests.flush(expectedProviders);
     expect(await providers).toEqual(expectedProviders);
@@ -53,17 +55,17 @@ describe('AuthService', () => {
 
   it('check if logged in: is logged in', async () => {
     const links = new Map<string, string>([
-      ["login", "http://localhost:5051/api/login"],
-      ["logout", "http://localhost:5051/api/logout"]
+      ['login', `${baseUri}/login`],
+      ['logout', `${baseUri}/logout`]
     ]);
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const isLoggedIn = await service.isLoggedIn();
     expect(isLoggedIn).toBeTrue();
   });
-  
+
   it('check if logged in: is not logged in', async () => {
     const links = new Map<string, string>([
-      ["login", "http://localhost:5051/api/login"]
+      ['login', `${baseUri}/login`]
     ]);
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const isLoggedIn = await service.isLoggedIn();

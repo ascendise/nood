@@ -9,7 +9,7 @@ describe('AuthGuard', () => {
   let guard: AuthGuard;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   beforeEach(() => {
-    const spy = jasmine.createSpyObj("AuthService", ["isLoggedIn"]);
+    const spy = jasmine.createSpyObj('AuthService', ['isLoggedIn']);
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
@@ -29,14 +29,14 @@ describe('AuthGuard', () => {
 
   it('should activate when user is logged in', async () => {
     authServiceSpy.isLoggedIn.and.returnValue(Promise.resolve(true));
-    var mockRouterState = jasmine.createSpyObj("RouterStateSnapshot", ["toString"]);
+    var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
     const canActivate = guard.canActivate(new ActivatedRouteSnapshot(),mockRouterState) as Promise<boolean>;
     expect(await canActivate).toBeTrue();
   });
 
   it('should not activate when user is not logged in', async () => {
     authServiceSpy.isLoggedIn.and.returnValue(Promise.resolve(false));
-    var mockRouterState = jasmine.createSpyObj("RouterStateSnapshot", ["toString"]);
+    var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
     const canActivate = guard.canActivate(new ActivatedRouteSnapshot(),mockRouterState) as Promise<boolean>;
     expect(await canActivate).toBeFalse();
   });

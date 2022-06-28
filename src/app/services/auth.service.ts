@@ -8,27 +8,22 @@ import { lastValueFrom } from 'rxjs';
 })
 export class AuthService {
 
-  private readonly linksService: LinksService;
-  private readonly httpClient: HttpClient;
-
-  constructor(linksService: LinksService, httpClient: HttpClient) {
-    this.linksService = linksService;
-    this.httpClient = httpClient;
-   }
+  constructor(private linksService: LinksService,
+    private httpClient: HttpClient) { }
 
   async getProviders() : Promise<Map<string, string>>
   {
     const links = await this.linksService.getLinks();
-    let loginLink = links.get("login");
+    let loginLink = links.get('login');
     if(loginLink === undefined)
     {
-      loginLink = "";
+      loginLink = '';
     }
     return lastValueFrom(this.httpClient.get<Map<string, string>>(loginLink));
   }
 
   async isLoggedIn() : Promise<boolean> {
     const links = await this.linksService.getLinks();
-    return links.get("logout") !== undefined;
+    return links.get('logout') !== undefined;
   }
 }
