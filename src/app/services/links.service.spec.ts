@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { LinksService } from './links.service';
+import { LinksService, RootLinks } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { enableProdMode } from '@angular/core';
-import { first } from 'rxjs';
 
 describe('LinksService', () => {
   let service: LinksService;
   let httpTestingController: HttpTestingController;
 
-  const baseUri: string = 'https://localhost:5051/api/'
+  const baseUri: string = 'http://localhost:5051/api/'
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,9 +26,9 @@ describe('LinksService', () => {
   })
 
   it('return links as anonymous user', async () =>{
-    const expectedLinks = new Map<string, string>([
-      ['login', `${baseUri}login`]
-    ]);
+    const expectedLinks = new RootLinks(
+      { href: `${baseUri}login`}
+    );
     const linksRequest = service.getLinks();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedLinks);
@@ -38,13 +36,13 @@ describe('LinksService', () => {
   });
 
   it('return links as logged in user', async () =>{
-    const expectedLinks = new Map<string, string>([
-      ['login', `${baseUri}login`],
-      ['logout', `${baseUri}logout`],
-      ['tasks', `${baseUri}tasks`],
-      ['checklists', `${baseUri}checklists`],
-      ['relations', `${baseUri}tasks`],
-    ]);
+    const expectedLinks = new RootLinks(
+      { href: `${baseUri}login`},
+      { href: `${baseUri}tasks`},
+      { href: `${baseUri}checklists`},
+      { href: `${baseUri}checklists/tasks`},
+      { href: `${baseUri}logout`}
+    )
     const linksRequest = service.getLinks();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedLinks);
@@ -52,13 +50,13 @@ describe('LinksService', () => {
   });
 
   it('cache links after retreiving them', async () =>{
-    const expectedLinks = new Map<string, string>([
-      ['login', `${baseUri}login`],
-      ['logout', `${baseUri}logout`],
-      ['tasks', `${baseUri}tasks`],
-      ['checklists', `${baseUri}checklists`],
-      ['relations', `${baseUri}tasks`],
-    ]);
+    const expectedLinks = new RootLinks(
+      { href: `${baseUri}login`},
+      { href: `${baseUri}tasks`},
+      { href: `${baseUri}checklists`},
+      { href: `${baseUri}checklists/tasks`},
+      { href: `${baseUri}logout`}
+    )
     const firstFetchLinks = service.getLinks();
     const request = httpTestingController.expectOne(baseUri);
     request.flush(expectedLinks);
@@ -68,16 +66,16 @@ describe('LinksService', () => {
   });
 
   it('add cached links after login', async () =>{
-    const expectedAnonLinks = new Map<string, string>([
-      ['login', `${baseUri}login`]
-    ]);
-    const expectedUserLinks = new Map<string, string>([
-      ['login', `${baseUri}login`],
-      ['logout', `${baseUri}logout`],
-      ['tasks', `${baseUri}tasks`],
-      ['checklists', `${baseUri}checklists`],
-      ['relations', `${baseUri}tasks`],
-    ]);
+    const expectedAnonLinks = new RootLinks(
+      { href: `${baseUri}login`}
+    )
+    const expectedUserLinks = new RootLinks(
+      { href: `${baseUri}login`},
+      { href: `${baseUri}tasks`},
+      { href: `${baseUri}checklists`},
+      { href: `${baseUri}checklists/tasks`},
+      { href: `${baseUri}logout`}
+    )
     const anonymousLinks = service.getLinks();
     const anonymousLinksRequest = httpTestingController.expectOne(baseUri);
     anonymousLinksRequest.flush(expectedAnonLinks);

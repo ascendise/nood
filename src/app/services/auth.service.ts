@@ -14,16 +14,12 @@ export class AuthService {
   async getProviders() : Promise<Map<string, string>>
   {
     const links = await this.linksService.getLinks();
-    let loginLink = links.get('login');
-    if(loginLink === undefined)
-    {
-      loginLink = '';
-    }
+    let loginLink = links.login.href;
     return lastValueFrom(this.httpClient.get<Map<string, string>>(loginLink));
   }
 
   async isLoggedIn() : Promise<boolean> {
     const links = await this.linksService.getLinks();
-    return links.get('logout') !== undefined;
+    return links.logout !== undefined;
   }
 }

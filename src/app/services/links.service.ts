@@ -5,19 +5,20 @@ import { lastValueFrom, Observable, of, shareReplay } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class LinksService {
 
-  private readonly baseUrl: string = 'https://localhost:5051/api/';
-  private cachedLinks: Map<string, string> | null = null;
+  private readonly baseUrl: string = 'http://localhost:5051/api/';
+  private cachedLinks?: RootLinks
 
   constructor(private httpClient: HttpClient) { }
 
-  async getLinks(): Promise<Map<string, string>> {
+  async getLinks(): Promise<RootLinks> {
     if(this.cachedLinks)
     {
       return this.cachedLinks;
     }
-    const response = await lastValueFrom(this.httpClient.get<Map<string, string>>(this.baseUrl));
+    const response = await lastValueFrom(this.httpClient.get<RootLinks>(this.baseUrl));
     if(this.includesAllLinks(response))
     {
       this.cachedLinks = response;
@@ -25,7 +26,21 @@ export class LinksService {
     return response;
   }
 
-  private includesAllLinks(links: Map<string, string>) {
-    return links.size > 1;
+  private includesAllLinks(links: RootLinks) {
+    return links.logout !== undefined;
   }
+}
+
+export interface Link {
+  href: string;
+}
+
+export class RootLinks {
+  constructor(
+    public login: Link,
+    public tasks?: Link,
+    public checklists?: Link,
+    public relations?: Link,
+    public logout?: Link
+  ) {}
 }
