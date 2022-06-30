@@ -51,7 +51,7 @@ describe('AuthGuard', () => {
     authService.isLoggedIn.and.returnValue(Promise.resolve(false));
     var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
     await guard.canActivate(new ActivatedRouteSnapshot(), mockRouterState);
-    expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: mockRouterState.url }});
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
   });
 
   it('should not activate on error', async () => {
@@ -65,6 +65,6 @@ describe('AuthGuard', () => {
     authService.isLoggedIn.and.returnValue(Promise.reject('Test error'))
     var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
     await guard.canActivate(new ActivatedRouteSnapshot(), mockRouterState);
-    expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: mockRouterState.url }});
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
   });
 });
