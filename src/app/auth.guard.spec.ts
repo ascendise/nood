@@ -53,4 +53,11 @@ describe('AuthGuard', () => {
     await guard.canActivate(new ActivatedRouteSnapshot(), mockRouterState);
     expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: mockRouterState.url }});
   });
+
+  it('should return to login page on error', async () => {
+    authService.isLoggedIn.and.returnValue(Promise.reject("Test error"))
+    var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
+    const canActivate = guard.canActivate(new ActivatedRouteSnapshot(), mockRouterState) as Promise<boolean>;
+    expect(await canActivate).toBeFalse();
+  });
 });
