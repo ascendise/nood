@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthService } from './auth.service';
+import { AuthService, LoginLinks } from './auth.service';
 import { LinksService, RootLinks } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 
@@ -44,11 +44,10 @@ describe('AuthService', () => {
     const providers = service.getProviders();
     await new Promise(resolve => setTimeout(resolve, 1));
     const requests = httpTestingController.expectOne(loginLink);
-    const expectedProviders = new Map<string, string>([
-      ['google', `${baseUri}/login/google`],
-      ['facebook', `${baseUri}/login/facebook`],
-      ['github', `${baseUri}/login/github`]
-    ]);
+    const expectedProviders = new LoginLinks(
+      { href: `${baseUri}/login/google`},
+      { href: loginLink}
+    );
     requests.flush(expectedProviders);
     expect(await providers).toEqual(expectedProviders);
   });

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, Observable, of, shareReplay } from 'rxjs';
+import { Link } from './links';
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +30,6 @@ export class LinksService {
   private includesAllLinks(links: RootLinks) {
     return links.logout !== undefined;
   }
-}
-
-export interface Link {
-  href: string;
 }
 
 export class RootLinks {
