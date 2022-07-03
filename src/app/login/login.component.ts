@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  private google: string = "";
+  public get googleLink() {
+    return this.google;
+  }
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService) { }
+
+  async ngOnInit() {
+    const providers = await this.authService.getProviders();
+    this.google = providers.google.href;
   }
 
 }
