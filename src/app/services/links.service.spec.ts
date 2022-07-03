@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { LinksService, RootLinks } from './links.service';
+import { LinksService, RootLinks, LinksResponse } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 
 describe('LinksService', () => {
@@ -26,56 +26,66 @@ describe('LinksService', () => {
   })
 
   it('return links as anonymous user', async () =>{
-    const expectedLinks = new RootLinks(
-      { href: `${baseUri}login`}
-    );
+    const expectedLinks: LinksResponse = {
+      _links: {
+        login: { href: `${baseUri}login` }
+      }
+    };
     const linksRequest = service.getLinks();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedLinks);
-    expect(await linksRequest).toEqual(expectedLinks);
+    expect(await linksRequest).toEqual(expectedLinks._links);
   });
 
   it('return links as logged in user', async () =>{
-    const expectedLinks = new RootLinks(
-      { href: `${baseUri}login`},
-      { href: `${baseUri}tasks`},
-      { href: `${baseUri}checklists`},
-      { href: `${baseUri}checklists/tasks`},
-      { href: `${baseUri}logout`}
-    )
+    const expectedLinks: LinksResponse = {
+      _links: {
+        login: { href: `${baseUri}login` },
+        tasks: { href: `${baseUri}tasks` },
+        checklists: { href: `${baseUri}checklists` },
+        relations: { href: `${baseUri}checklists/tasks` },
+        logout: { href: `${baseUri}logout` }
+      }
+    };
     const linksRequest = service.getLinks();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedLinks);
-    expect(await linksRequest).toEqual(expectedLinks);
+    expect(await linksRequest).toEqual(expectedLinks._links);
   });
 
   it('cache links after retreiving them', async () =>{
-    const expectedLinks = new RootLinks(
-      { href: `${baseUri}login`},
-      { href: `${baseUri}tasks`},
-      { href: `${baseUri}checklists`},
-      { href: `${baseUri}checklists/tasks`},
-      { href: `${baseUri}logout`}
-    )
+    const expectedLinks: LinksResponse = {
+      _links: {
+        login: { href: `${baseUri}login` },
+        tasks: { href: `${baseUri}tasks` },
+        checklists: { href: `${baseUri}checklists` },
+        relations: { href: `${baseUri}checklists/tasks` },
+        logout: { href: `${baseUri}logout` }
+      }
+    };
     const firstFetchLinks = service.getLinks();
     const request = httpTestingController.expectOne(baseUri);
     request.flush(expectedLinks);
     await firstFetchLinks;
     const links = await service.getLinks();
-    expect(links).toEqual(expectedLinks);
+    expect(links).toEqual(expectedLinks._links);
   });
 
   it('add cached links after login', async () =>{
-    const expectedAnonLinks = new RootLinks(
-      { href: `${baseUri}login`}
-    )
-    const expectedUserLinks = new RootLinks(
-      { href: `${baseUri}login`},
-      { href: `${baseUri}tasks`},
-      { href: `${baseUri}checklists`},
-      { href: `${baseUri}checklists/tasks`},
-      { href: `${baseUri}logout`}
-    )
+    const expectedAnonLinks: LinksResponse = {
+      _links: {
+        login: { href: `${baseUri}login` }
+      }
+    };
+    const expectedUserLinks: LinksResponse = {
+      _links: {
+        login: { href: `${baseUri}login` },
+        tasks: { href: `${baseUri}tasks` },
+        checklists: { href: `${baseUri}checklists` },
+        relations: { href: `${baseUri}checklists/tasks` },
+        logout: { href: `${baseUri}logout` }
+      }
+    };
     const anonymousLinks = service.getLinks();
     const anonymousLinksRequest = httpTestingController.expectOne(baseUri);
     anonymousLinksRequest.flush(expectedAnonLinks);
@@ -86,7 +96,7 @@ describe('LinksService', () => {
     await userLinks;
     const cachedLinks = await service.getLinks();
     httpTestingController.expectNone(baseUri)
-    expect(cachedLinks).toEqual(expectedUserLinks);
+    expect(cachedLinks).toEqual(expectedUserLinks._links);
   });
 
 });

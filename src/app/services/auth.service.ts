@@ -17,7 +17,7 @@ export class AuthService {
   {
     const links = await this.linksService.getLinks();
     const loginLink = links.login.href;
-    return lastValueFrom(this.httpClient.get<LoginLinks>(loginLink));
+    return (await lastValueFrom(this.httpClient.get<LoginResponse>(loginLink)))._links;
   }
 
   async isLoggedIn() : Promise<boolean> {
@@ -26,9 +26,11 @@ export class AuthService {
   }
 }
 
-export class LoginLinks {
-  constructor(
-    public google: Link,
-    public self: Link
-  ) {}
+export interface LoginLinks {
+  google: Link
+  self: Link
+}
+
+export interface LoginResponse {
+  _links: LoginLinks
 }

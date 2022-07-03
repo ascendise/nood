@@ -19,12 +19,13 @@ export class LinksService {
     {
       return this.cachedLinks;
     }
-    const response = await lastValueFrom(this.httpClient.get<RootLinks>(this.baseUrl));
-    if(this.includesAllLinks(response))
+    const response = await lastValueFrom(this.httpClient.get<LinksResponse>(this.baseUrl));
+    const links = response._links
+    if(this.includesAllLinks(links))
     {
-      this.cachedLinks = response;
+      this.cachedLinks = links;
     }
-    return response;
+    return links;
   }
 
   private includesAllLinks(links: RootLinks) {
@@ -32,12 +33,14 @@ export class LinksService {
   }
 }
 
-export class RootLinks {
-  constructor(
-    public login: Link,
-    public tasks?: Link,
-    public checklists?: Link,
-    public relations?: Link,
-    public logout?: Link
-  ) {}
+export interface RootLinks {
+    login: Link
+    tasks?: Link
+    checklists?: Link
+    relations?: Link
+    logout?: Link
+}
+
+export interface LinksResponse {
+  _links: RootLinks
 }

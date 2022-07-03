@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthService, LoginLinks } from './auth.service';
+import { AuthService, LoginLinks, LoginResponse } from './auth.service';
 import { LinksService, RootLinks } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 
@@ -37,38 +37,40 @@ describe('AuthService', () => {
 
   it('get providers', async () => {
     const loginLink = `${baseUri}/login`;
-    const links = new RootLinks(
-      { href: loginLink}
-    )
+    const links: RootLinks = {
+      login: { href: loginLink}
+    };
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const providers = service.getProviders();
     await new Promise(resolve => setTimeout(resolve, 1));
     const requests = httpTestingController.expectOne(loginLink);
-    const expectedProviders = new LoginLinks(
-      { href: `${baseUri}/login/google`},
-      { href: loginLink}
-    );
+    const expectedProviders: LoginResponse = {
+      _links: {
+        google: { href: `${baseUri}/login/google`},
+        self: { href: loginLink }
+      }
+    }
     requests.flush(expectedProviders);
-    expect(await providers).toEqual(expectedProviders);
+    expect(await providers).toEqual(expectedProviders._links);
   });
 
   it('check if logged in: is logged in', async () => {
-    const links = new RootLinks(
-      { href: `${baseUri}/login`},
-      { href: `${baseUri}/tasks`},
-      { href: `${baseUri}/checklists`},
-      { href: `${baseUri}/relations`},
-      { href: `${baseUri}/logout`}
-    )
+    const links: RootLinks = {
+      login: { href: `${baseUri}/login`},
+      tasks: { href: `${baseUri}/tasks`},
+      checklists: { href: `${baseUri}/checklists`},
+      relations: { href: `${baseUri}/checklists/tasks`},
+      logout: { href: `${baseUri}/logout`}
+    }
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const isLoggedIn = await service.isLoggedIn();
     expect(isLoggedIn).toBeTrue();
   });
 
   it('check if logged in: is not logged in', async () => {
-    const links = new RootLinks(
-      { href: `${baseUri}/login`}
-    )
+    const links: RootLinks = {
+      login: { href: `${baseUri}/login`}
+    }
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const isLoggedIn = await service.isLoggedIn();
     expect(isLoggedIn).toBeFalse();
