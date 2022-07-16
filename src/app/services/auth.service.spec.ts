@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthService, LoginLinks, LoginResponse } from './auth.service';
+import { AuthService } from './auth.service';
 import { LinksService, RootLinks, UnauthorizedError } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 
@@ -41,6 +41,7 @@ describe('AuthService', () => {
       checklists: { href: `${baseUri}/checklists`},
       relations: { href: `${baseUri}/checklists/tasks`}
     }
+
     linksServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
     const isLoggedIn = await service.isLoggedIn();
     expect(isLoggedIn).toBeTrue();

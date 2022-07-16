@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LinksService, UnauthorizedError } from './links.service';
+import { LinksService, UnauthorizedError, RootLinks } from './links.service';
 import { lastValueFrom } from 'rxjs';
 import { Link } from './links';
 
@@ -10,20 +10,10 @@ import { Link } from './links';
 
 export class AuthService {
 
-  constructor(private linksService: LinksService,
-    private httpClient: HttpClient) { }
+  constructor(private linksService: LinksService) { }
 
   async isLoggedIn() : Promise<boolean> {
     const links = await this.linksService.getLinks();
-    return links !== UnauthorizedError
+    return !(links instanceof UnauthorizedError)
   }
-}
-
-export interface LoginLinks {
-  google: Link
-  self: Link
-}
-
-export interface LoginResponse {
-  _links: LoginLinks
 }
