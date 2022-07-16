@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, Observable, of, shareReplay } from 'rxjs';
 import { Link } from './links';
@@ -14,31 +14,29 @@ export class LinksService {
 
   constructor(private httpClient: HttpClient) { }
 
-  async getLinks(): Promise<RootLinks> {
+  async getLinks(): Promise<RootLinks| UnauthorizedError> {
     if(this.cachedLinks)
     {
       return this.cachedLinks;
     }
-    const response = await lastValueFrom(this.httpClient.get<LinksResponse>(this.baseUrl));
-    const links = response._links
-    if(this.includesAllLinks(links))
+    const response = await lastValueFrom(this.httpClient.get<HttpResponse<LinksResponse>>(this.baseUrl));
+    if(response.status == 401 || response.body == null)
     {
-      this.cachedLinks = links;
+      return new UnauthorizedError();
     }
+    const links = response.body._links;
+    this.cachedLinks = links;
     return links;
-  }
-
-  private includesAllLinks(links: RootLinks) {
-    return links.logout !== undefined;
   }
 }
 
+export class UnauthorizedError extends Error {
+}
+
 export interface RootLinks {
-    login: Link
     tasks?: Link
     checklists?: Link
     relations?: Link
-    logout?: Link
 }
 
 export interface LinksResponse {

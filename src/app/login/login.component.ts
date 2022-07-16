@@ -8,16 +8,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  private google: string = "";
-  public get googleLink() {
-    return this.google;
-  }
+  constructor() { }
 
-  constructor(private authService: AuthService) { }
-
-  async ngOnInit() {
-    const providers = await this.authService.getProviders();
-    this.google = providers.google.href;
+  ngOnInit(): void {
   }
 
 }
