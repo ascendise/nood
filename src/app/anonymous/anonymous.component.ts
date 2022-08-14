@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -6,11 +7,16 @@ import { OAuthService } from 'angular-oauth2-oidc';
   templateUrl: './anonymous.component.html',
   styleUrls: ['./anonymous.component.scss']
 })
-export class AnonymousComponent implements OnInit {
+export class AnonymousComponent implements AfterViewChecked {
 
-  constructor(private authService: OAuthService) { }
+  constructor(private authService: OAuthService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngAfterViewChecked(): void {
+    const isLoggedIn = this.authService.hasValidIdToken();
+    console.log(isLoggedIn);
+    if(this.authService.hasValidIdToken()) {
+      this.router.navigate(['/dashboard'])
+    }
   }
 
   public login() {
