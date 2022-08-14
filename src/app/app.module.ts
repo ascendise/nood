@@ -6,10 +6,14 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AnonymousComponent } from './components/anonymous/anonymous.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DashboardComponent,
+    AnonymousComponent,
   ],
   imports: [
     BrowserModule,
