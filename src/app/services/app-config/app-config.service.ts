@@ -23,6 +23,7 @@ export interface AppConfig {
 
 export interface OAuthConfig {
   issuer: string,
+  redirectUri: string,
   clientId: string,
   logoutUrl: string,
   loginUrl: string,

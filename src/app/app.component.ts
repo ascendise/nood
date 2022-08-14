@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { AppConfigService } from './services/app-config/app-config.service';
 
 @Component({
   selector: 'app-root',
@@ -10,24 +11,25 @@ import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 export class AppComponent {
   title = 'nood';
 
-  private readonly authConfig: AuthConfig = {
-    issuer: 'https://dev-ypizy20t.us.auth0.com/',
-    redirectUri: 'http://localhost:4200',
-    clientId: 'TzjUFvs2J6uDTfbDsJOJa3iKoXvW49wj',
-    scope: 'openid profile email offline_access',
-    responseType: 'token id_token',
-    logoutUrl: 'https://dev-ypizy20t.us.auth0.com/v2/logout',
-    loginUrl: 'https://dev-ypizy20t.us.auth0.com/authorize',
-    oidc: true,
-    customQueryParams: {
-      audience: 'https://ascendise.todolistapi.ch'
-    }
-  };
-
-  constructor(private oauthService: OAuthService)
+  constructor(private oauthService: OAuthService, private configService: AppConfigService)
   {
-    this.oauthService.configure(this.authConfig);
-    this.oauthService.setStorage(localStorage);
-    this.oauthService.loadDiscoveryDocumentAndLogin();
+    this.configService.loadConfig().then(appConfig => {
+      const authConfig: AuthConfig = {
+        issuer: appConfig.oauth.issuer,
+        redirectUri: appConfig.oauth.redirectUri,
+        clientId: appConfig.oauth.clientId,
+        scope: 'openid profile email offline_access',
+        responseType: 'token id_token',
+        logoutUrl: appConfig.oauth.logoutUrl,
+        loginUrl: appConfig.oauth.loginUrl,
+        oidc: true,
+        customQueryParams: {
+          audience: appConfig.oauth.audience
+        }
+      }
+      this.oauthService.configure(authConfig);
+      this.oauthService.setStorage(localStorage);
+      this.oauthService.loadDiscoveryDocumentAndLogin();
+    });
   }
 }

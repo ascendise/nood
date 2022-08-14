@@ -30,6 +30,7 @@ describe('AppConfigService', () => {
       apiBaseUri: 'https://nood.com/api/',
       oauth: {
         issuer: 'https://nood.auth0.com/',
+        redirectUri: 'https://nood.auth0.com/',
         clientId: 'myClientId12345',
         logoutUrl: 'https://nood.auth0.com/v2/logout',
         loginUrl: 'https://nood.auth0.com/authorize',
