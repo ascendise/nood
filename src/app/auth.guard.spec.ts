@@ -3,7 +3,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 
 import { AuthGuard } from './auth.guard';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;

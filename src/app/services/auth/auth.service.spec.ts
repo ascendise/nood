@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
-import { LinksService, RootLinks, UnauthorizedError } from './links.service';
+import { LinksService, RootLinks, UnauthorizedError } from '../links/links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 
 describe('AuthService', () => {
