@@ -1,6 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, Observable, of, shareReplay } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { firstValueFrom, lastValueFrom, Observable, of, shareReplay } from 'rxjs';
+import { AppConfig, AppConfigService } from '../app-config/app-config.service';
 import { Link } from './links';
 
 @Injectable({
@@ -9,17 +11,17 @@ import { Link } from './links';
 
 export class LinksService {
 
-  private readonly baseUrl: string = 'http://localhost:5051/api/';
   private cachedLinks?: RootLinks
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private config: AppConfigService) {}
 
   async getLinks(): Promise<RootLinks| UnauthorizedError> {
+    const baseUri = (await this.config.loadConfig()).apiBaseUri;
     if(this.cachedLinks)
     {
       return this.cachedLinks;
     }
-    const response = await lastValueFrom(this.httpClient.get<HttpResponse<LinksResponse>>(this.baseUrl));
+    const response = await lastValueFrom(this.httpClient.get<HttpResponse<LinksResponse>>(baseUri));
     if(response.status == 401 || response.body == null)
     {
       return new UnauthorizedError();
