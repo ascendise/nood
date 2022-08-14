@@ -47,11 +47,11 @@ describe('AuthGuard', () => {
     expect(await canActivate).toBeFalse();
   });
 
-  it('should navigate to login page if user is not logged in', async () => {
+  it('should navigate to anonymous page if user is not logged in', async () => {
     authService.isLoggedIn.and.returnValue(Promise.resolve(false));
     var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
     await guard.canActivate(new ActivatedRouteSnapshot(), mockRouterState);
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    expect(router.navigate).toHaveBeenCalledWith(['/anonymous']);
   });
 
   it('should not activate on error', async () => {
@@ -61,10 +61,10 @@ describe('AuthGuard', () => {
     expect(await canActivate).toBeFalse();
   });
 
-  it('should return to login page on error', async () => {
+  it('should return to anonymous page on error', async () => {
     authService.isLoggedIn.and.returnValue(Promise.reject('Test error'))
     var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
     await guard.canActivate(new ActivatedRouteSnapshot(), mockRouterState);
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    expect(router.navigate).toHaveBeenCalledWith(['/anonymous']);
   });
 });
