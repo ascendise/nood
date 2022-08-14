@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { AppConfigService } from './services/app-config/app-config.service';
+import { environment } from 'src/environments/environment';
+import { AppConfig, AppConfigService } from './services/app-config/app-config.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,12 @@ import { AppConfigService } from './services/app-config/app-config.service';
 export class AppComponent {
   title = 'nood';
 
+  private config: AppConfig | null = null;
+
   constructor(private oauthService: OAuthService, private configService: AppConfigService)
   {
     this.configService.loadConfig().then(appConfig => {
+      this.config = appConfig;
       const authConfig: AuthConfig = {
         issuer: appConfig.oauth.issuer,
         redirectUri: appConfig.oauth.redirectUri,
@@ -32,8 +36,16 @@ export class AppComponent {
     });
   }
 
-  public login()
+  public logout()
   {
-    this.oauthService.initLoginFlow();
+    this.oauthService.logOut(
+      {
+        returnTo: this.config?.appDomain
+      }
+    );
+  }
+
+  public isLoggedIn(): boolean {
+    return this.oauthService.hasValidIdToken();
   }
 }

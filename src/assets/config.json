@@ -7,5 +7,6 @@
     "logoutUrl": "https://dev-ypizy20t.us.auth0.com/v2/logout",
     "loginUrl": "https://dev-ypizy20t.us.auth0.com/authorize",
     "audience": "https://ascendise.todolistapi.ch"
-  }
+  },
+  "appDomain": "http://localhost:4200/"
 }
