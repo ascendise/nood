@@ -28,7 +28,6 @@ export class AppComponent {
         }
       }
       this.oauthService.configure(authConfig);
-      this.oauthService.setStorage(localStorage);
       this.oauthService.loadDiscoveryDocumentAndLogin();
     });
   }
