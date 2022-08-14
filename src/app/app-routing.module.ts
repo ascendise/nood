@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AnonymousComponent } from './anonymous/anonymous.component';
+import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { AuthGuard } from './guards/auth/auth.guard';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', component: AnonymousComponent, canActivate: [AuthGuard], data: {requiresLogin: false, redirectTo: '/dashboard'}},
