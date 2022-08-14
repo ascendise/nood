@@ -28,7 +28,7 @@ export class AppComponent {
         }
       }
       this.oauthService.configure(authConfig);
-      this.oauthService.loadDiscoveryDocumentAndLogin();
+      this.oauthService.loadDiscoveryDocumentAndTryLogin();
     });
   }
 
