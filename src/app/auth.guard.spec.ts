@@ -51,6 +51,6 @@ describe('AuthGuard', () => {
     authService.hasValidIdToken.and.returnValue(false);
     var mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', ['toString']);
     await guard.canActivate(new ActivatedRouteSnapshot(), mockRouterState);
-    expect(router.navigate).toHaveBeenCalledWith(['/anonymous']);
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
 });

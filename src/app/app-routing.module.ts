@@ -5,8 +5,8 @@ import { AuthGuard } from './auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: 'anonymous', component: AnonymousComponent},
-  { path: '', component: DashboardComponent, canActivate: [AuthGuard]},
+  { path: '', component: AnonymousComponent},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '' }
 ];
 
