@@ -1,31 +1,28 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
-import { AuthService } from './services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: OAuthService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return this.authService.isLoggedIn()
-      .then(isLoggedIn => {
-        if(!isLoggedIn)
-        {
-          console.log('redirect');
-          this.router.navigate(["/anonymous"]);
-        }
-        return isLoggedIn;
-      })
-      .catch(() => {
-        this.router.navigate(["/anonymous"]);
-        return false;
-      });
+      const isLoggedIn = this.authService.hasValidIdToken();
+      if(isLoggedIn)
+      {
+        console.log('logged in');
+        return true;
+      }
+      console.log('not logged in');
+      this.router.navigate(['/anonymous']);
+      return false;
   }
 
 }
+
