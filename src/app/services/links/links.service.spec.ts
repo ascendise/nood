@@ -2,20 +2,39 @@ import { TestBed } from '@angular/core/testing';
 import { LinksService, RootLinks, LinksResponse, UnauthorizedError } from './links.service';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { HttpResponse } from '@angular/common/http';
+import { AppConfig, AppConfigService } from '../app-config/app-config.service';
 
 describe('LinksService', () => {
   let service: LinksService;
+  let configServiceSpy: jasmine.SpyObj<AppConfigService>;
   let httpTestingController: HttpTestingController;
 
-  const baseUri: string = 'http://localhost:5051/api/'
+  const config: AppConfig = {
+    apiBaseUri: 'http://localhost:5051/api/',
+    oauth: {
+      issuer: '',
+      redirectUri: '',
+      audience: '',
+      loginUrl: '',
+      logoutUrl: '',
+      clientId: ''
+    }
+  }
+  const baseUri = config.apiBaseUri;
 
   beforeEach(() => {
+    const spy = jasmine.createSpyObj('AppConfigService', ['loadConfig']);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [LinksService]
+      providers: [
+        LinksService,
+        { provide: AppConfigService, useValue: spy}
+      ]
     });
     service = TestBed.inject(LinksService);
+    configServiceSpy = TestBed.inject(AppConfigService) as jasmine.SpyObj<AppConfigService>;
     httpTestingController = TestBed.inject(HttpTestingController);
+    configServiceSpy.loadConfig.and.returnValue(Promise.resolve(config))
   });
 
   afterEach(() => {
@@ -29,6 +48,7 @@ describe('LinksService', () => {
   it('return unauthorizedError as anonymous user', async () =>{
     const expectedResponse = new UnauthorizedError();
     const linksRequest = service.getLinks();
+    await waitForRequest();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedResponse);
     expect(await linksRequest).toEqual(expectedResponse);
@@ -47,6 +67,7 @@ describe('LinksService', () => {
       status: 200
     });
     const linksRequest = service.getLinks();
+    await waitForRequest();
     var request = httpTestingController.expectOne(baseUri)
     request.flush(expectedResponse);
     expect(await linksRequest).toEqual(expectedLinks._links);
@@ -65,6 +86,7 @@ describe('LinksService', () => {
       status: 200
     });
     const firstFetchLinks = service.getLinks();
+    await waitForRequest();
     const request = httpTestingController.expectOne(baseUri);
     request.flush(expectedResponse);
     await firstFetchLinks;
@@ -73,3 +95,8 @@ describe('LinksService', () => {
   });
 
 });
+
+async function waitForRequest() {
+  await Promise.resolve((resolve: () => void) => setTimeout(resolve, 100));
+}
+
