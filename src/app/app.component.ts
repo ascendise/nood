@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { environment } from 'src/environments/environment';
 import { AppConfig, AppConfigService } from './services/app-config/app-config.service';
@@ -9,31 +9,30 @@ import { AppConfig, AppConfigService } from './services/app-config/app-config.se
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'nood';
 
   private config: AppConfig | null = null;
 
-  constructor(private oauthService: OAuthService, private configService: AppConfigService)
-  {
-    this.configService.loadConfig().then(appConfig => {
-      this.config = appConfig;
-      const authConfig: AuthConfig = {
-        issuer: appConfig.oauth.issuer,
-        redirectUri: appConfig.oauth.redirectUri,
-        clientId: appConfig.oauth.clientId,
-        scope: 'openid profile email offline_access',
-        responseType: 'token id_token',
-        logoutUrl: appConfig.oauth.logoutUrl,
-        loginUrl: appConfig.oauth.loginUrl,
-        oidc: true,
-        customQueryParams: {
-          audience: appConfig.oauth.audience
-        }
+  constructor(private oauthService: OAuthService, private configService: AppConfigService) {}
+
+  async ngOnInit(): Promise<void> {
+    this.config = await this.configService.loadConfig();
+    const authConfig: AuthConfig = {
+      issuer: this.config.oauth.issuer,
+      redirectUri: this.config.oauth.redirectUri,
+      clientId: this.config.oauth.clientId,
+      scope: 'openid profile email offline_access',
+      responseType: 'token id_token',
+      logoutUrl: this.config.oauth.logoutUrl,
+      loginUrl: this.config.oauth.loginUrl,
+      oidc: true,
+      customQueryParams: {
+        audience: this.config.oauth.audience
       }
-      this.oauthService.configure(authConfig);
-      this.oauthService.loadDiscoveryDocumentAndTryLogin();
-    });
+    }
+    this.oauthService.configure(authConfig);
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
   public logout()
