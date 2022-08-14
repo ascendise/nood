@@ -1,0 +1,28 @@
+name: run-tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+      - name: Setup Firefox
+        uses: browser-actions/setup-firefox@latest
+        with:
+          firefox-version: 'latest'
+      - run: npm ci
+      - run: npm run build --if-present
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+      - name: Run Tests
+        run: ng test --browsers FirefoxHeadless --watch false
