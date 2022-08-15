@@ -1,13 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  LinksService,
-  LinksResponse,
-  UnauthorizedError,
-} from './links.service';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { LinksService, LinksResponse, UnauthorizedError } from './links.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpResponse } from '@angular/common/http';
 import { AppConfig, AppConfigService } from '../app-config/app-config.service';
 
@@ -37,9 +30,7 @@ describe('LinksService', () => {
       providers: [LinksService, { provide: AppConfigService, useValue: spy }],
     });
     service = TestBed.inject(LinksService);
-    configServiceSpy = TestBed.inject(
-      AppConfigService
-    ) as jasmine.SpyObj<AppConfigService>;
+    configServiceSpy = TestBed.inject(AppConfigService) as jasmine.SpyObj<AppConfigService>;
     httpTestingController = TestBed.inject(HttpTestingController);
     configServiceSpy.loadConfig.and.returnValue(Promise.resolve(config));
   });

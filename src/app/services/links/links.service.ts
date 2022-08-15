@@ -10,19 +10,14 @@ import { Link } from './links';
 export class LinksService {
   private cachedLinks?: RootLinks;
 
-  constructor(
-    private httpClient: HttpClient,
-    private config: AppConfigService
-  ) {}
+  constructor(private httpClient: HttpClient, private config: AppConfigService) {}
 
   async getLinks(): Promise<RootLinks | UnauthorizedError> {
     const baseUri = (await this.config.loadConfig()).apiBaseUri;
     if (this.cachedLinks) {
       return this.cachedLinks;
     }
-    const response = await lastValueFrom(
-      this.httpClient.get<HttpResponse<LinksResponse>>(baseUri)
-    );
+    const response = await lastValueFrom(this.httpClient.get<HttpResponse<LinksResponse>>(baseUri));
     if (response.status == 401 || response.body == null) {
       return new UnauthorizedError();
     }
@@ -35,9 +30,9 @@ export class LinksService {
 export class UnauthorizedError extends Error {}
 
 export interface RootLinks {
-  tasks?: Link;
-  checklists?: Link;
-  relations?: Link;
+  tasks: Link;
+  checklists: Link;
+  relations: Link;
 }
 
 export interface LinksResponse {

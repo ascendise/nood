@@ -11,12 +11,7 @@ import { AnonymousComponent } from './components/anonymous/anonymous.component';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, AnonymousComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    OAuthModule.forRoot(),
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot()],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
