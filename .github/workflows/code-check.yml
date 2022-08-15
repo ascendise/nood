@@ -1,4 +1,4 @@
-name: code-checkout
+name: code-check
 on:
   push:
     branches: [main]
