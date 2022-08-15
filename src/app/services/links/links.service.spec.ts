@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import {
   LinksService,
-  RootLinks,
   LinksResponse,
   UnauthorizedError,
 } from './links.service';
 import {
   HttpClientTestingModule,
   HttpTestingController,
-  TestRequest,
 } from '@angular/common/http/testing';
 import { HttpResponse } from '@angular/common/http';
 import { AppConfig, AppConfigService } from '../app-config/app-config.service';
@@ -58,7 +56,7 @@ describe('LinksService', () => {
     const expectedResponse = new UnauthorizedError();
     const linksRequest = service.getLinks();
     await waitForRequest();
-    var request = httpTestingController.expectOne(baseUri);
+    const request = httpTestingController.expectOne(baseUri);
     request.flush(expectedResponse);
     expect(await linksRequest).toEqual(expectedResponse);
   });
@@ -77,7 +75,7 @@ describe('LinksService', () => {
     });
     const linksRequest = service.getLinks();
     await waitForRequest();
-    var request = httpTestingController.expectOne(baseUri);
+    const request = httpTestingController.expectOne(baseUri);
     request.flush(expectedResponse);
     expect(await linksRequest).toEqual(expectedLinks._links);
   });

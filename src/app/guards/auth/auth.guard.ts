@@ -3,10 +3,9 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
-  RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,8 +15,7 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: OAuthService, private router: Router) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    route: ActivatedRouteSnapshot
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

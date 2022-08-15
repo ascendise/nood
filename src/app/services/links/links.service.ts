@@ -1,14 +1,9 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import {
-  firstValueFrom,
   lastValueFrom,
-  Observable,
-  of,
-  shareReplay,
 } from 'rxjs';
-import { AppConfig, AppConfigService } from '../app-config/app-config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 import { Link } from './links';
 
 @Injectable({

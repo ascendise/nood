@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { environment } from 'src/environments/environment';
 import {
   AppConfig,
   AppConfigService,

@@ -38,11 +38,9 @@ describe('AuthGuard', () => {
       redirectTo: '/protected',
     };
     const route = new ActivatedRouteSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (route as any).data = data;
-    const mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', [
-      'toString',
-    ]);
-    const canActivate = guard.canActivate(route, mockRouterState);
+    const canActivate = guard.canActivate(route);
     expect(await canActivate).toBeTrue();
   });
 
@@ -53,11 +51,9 @@ describe('AuthGuard', () => {
       redirectTo: '/home',
     };
     const route = new ActivatedRouteSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (route as any).data = data;
-    const mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', [
-      'toString',
-    ]);
-    const canActivate = guard.canActivate(route, mockRouterState);
+    const canActivate = guard.canActivate(route);
     expect(await canActivate).toBeFalse();
   });
 
@@ -68,11 +64,9 @@ describe('AuthGuard', () => {
       redirectTo: '/home',
     };
     const route = new ActivatedRouteSnapshot();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (route as any).data = data;
-    const mockRouterState = jasmine.createSpyObj('RouterStateSnapshot', [
-      'toString',
-    ]);
-    const canActivate = guard.canActivate(route, mockRouterState);
+    await guard.canActivate(route);
     expect(router.navigate).toHaveBeenCalledWith(['/home']);
   });
 });
