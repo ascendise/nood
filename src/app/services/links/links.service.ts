@@ -1,8 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  lastValueFrom,
-} from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import { Link } from './links';
 
