@@ -1,4 +1,7 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { AppConfig, AppConfigService } from './app-config.service';
@@ -10,7 +13,7 @@ describe('AppConfigService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AppConfigService]
+      providers: [AppConfigService],
     });
     service = TestBed.inject(AppConfigService);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -18,7 +21,7 @@ describe('AppConfigService', () => {
 
   afterEach(() => {
     httpTestingController.verify();
-  })
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -34,9 +37,9 @@ describe('AppConfigService', () => {
         clientId: 'myClientId12345',
         logoutUrl: 'https://nood.auth0.com/v2/logout',
         loginUrl: 'https://nood.auth0.com/authorize',
-        audience: 'https://nood.com'
+        audience: 'https://nood.com',
       },
-      appDomain: 'https://nood.com/'
+      appDomain: 'https://nood.com/',
     };
     const request = httpTestingController.expectOne('/assets/config.json');
     request.flush(expectedConfig);

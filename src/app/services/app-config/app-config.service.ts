@@ -3,30 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppConfigService {
-
   private static readonly configFile = '/assets/config.json';
 
-  constructor(private client: HttpClient) { }
+  constructor(private client: HttpClient) {}
 
   async loadConfig(): Promise<AppConfig> {
-    return firstValueFrom(this.client.get<AppConfig>(AppConfigService.configFile));
+    return firstValueFrom(
+      this.client.get<AppConfig>(AppConfigService.configFile)
+    );
   }
 }
 
 export interface AppConfig {
-  apiBaseUri: string,
-  oauth: OAuthConfig,
-  appDomain: string,
+  apiBaseUri: string;
+  oauth: OAuthConfig;
+  appDomain: string;
 }
 
 export interface OAuthConfig {
-  issuer: string,
-  redirectUri: string,
-  clientId: string,
-  logoutUrl: string,
-  loginUrl: string,
-  audience: string,
+  issuer: string;
+  redirectUri: string;
+  clientId: string;
+  logoutUrl: string;
+  loginUrl: string;
+  audience: string;
 }

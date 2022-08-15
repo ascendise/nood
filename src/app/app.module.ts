@@ -10,21 +10,20 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    AnonymousComponent,
-  ],
+  declarations: [AppComponent, DashboardComponent, AnonymousComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    OAuthModule.forRoot()
+    OAuthModule.forRoot(),
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-
-export class AppModule { }
+export class AppModule {}
