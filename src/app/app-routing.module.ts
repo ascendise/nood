@@ -5,13 +5,23 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: AnonymousComponent, canActivate: [AuthGuard], data: {requiresLogin: false, redirectTo: '/dashboard'}},
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {requiresLogin: true, redirectTo: '/'}},
-  { path: '**', redirectTo: '' }
+  {
+    path: '',
+    component: AnonymousComponent,
+    canActivate: [AuthGuard],
+    data: { requiresLogin: false, redirectTo: '/dashboard' },
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { requiresLogin: true, redirectTo: '/' },
+  },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
