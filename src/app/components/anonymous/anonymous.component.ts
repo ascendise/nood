@@ -11,8 +11,6 @@ export class AnonymousComponent implements AfterViewChecked {
   constructor(private authService: OAuthService, private router: Router) {}
 
   ngAfterViewChecked(): void {
-    const isLoggedIn = this.authService.hasValidIdToken();
-    console.log(isLoggedIn);
     if (this.authService.hasValidIdToken()) {
       this.router.navigate(['/dashboard']);
     }

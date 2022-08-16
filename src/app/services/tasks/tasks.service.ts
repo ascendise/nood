@@ -62,8 +62,6 @@ export class TasksService {
     const monthString = TasksService.pad2Digits(month);
     const day = date.getDate();
     const dayString = TasksService.pad2Digits(day);
-    console.log(date);
-    console.log(date.getDay());
     return `${year}-${monthString}-${dayString}`;
   }
 
