@@ -37,6 +37,13 @@ export class TasksService {
     });
     return taskResponse;
   }
+
+  public async createTask(task: Task): Promise<TaskEntity> {
+    const link = await this.getTasksLink();
+    const request = this.http.post<TaskEntity>(link, task);
+    const taskResponse = await firstValueFrom(request);
+    return taskResponse;
+  }
 }
 
 export interface Tasks {
@@ -49,7 +56,15 @@ export interface TaskEntity extends HateoasEntity<TaskLinks> {
   description: string;
   startDate: string;
   endDate: string;
-  isDone: boolean;
+  done: boolean;
+}
+
+export interface Task {
+  name: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  done: boolean;
 }
 
 export interface TaskLinks {

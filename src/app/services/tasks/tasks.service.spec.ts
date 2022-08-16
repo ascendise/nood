@@ -4,7 +4,7 @@ import { EntityNotFoundError } from '../errors';
 import { HateoasCollection } from '../links/entity';
 import { LinksService, RootLinks } from '../links/links.service';
 
-import { TaskCollectionLinks, TaskEntity, TaskLinks, Tasks, TasksService } from './tasks.service';
+import { TaskCollectionLinks, TaskEntity, TaskLinks, Tasks, TasksService, Task } from './tasks.service';
 
 describe('TasksService', () => {
   const API_BASE_URI = 'https://todoapi.com';
@@ -42,7 +42,7 @@ describe('TasksService', () => {
         description: 'My First Task',
         startDate: '2022-08-15',
         endDate: '2022-08-15',
-        isDone: false,
+        done: false,
         _links: {
           self: {
             href: `${API_BASE_URI}/api/tasks/1`,
@@ -58,7 +58,7 @@ describe('TasksService', () => {
         description: 'My Second Task',
         startDate: '2022-08-15',
         endDate: '2022-08-15',
-        isDone: false,
+        done: false,
         _links: {
           self: {
             href: `${API_BASE_URI}/api/tasks/2`,
@@ -116,7 +116,7 @@ describe('TasksService', () => {
       description: 'My First Task',
       startDate: '2022-08-15',
       endDate: '2022-08-15',
-      isDone: false,
+      done: false,
       _links: {
         self: {
           href: `${API_BASE_URI}/api/tasks/1`,
@@ -137,7 +137,7 @@ describe('TasksService', () => {
     expect(await taskRequest).toEqual(expectedTask);
   });
 
-  it('throw error if requested task entity does not exist', async () => {
+  it('should throw error if requested task entity does not exist', async () => {
     const taskLink: TaskLinks = {
       self: { href: `${API_BASE_URI}/api/tasks/1` },
       tasks: { href: `${API_BASE_URI}/api/tasks` },
@@ -152,5 +152,33 @@ describe('TasksService', () => {
     } catch (err) {
       expect(err).toEqual(new EntityNotFoundError());
     }
+  });
+
+  it('should send task to api and return created resource', async () => {
+    const newTask: Task = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-02'),
+      done: false,
+    };
+    const expectedResponse: TaskEntity = {
+      id: 123,
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: '2023-01-01',
+      endDate: '2023-01-02',
+      done: false,
+      _links: {
+        self: { href: `${API_BASE_URI}/api/tasks/1` },
+        tasks: { href: `${API_BASE_URI}/api/tasks` },
+      },
+    };
+    const taskRequest = service.createTask(newTask);
+    await WaitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    request.flush(expectedResponse, { status: 201, statusText: 'Created' });
+    expect(await taskRequest).toEqual(expectedResponse);
+    expect(linkService.getLinks).toHaveBeenCalled();
   });
 });
