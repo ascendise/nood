@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { HateoasCollection } from '../links/Entity';
+import { HateoasCollection } from '../links/entity';
 import { LinksService, RootLinks } from '../links/links.service';
 
 import { TaskCollectionLinks, TaskEntity, TaskLinks, Tasks, TasksService } from './tasks.service';
@@ -89,6 +89,24 @@ describe('TasksService', () => {
   async function WaitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
+
+  it('should return empty list of tasks if no tasks were created yet', async () => {
+    const expectedTasks: TaskEntity[] = [];
+    const response: HateoasCollection<Tasks, TaskCollectionLinks> = {
+      _embedded: null,
+      _links: {
+        self: {
+          href: `${API_BASE_URI}/api/tasks`,
+        },
+      },
+    };
+    const tasks = service.getTasks();
+    await WaitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    request.flush(response);
+    expect(await tasks).toEqual(expectedTasks);
+    expect(linkService.getLinks).toHaveBeenCalled();
+  });
 
   it('should return task with given id', async () => {
     const expectedTask: TaskEntity = {

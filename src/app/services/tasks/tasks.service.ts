@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { HateoasCollection, HateoasEntity } from '../links/Entity';
+import { HateoasCollection, HateoasEntity } from '../links/entity';
 import { Link } from '../links/links';
 import { LinksService, RootLinks } from '../links/links.service';
 
@@ -15,7 +15,10 @@ export class TasksService {
     const taskLink = await this.getTasksLink();
     const request = this.http.get<HateoasCollection<Tasks, TaskCollectionLinks>>(taskLink);
     const taskResponse = await firstValueFrom(request);
-    return taskResponse._embedded.tasks;
+    if (taskResponse._embedded != null) {
+      return taskResponse._embedded.tasks;
+    }
+    return [];
   }
 
   private async getTasksLink(): Promise<string> {
