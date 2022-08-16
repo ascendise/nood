@@ -81,6 +81,10 @@ export class TasksService {
       throw err;
     });
   }
+
+  public async deleteTask(link: TaskLinks) {
+    await firstValueFrom(this.http.delete(link.self.href));
+  }
 }
 
 interface TaskDto {

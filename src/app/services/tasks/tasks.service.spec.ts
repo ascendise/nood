@@ -287,4 +287,16 @@ describe('TasksService', () => {
       expect(err).toEqual(new EntityNotFoundError());
     }
   });
+
+  it('should send DELETE request for specified task', async () => {
+    const link: TaskLinks = {
+      self: { href: `${API_BASE_URI}/tasks/123` },
+      tasks: { href: `${API_BASE_URI}/tasks` },
+    };
+    const taskRequest = service.deleteTask(link);
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
+    expect(request.request.method).toEqual('DELETE');
+    request.flush(null, { status: 204, statusText: 'No Content' });
+    await taskRequest;
+  });
 });
