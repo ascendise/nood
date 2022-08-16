@@ -1,4 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { TokenType } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { EntityNotFoundError } from '../errors';
@@ -72,7 +73,8 @@ export class TasksService {
   }
 
   public async updateTask(task: Task, link: TaskLinks): Promise<TaskEntity> {
-    const request = this.http.put<TaskEntity>(link.self.href, task);
+    const taskDto = TasksService.toTaskDto(task);
+    const request = this.http.put<TaskEntity>(link.self.href, taskDto);
     return await firstValueFrom(request);
   }
 }

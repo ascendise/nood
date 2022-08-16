@@ -236,4 +236,31 @@ describe('TasksService', () => {
     request.flush(expectedResponse, { status: 200, statusText: 'OK' });
     expect(await taskRequest).toEqual(expectedResponse);
   });
+
+  it('should put correctly formatted task', async () => {
+    const newTask: Task = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-02'),
+      done: false,
+    };
+    const link: TaskLinks = {
+      self: { href: `${API_BASE_URI}/tasks/123` },
+      tasks: { href: `${API_BASE_URI}/tasks` },
+    };
+    const taskRequest = service.updateTask(newTask, link);
+    await WaitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
+    const expectedBody = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: '2023-01-01',
+      endDate: '2023-01-02',
+      done: false,
+    };
+    expect(request.request.body).toEqual(expectedBody);
+    request.flush('');
+    await taskRequest;
+  });
 });
