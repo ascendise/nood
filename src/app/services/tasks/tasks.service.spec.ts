@@ -1,5 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { EntityNotFoundError } from '../errors';
 import { HateoasCollection } from '../links/entity';
 import { LinksService, RootLinks } from '../links/links.service';
 
@@ -134,5 +135,22 @@ describe('TasksService', () => {
     const request = httpTestingController.expectOne(taskLink.self.href);
     request.flush(expectedTask);
     expect(await taskRequest).toEqual(expectedTask);
+  });
+
+  it('throw error if requested task entity does not exist', async () => {
+    const taskLink: TaskLinks = {
+      self: { href: `${API_BASE_URI}/api/tasks/1` },
+      tasks: { href: `${API_BASE_URI}/api/tasks` },
+    };
+    try {
+      const taskRequest = service.getTask(taskLink);
+      await WaitForRequest();
+      const request = httpTestingController.expectOne(taskLink.self.href);
+      request.flush('', { status: 404, statusText: 'Not Found' });
+      await taskRequest;
+      fail('Method did not throw error');
+    } catch (err) {
+      expect(err).toEqual(new EntityNotFoundError());
+    }
   });
 });

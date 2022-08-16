@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { EntityNotFoundError } from '../errors';
 import { HateoasCollection, HateoasEntity } from '../links/entity';
 import { Link } from '../links/links';
 import { LinksService, RootLinks } from '../links/links.service';
@@ -28,7 +29,12 @@ export class TasksService {
 
   public async getTask(taskLink: TaskLinks): Promise<TaskEntity> {
     const request = this.http.get<TaskEntity>(taskLink.self.href);
-    const taskResponse = await firstValueFrom(request);
+    const taskResponse = await firstValueFrom(request).catch((err: HttpErrorResponse) => {
+      if (err.status === 404) {
+        throw new EntityNotFoundError();
+      }
+      throw err;
+    });
     return taskResponse;
   }
 }
