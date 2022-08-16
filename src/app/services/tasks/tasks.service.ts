@@ -39,11 +39,45 @@ export class TasksService {
   }
 
   public async createTask(task: Task): Promise<TaskEntity> {
+    const taskDto = TasksService.toTaskDto(task);
     const link = await this.getTasksLink();
-    const request = this.http.post<TaskEntity>(link, task);
+    const request = this.http.post<TaskEntity>(link, taskDto);
     const taskResponse = await firstValueFrom(request);
     return taskResponse;
   }
+
+  private static toTaskDto(task: Task): TaskDto {
+    return {
+      name: task.name,
+      description: task.description,
+      startDate: TasksService.toDateString(task.startDate),
+      endDate: TasksService.toDateString(task.endDate),
+      done: task.done,
+    };
+  }
+
+  private static toDateString(date: Date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const monthString = TasksService.pad2Digits(month);
+    const day = date.getDate();
+    const dayString = TasksService.pad2Digits(day);
+    console.log(date);
+    console.log(date.getDay());
+    return `${year}-${monthString}-${dayString}`;
+  }
+
+  private static pad2Digits(value: number) {
+    return value < 10 ? `0${value}` : value.toString();
+  }
+}
+
+interface TaskDto {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  done: boolean;
 }
 
 export interface Tasks {

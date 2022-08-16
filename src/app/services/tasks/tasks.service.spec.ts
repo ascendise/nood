@@ -181,4 +181,21 @@ describe('TasksService', () => {
     expect(await taskRequest).toEqual(expectedResponse);
     expect(linkService.getLinks).toHaveBeenCalled();
   });
+
+  it('should format provided task to format expected by API', async () => {
+    const newTask: Task = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-21'),
+      done: false,
+    };
+    const taskRequest = service.createTask(newTask);
+    await WaitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    expect(request.request.body.startDate).toEqual('2023-01-01');
+    expect(request.request.body.endDate).toEqual('2023-01-21');
+    request.flush('');
+    await taskRequest;
+  });
 });
