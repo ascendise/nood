@@ -12,10 +12,21 @@ export class TasksService {
   constructor(private linksService: LinksService, private http: HttpClient) {}
 
   public async getTasks(): Promise<TaskEntity[]> {
-    const links = (await this.linksService.getLinks()) as RootLinks;
-    const request = this.http.get<HateoasCollection<Tasks, TaskCollectionLinks>>(links.tasks.href);
+    const taskLink = await this.getTasksLink();
+    const request = this.http.get<HateoasCollection<Tasks, TaskCollectionLinks>>(taskLink);
     const taskResponse = await firstValueFrom(request);
     return taskResponse._embedded.tasks;
+  }
+
+  private async getTasksLink(): Promise<string> {
+    const links = (await this.linksService.getLinks()) as RootLinks;
+    return links.tasks.href;
+  }
+
+  public async getTask(taskLink: TaskLinks): Promise<TaskEntity> {
+    const request = this.http.get<TaskEntity>(taskLink.self.href);
+    const taskResponse = await firstValueFrom(request);
+    return taskResponse;
   }
 }
 

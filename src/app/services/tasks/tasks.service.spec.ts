@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HateoasCollection } from '../links/Entity';
 import { LinksService, RootLinks } from '../links/links.service';
 
-import { TaskCollectionLinks, TaskEntity, Tasks, TasksService } from './tasks.service';
+import { TaskCollectionLinks, TaskEntity, TaskLinks, Tasks, TasksService } from './tasks.service';
 
 describe('TasksService', () => {
   const API_BASE_URI = 'https://todoapi.com';
@@ -89,4 +89,32 @@ describe('TasksService', () => {
   async function WaitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
+
+  it('should return task with given id', async () => {
+    const expectedTask: TaskEntity = {
+      id: 1,
+      name: 'FirstTask',
+      description: 'My First Task',
+      startDate: '2022-08-15',
+      endDate: '2022-08-15',
+      isDone: false,
+      _links: {
+        self: {
+          href: `${API_BASE_URI}/api/tasks/1`,
+        },
+        tasks: {
+          href: `${API_BASE_URI}/api/tasks`,
+        },
+      },
+    };
+    const taskLink: TaskLinks = {
+      self: { href: `${API_BASE_URI}/api/tasks/1` },
+      tasks: { href: `${API_BASE_URI}/api/tasks` },
+    };
+    const taskRequest = service.getTask(taskLink);
+    await WaitForRequest();
+    const request = httpTestingController.expectOne(taskLink.self.href);
+    request.flush(expectedTask);
+    expect(await taskRequest).toEqual(expectedTask);
+  });
 });
