@@ -70,6 +70,11 @@ export class TasksService {
   private static pad2Digits(value: number) {
     return value < 10 ? `0${value}` : value.toString();
   }
+
+  public async updateTask(task: Task, link: TaskLinks): Promise<TaskEntity> {
+    const request = this.http.put<TaskEntity>(link.self.href, task);
+    return await firstValueFrom(request);
+  }
 }
 
 interface TaskDto {

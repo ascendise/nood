@@ -121,16 +121,16 @@ describe('TasksService', () => {
       done: false,
       _links: {
         self: {
-          href: `${API_BASE_URI}/api/tasks/1`,
+          href: `${API_BASE_URI}/tasks/1`,
         },
         tasks: {
-          href: `${API_BASE_URI}/api/tasks`,
+          href: `${API_BASE_URI}/tasks`,
         },
       },
     };
     const taskLink: TaskLinks = {
-      self: { href: `${API_BASE_URI}/api/tasks/1` },
-      tasks: { href: `${API_BASE_URI}/api/tasks` },
+      self: { href: `${API_BASE_URI}/tasks/1` },
+      tasks: { href: `${API_BASE_URI}/tasks` },
     };
     const taskRequest = service.getTask(taskLink);
     await WaitForRequest();
@@ -174,8 +174,8 @@ describe('TasksService', () => {
       endDate: '2023-01-02',
       done: false,
       _links: {
-        self: { href: `${API_BASE_URI}/api/tasks/1` },
-        tasks: { href: `${API_BASE_URI}/api/tasks` },
+        self: { href: `${API_BASE_URI}/tasks/123` },
+        tasks: { href: `${API_BASE_URI}/tasks` },
       },
     };
     const taskRequest = service.createTask(newTask);
@@ -187,7 +187,7 @@ describe('TasksService', () => {
     expect(linkService.getLinks).toHaveBeenCalled();
   });
 
-  it('should format provided task to format expected by API', async () => {
+  it('should format date to expected format in POST', async () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
@@ -203,5 +203,37 @@ describe('TasksService', () => {
     expect(request.request.body.endDate).toEqual('2023-01-21');
     request.flush('');
     await taskRequest;
+  });
+
+  it('should put task to api', async () => {
+    const newTask: Task = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-02'),
+      done: false,
+    };
+    const expectedResponse: TaskEntity = {
+      id: 123,
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: '2023-01-01',
+      endDate: '2023-01-02',
+      done: false,
+      _links: {
+        self: { href: `${API_BASE_URI}/tasks/123` },
+        tasks: { href: `${API_BASE_URI}/api/tasks` },
+      },
+    };
+    const link: TaskLinks = {
+      self: { href: `${API_BASE_URI}/tasks/123` },
+      tasks: { href: `${API_BASE_URI}/tasks` },
+    };
+    const taskRequest = service.updateTask(newTask, link);
+    await WaitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
+    expect(request.request.method).toEqual('PUT');
+    request.flush(expectedResponse, { status: 200, statusText: 'OK' });
+    expect(await taskRequest).toEqual(expectedResponse);
   });
 });
