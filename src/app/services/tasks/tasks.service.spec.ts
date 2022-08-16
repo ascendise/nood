@@ -82,6 +82,7 @@ describe('TasksService', () => {
     const tasks = service.getTasks();
     await WaitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    expect(request.request.method).toEqual('GET');
     request.flush(response);
     expect(await tasks).toEqual(expectedTasks);
     expect(linkService.getLinks).toHaveBeenCalled();
@@ -104,6 +105,7 @@ describe('TasksService', () => {
     const tasks = service.getTasks();
     await WaitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    expect(request.request.method).toEqual('GET');
     request.flush(response);
     expect(await tasks).toEqual(expectedTasks);
     expect(linkService.getLinks).toHaveBeenCalled();
@@ -133,6 +135,7 @@ describe('TasksService', () => {
     const taskRequest = service.getTask(taskLink);
     await WaitForRequest();
     const request = httpTestingController.expectOne(taskLink.self.href);
+    expect(request.request.method).toEqual('GET');
     request.flush(expectedTask);
     expect(await taskRequest).toEqual(expectedTask);
   });
@@ -146,6 +149,7 @@ describe('TasksService', () => {
       const taskRequest = service.getTask(taskLink);
       await WaitForRequest();
       const request = httpTestingController.expectOne(taskLink.self.href);
+      expect(request.request.method).toEqual('GET');
       request.flush('', { status: 404, statusText: 'Not Found' });
       await taskRequest;
       fail('Method did not throw error');
@@ -154,7 +158,7 @@ describe('TasksService', () => {
     }
   });
 
-  it('should send task to api and return created resource', async () => {
+  it('should post task to api and return created resource', async () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
@@ -177,6 +181,7 @@ describe('TasksService', () => {
     const taskRequest = service.createTask(newTask);
     await WaitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    expect(request.request.method).toEqual('POST');
     request.flush(expectedResponse, { status: 201, statusText: 'Created' });
     expect(await taskRequest).toEqual(expectedResponse);
     expect(linkService.getLinks).toHaveBeenCalled();
@@ -193,6 +198,7 @@ describe('TasksService', () => {
     const taskRequest = service.createTask(newTask);
     await WaitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    expect(request.request.method).toEqual('POST');
     expect(request.request.body.startDate).toEqual('2023-01-01');
     expect(request.request.body.endDate).toEqual('2023-01-21');
     request.flush('');
