@@ -75,7 +75,12 @@ export class TasksService {
   public async updateTask(task: Task, link: TaskLinks): Promise<TaskEntity> {
     const taskDto = TasksService.toTaskDto(task);
     const request = this.http.put<TaskEntity>(link.self.href, taskDto);
-    return await firstValueFrom(request);
+    return await firstValueFrom(request).catch((err: HttpErrorResponse) => {
+      if (err.status === 404) {
+        throw new EntityNotFoundError();
+      }
+      throw err;
+    });
   }
 }
 

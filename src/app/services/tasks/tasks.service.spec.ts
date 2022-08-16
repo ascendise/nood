@@ -263,4 +263,28 @@ describe('TasksService', () => {
     request.flush('');
     await taskRequest;
   });
+
+  it('should throw EntityNotFoundException if task does not exist', async () => {
+    const newTask: Task = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-02'),
+      done: false,
+    };
+    const link: TaskLinks = {
+      self: { href: `${API_BASE_URI}/tasks/123` },
+      tasks: { href: `${API_BASE_URI}/tasks` },
+    };
+    try {
+      const taskRequest = service.updateTask(newTask, link);
+      await WaitForRequest();
+      const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
+      request.flush('', { status: 404, statusText: 'Not Found' });
+      await taskRequest;
+      fail();
+    } catch (err) {
+      expect(err).toEqual(new EntityNotFoundError());
+    }
+  });
 });
