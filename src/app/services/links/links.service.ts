@@ -1,6 +1,6 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import { Link } from './links';
 
@@ -12,16 +12,20 @@ export class LinksService {
 
   constructor(private httpClient: HttpClient, private config: AppConfigService) {}
 
-  async getLinks(): Promise<RootLinks | UnauthorizedError> {
+  async getLinks(): Promise<RootLinks> {
     const baseUri = (await this.config.loadConfig()).apiBaseUri;
     if (this.cachedLinks) {
       return this.cachedLinks;
     }
-    const response = await lastValueFrom(this.httpClient.get<HttpResponse<LinksResponse>>(baseUri));
-    if (response.status == 401 || response.body == null) {
-      return new UnauthorizedError();
-    }
-    const links = response.body._links;
+    const response = await firstValueFrom(this.httpClient.get<LinksResponse>(baseUri)).catch(
+      (err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          throw new UnauthorizedError();
+        }
+        throw err;
+      }
+    );
+    const links = response._links;
     this.cachedLinks = links;
     return links;
   }

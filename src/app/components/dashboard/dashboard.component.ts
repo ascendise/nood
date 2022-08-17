@@ -7,10 +7,9 @@ import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-
   private _tasks: TaskEntity[] = [];
 
-  constructor(private tasksService: TasksService) { }
+  constructor(private tasksService: TasksService) {}
 
   async ngOnInit() {
     this._tasks = await this.tasksService.getTasks();
@@ -19,5 +18,4 @@ export class DashboardComponent implements OnInit {
   public get tasks(): TaskEntity[] {
     return this._tasks;
   }
-
 }
