@@ -1,1 +1,7 @@
-<p>dashboard works!</p>
+<div *ngFor="let task of this.tasks">
+  <div>
+    <p>
+      {{task.name}}
+    </p>
+  </div>
+</div>
