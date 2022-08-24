@@ -9,10 +9,11 @@ import { AuthorizationInterceptor } from './interceptors/authorization.intercept
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { NewTaskComponent } from './components/new-task/new-task.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, AnonymousComponent, NewTaskComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot()],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot(), FormsModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

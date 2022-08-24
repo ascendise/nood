@@ -51,7 +51,7 @@ export class TasksService {
       name: task.name,
       description: task.description,
       startDate: TasksService.toDateString(task.startDate),
-      endDate: TasksService.toDateString(task.endDate),
+      endDate: (task.endDate != null) ? TasksService.toDateString(task.endDate) : null,
       done: task.done,
     };
   }
@@ -89,7 +89,7 @@ interface TaskDto {
   name: string;
   description: string;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
   done: boolean;
 }
 
@@ -102,7 +102,7 @@ export interface TaskEntity extends HateoasEntity<TaskLinks> {
   name: string;
   description: string;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
   done: boolean;
 }
 
@@ -110,7 +110,7 @@ export interface Task {
   name: string;
   description: string;
   startDate: Date;
-  endDate: Date;
+  endDate: Date | null;
   done: boolean;
 }
 

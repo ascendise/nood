@@ -1,32 +1,36 @@
-<div class="container panel shadow mt-5 ">
-  <div class="row">
-    <div class="col m-2">
+<form #heroForm="ngForm">
+  <div class="container panel shadow mt-5 ">
+    <div class="row">
+      <div class="col m-2">
+        <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">
+          Back to Dashboard
+        </button>
+      </div>
+      <div class="col">
+        <h1 class="text-light text-center fw-bold">New Task</h1>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row m-2">
+      <input type="text" class="form-control" placeholder="Task name" required [(ngModel)]="NewTask.name" name="name">
+    </div>
+    <div class="row m-2">
+      <textarea class="form-control" placeholder="Describe your task"
+        required [(ngModel)]="NewTask.description" name="description">
+      </textarea>
+    </div>
+    <div class="row m-2">
+      <label for="startDate" class="text-light fw-bold">Start Date</label>
+      <input type="date" class="form-control" id="startdate" required [(ngModel)]="NewTask.startDate" name="startDate">
+    </div>
+    <div class="row m-2">
+      <label for="endDate" class="text-light fw-bold">End Date (Optional)</label>
+      <input type="date" class="form-control" id="endDate" [(ngModel)]="NewTask.endDate" name="endDate">
+    </div>
+    <div class="row m-1">
       <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">
-        Back to Dashboard
+        Create task
       </button>
     </div>
-    <div class="col">
-      <h1 class="text-light text-center fw-bold">New Task</h1>
-    </div>
-    <div class="col"></div>
   </div>
-  <div class="row m-2">
-    <input type="text" class="form-control" placeholder="Task name">
-  </div>
-  <div class="row m-2">
-    <textarea class="form-control" placeholder="Describe your task"></textarea>
-  </div>
-  <div class="row m-2">
-    <label for="startDate" class="text-light fw-bold">Start Date</label>
-    <input type="date" class="form-control" id="startdate">
-  </div>
-  <div class="row m-2">
-    <label for="endDate" class="text-light fw-bold">End Date</label>
-    <input type="date" class="form-control" id="endDate">
-  </div>
-  <div class="row m-1">
-    <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">
-      Create task
-    </button>
-  </div>
-</div>
+</form>
