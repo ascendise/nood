@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NewTaskComponent } from './components/new-task/new-task.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,12 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
     data: { requiresLogin: true, redirectTo: '/' },
+  },
+  {
+    path: 'new-task',
+    component: NewTaskComponent,
+    canActivate: [AuthGuard],
+    data: { requiresLogin: true, redirectTo: '/'},
   },
   { path: '**', redirectTo: '' },
 ];

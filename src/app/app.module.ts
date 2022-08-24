@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
+import { NewTaskComponent } from './components/new-task/new-task.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, AnonymousComponent],
+  declarations: [AppComponent, DashboardComponent, AnonymousComponent, NewTaskComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot()],
   providers: [
     {
