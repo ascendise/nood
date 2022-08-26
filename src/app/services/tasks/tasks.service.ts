@@ -39,6 +39,7 @@ export class TasksService {
   }
 
   public async createTask(task: Task): Promise<TaskEntity> {
+    console.log(task);
     const taskDto = TasksService.toTaskDto(task);
     const link = await this.getTasksLink();
     const request = this.http.post<TaskEntity>(link, taskDto);
@@ -57,10 +58,11 @@ export class TasksService {
   }
 
   private static toDateString(date: Date) {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth() + 1;
     const monthString = TasksService.pad2Digits(month);
-    const day = date.getDate();
+    const day = dateObj.getDate();
     const dayString = TasksService.pad2Digits(day);
     return `${year}-${monthString}-${dayString}`;
   }
