@@ -8,7 +8,7 @@ import { Task, TasksService } from 'src/app/services/tasks/tasks.service';
 })
 export class NewTaskComponent {
 
-  private newTask: Task = {
+  private _newTask: Task = {
     name: '',
     description: '',
     startDate: new Date(),
@@ -18,12 +18,12 @@ export class NewTaskComponent {
 
   constructor(private tasksService: TasksService) {}
 
-  public get NewTask() {
-    return this.newTask;
+  public get newTask() {
+    return this._newTask;
   }
 
-  public Submit() {
-    this.tasksService.createTask(this.NewTask)
+  public submit() {
+    this.tasksService.createTask(this.newTask)
   }
 
 }
