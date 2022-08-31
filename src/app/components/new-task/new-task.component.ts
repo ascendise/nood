@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Task } from 'src/app/services/tasks/tasks.service';
+import { Task, TasksService } from 'src/app/services/tasks/tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -16,8 +16,14 @@ export class NewTaskComponent {
     done: false
   }
 
+  constructor(private tasksService: TasksService) {}
+
   public get NewTask() {
     return this.newTask;
+  }
+
+  public Submit() {
+    this.tasksService.createTask(this.NewTask)
   }
 
 }
