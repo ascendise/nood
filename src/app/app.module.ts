@@ -10,12 +10,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { NewTaskComponent } from './components/new-task/new-task.component';
 import { FormsModule } from '@angular/forms';
-import { NotInPastValidatorDirective } from './validators/not-in-past-validator.directive';
-import { NotInPastDirectiveDirective } from './validators/not-in-past-directive.directive';
 import { NotInPastDirective } from './validators/not-in-past.directive';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, AnonymousComponent, NewTaskComponent, NotInPastValidatorDirective, NotInPastDirectiveDirective, NotInPastDirective],
+  declarations: [AppComponent, DashboardComponent, AnonymousComponent, NewTaskComponent, NotInPastDirective],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot(), FormsModule],
   providers: [
     {

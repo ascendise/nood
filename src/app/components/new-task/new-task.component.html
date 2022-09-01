@@ -25,7 +25,13 @@
     </div>
     <div class="row m-2">
       <label for="startDate" class="text-light fw-bold">Start Date</label>
-      <input type="date" class="form-control" id="startdate" required [(ngModel)]="newTask.startDate" name="startDate" #startDate="ngModel">
+      <input type="date" class="form-control" id="startdate" name="startDate" #startDate="ngModel"
+        required [(ngModel)]="newTask.startDate" notInPast
+      >
+      <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">
+        <div *ngIf="startDate.errors?.['required']"> Start Date is required </div>
+        <div *ngIf="startDate.errors?.['notInPast']"> Start date cannot be in the past </div>
+      </div>
     </div>
     <div class="row m-2">
       <label for="endDate" class="text-light fw-bold">End Date (Optional)</label>
