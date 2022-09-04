@@ -32,8 +32,26 @@
     <div class="col my-1 d-flex flex-column flex-gap-1">
       <button class="btn btn-light btn-outline-primary">Edit</button>
       <div class="py-1"></div>
-      <button (click)="delete()" class="btn btn-light btn-outline-danger">Delete</button>
+      <button type="button" class="btn btn-light btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-dialog" >Delete</button>
     </div>
   </div>
+</div>
 
+<!-- Modal for delete confirmation -->
+<div class="modal fade" id="delete-dialog" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete task '{{task.name}}' ?</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="delete()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete task</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
