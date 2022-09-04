@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NewTaskComponent } from './components/new-task/new-task.component';
-import { TaskDetailsComponent } from './components/task-details/task-details.component';
-import { EditTaskComponent } from './components/edit-task/edit-task.component';
+import { NewTaskComponent } from './components/task/new-task/new-task.component';
+import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
+import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 
 const routes: Routes = [
   {
