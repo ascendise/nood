@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TaskEntity } from 'src/app/services/tasks/tasks.service';
+import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
 
 @Component({
   selector: 'app-task-details',
@@ -11,7 +11,7 @@ export class TaskDetailsComponent implements OnInit{
 
   _task: TaskEntity
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private tasksService: TasksService) {
     this._task = this.router.getCurrentNavigation()?.extras.state as TaskEntity;
     if(this.isNullOrWhitespace(this._task.description)) {
       this._task.description = "(No description)";
@@ -33,6 +33,11 @@ export class TaskDetailsComponent implements OnInit{
 
   public get task(): TaskEntity {
     return this._task;
+  }
+
+  public async delete() {
+    await this.tasksService.deleteTask(this._task._links);
+    this.router.navigateByUrl('/dashboard');
   }
 
 }
