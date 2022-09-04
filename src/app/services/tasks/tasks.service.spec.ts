@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { EntityNotFoundError } from '../errors';
@@ -140,7 +141,7 @@ describe('TasksService', () => {
     expect(await taskRequest).toEqual(expectedTask);
   });
 
-  it('should throw error if requested task entity does not exist', async () => {
+  it('getTask should throw EntityNotFoundError if requested task entity does not exist', async () => {
     const taskLink: TaskLinks = {
       self: { href: `${API_BASE_URI}/api/tasks/1` },
       tasks: { href: `${API_BASE_URI}/api/tasks` },
@@ -157,6 +158,24 @@ describe('TasksService', () => {
       expect(err).toEqual(new EntityNotFoundError());
     }
   });
+
+  it('getTask should let errors other than 404 bubble', async () => {
+    const taskLink: TaskLinks = {
+      self: { href: `${API_BASE_URI}/api/tasks/1` },
+      tasks: { href: `${API_BASE_URI}/api/tasks` },
+    };
+    try {
+      const taskRequest = service.getTask(taskLink);
+      await WaitForRequest();
+      const request = httpTestingController.expectOne(taskLink.self.href);
+      expect(request.request.method).toEqual('GET');
+      request.flush('', { status: 500, statusText: 'Internal Server Error' });
+      await taskRequest;
+      fail('Method did not throw error');
+    } catch (err) {
+      expect(err).toBeInstanceOf(HttpErrorResponse);
+    }
+  })
 
   it('should post task to api and return created resource', async () => {
     const newTask: Task = {
@@ -288,6 +307,30 @@ describe('TasksService', () => {
     }
   });
 
+  it('updateTask should throw HttpErrorResponse if error is not 404 if task does not exist', async () => {
+    const newTask: Task = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-01-02'),
+      done: false,
+    };
+    const link: TaskLinks = {
+      self: { href: `${API_BASE_URI}/tasks/123` },
+      tasks: { href: `${API_BASE_URI}/tasks` },
+    };
+    try {
+      const taskRequest = service.updateTask(newTask, link);
+      await WaitForRequest();
+      const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
+      request.flush('', { status: 500, statusText: 'Internal Server Error' });
+      await taskRequest;
+      fail();
+    } catch (err) {
+      expect(err).toBeInstanceOf(HttpErrorResponse);
+    }
+  });
+
   it('should send DELETE request for specified task', async () => {
     const link: TaskLinks = {
       self: { href: `${API_BASE_URI}/tasks/123` },
@@ -299,4 +342,32 @@ describe('TasksService', () => {
     request.flush(null, { status: 204, statusText: 'No Content' });
     await taskRequest;
   });
+
+  it('should create task without end date if not specified', async () => {
+    const newTask: Task = {
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: new Date('2023-01-01'),
+      endDate: null,
+      done: false,
+    };
+    const expectedResponse: TaskEntity = {
+      id: 123,
+      name: 'My new task',
+      description: 'This is my new task',
+      startDate: '2023-01-01',
+      endDate: null,
+      done: false,
+      _links: {
+        self: { href: `${API_BASE_URI}/tasks/123` },
+        tasks: { href: `${API_BASE_URI}/tasks` },
+      },
+    };
+    const taskRequest = service.createTask(newTask);
+    await WaitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
+    expect(request.request.method).toEqual('POST');
+    request.flush(expectedResponse, { status: 201, statusText: 'Created' });
+    expect(await taskRequest).toEqual(expectedResponse);
+  })
 });
