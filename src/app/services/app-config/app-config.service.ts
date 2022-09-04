@@ -11,9 +11,7 @@ export class AppConfigService {
   constructor(private client: HttpClient) {}
 
   async loadConfig(): Promise<AppConfig> {
-    return firstValueFrom(
-      this.client.get<AppConfig>(AppConfigService.configFile)
-    );
+    return firstValueFrom(this.client.get<AppConfig>(AppConfigService.configFile));
   }
 }
 

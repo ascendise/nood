@@ -16,11 +16,7 @@ describe('AuthGuard', () => {
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        AuthGuard,
-        { provide: OAuthService, useValue: authSpy },
-        { provide: Router, useValue: routerSpy },
-      ],
+      providers: [AuthGuard, { provide: OAuthService, useValue: authSpy }, { provide: Router, useValue: routerSpy }],
     });
     guard = TestBed.inject(AuthGuard);
     authService = TestBed.inject(OAuthService) as jasmine.SpyObj<OAuthService>;

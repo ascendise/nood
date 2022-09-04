@@ -1,9 +1,15 @@
+@import '../colours.scss';
+
 .login {
-  background-color: #69beff;
+  background-color: $main-color;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
 
 h1 {
   font-weight: bolder;
+}
+
+.clickable:hover {
+  cursor: pointer;
 }

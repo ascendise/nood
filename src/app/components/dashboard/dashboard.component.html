@@ -1,1 +1,15 @@
-<p>dashboard works!</p>
+<div class="d-flex flex-row flex-wrap justify-content-around align-items-stretch">
+  <div class="tasklist text-center text-light">
+    <h4 class="fw-bold">All tasks</h4>
+    <div *ngFor="let task of tasks">
+      <div class="task text-truncate" (click)="navigateToTaskDetails(task)">
+        {{ task.name }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="position-absolute bottom-0 end-0 p-5">
+  <button routerLink="/new-task" class="btn btn-outline-primary rounded-circle btn-xxl">
+    <i class="bi bi-plus-lg large-icon"></i>
+  </button>
+</div>

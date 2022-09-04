@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import {
-  AppConfig,
-  AppConfigService,
-} from './services/app-config/app-config.service';
+import { AppConfig, AppConfigService } from './services/app-config/app-config.service';
 
 @Component({
   selector: 'app-root',
@@ -15,10 +12,7 @@ export class AppComponent implements OnInit {
 
   private config: AppConfig | null = null;
 
-  constructor(
-    private oauthService: OAuthService,
-    private configService: AppConfigService
-  ) {}
+  constructor(private oauthService: OAuthService, private configService: AppConfigService) {}
 
   async ngOnInit(): Promise<void> {
     this.config = await this.configService.loadConfig();

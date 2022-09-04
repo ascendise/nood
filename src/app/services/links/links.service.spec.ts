@@ -1,15 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  LinksService,
-  LinksResponse,
-  UnauthorizedError,
-} from './links.service';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { HttpResponse } from '@angular/common/http';
+import { LinksService, LinksResponse, UnauthorizedError } from './links.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppConfig, AppConfigService } from '../app-config/app-config.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('LinksService', () => {
   let service: LinksService;
@@ -37,9 +30,7 @@ describe('LinksService', () => {
       providers: [LinksService, { provide: AppConfigService, useValue: spy }],
     });
     service = TestBed.inject(LinksService);
-    configServiceSpy = TestBed.inject(
-      AppConfigService
-    ) as jasmine.SpyObj<AppConfigService>;
+    configServiceSpy = TestBed.inject(AppConfigService) as jasmine.SpyObj<AppConfigService>;
     httpTestingController = TestBed.inject(HttpTestingController);
     configServiceSpy.loadConfig.and.returnValue(Promise.resolve(config));
   });
@@ -52,13 +43,18 @@ describe('LinksService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('return unauthorizedError as anonymous user', async () => {
-    const expectedResponse = new UnauthorizedError();
-    const linksRequest = service.getLinks();
-    await waitForRequest();
-    const request = httpTestingController.expectOne(baseUri);
-    request.flush(expectedResponse);
-    expect(await linksRequest).toEqual(expectedResponse);
+  it('throw unauthorizedError as anonymous user', async () => {
+    try {
+      const linksRequest = service.getLinks();
+      await waitForRequest();
+      const request = httpTestingController.expectOne(baseUri);
+      request.flush(null, { status: 401, statusText: 'Unauthorized' });
+      await linksRequest;
+      fail();
+    } catch (err) {
+      console.log(err);
+      expect(err).toBeInstanceOf(UnauthorizedError);
+    }
   });
 
   it('return links as logged in user', async () => {
@@ -69,14 +65,10 @@ describe('LinksService', () => {
         relations: { href: `${baseUri}checklists/tasks` },
       },
     };
-    const expectedResponse = new HttpResponse<LinksResponse>({
-      body: expectedLinks,
-      status: 200,
-    });
     const linksRequest = service.getLinks();
     await waitForRequest();
     const request = httpTestingController.expectOne(baseUri);
-    request.flush(expectedResponse);
+    request.flush(expectedLinks, { status: 200, statusText: 'OK' });
     expect(await linksRequest).toEqual(expectedLinks._links);
   });
 
@@ -88,17 +80,27 @@ describe('LinksService', () => {
         relations: { href: `${baseUri}checklists/tasks` },
       },
     };
-    const expectedResponse = new HttpResponse<LinksResponse>({
-      body: expectedLinks,
-      status: 200,
-    });
     const firstFetchLinks = service.getLinks();
     await waitForRequest();
     const request = httpTestingController.expectOne(baseUri);
-    request.flush(expectedResponse);
+    request.flush(expectedLinks, { status: 200, statusText: 'OK' });
     await firstFetchLinks;
     const links = await service.getLinks();
     expect(links).toEqual(expectedLinks._links);
+  });
+
+  it('should let error bubble up if not 401', async () => {
+    try {
+      const linksRequest = service.getLinks();
+      await waitForRequest();
+      const request = httpTestingController.expectOne(baseUri);
+      request.flush(null, { status: 500, statusText: 'Internal Server Error' });
+      await linksRequest;
+      fail();
+    } catch (err) {
+      console.log(err);
+      expect(err).toBeInstanceOf(HttpErrorResponse);
+    }
   });
 });
 
