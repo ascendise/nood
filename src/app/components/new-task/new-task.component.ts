@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Task, TasksService } from 'src/app/services/tasks/tasks.service';
 
 @Component({
@@ -16,14 +17,15 @@ export class NewTaskComponent {
     done: false
   }
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private router: Router, private tasksService: TasksService) {}
 
   public get newTask() {
     return this._newTask;
   }
 
-  public submit() {
-    this.tasksService.createTask(this.newTask)
+  public async submit() {
+    await this.tasksService.createTask(this.newTask)
+    this.router.navigateByUrl('dashboard');
   }
 
 }
