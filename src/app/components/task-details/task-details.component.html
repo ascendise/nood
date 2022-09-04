@@ -1,1 +1,31 @@
-<p>{{task.name}}</p>
+<div class="container panel shadow mt-5">
+  <div class="row">
+    <div class="col m-2">
+      <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">
+        Back to Dashboard
+      </button>
+    </div>
+    <div class="col">
+      <h1 class="text-light text-center fw-bold">{{task.name}}</h1>
+    </div>
+    <div class="col"></div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3 class="text-light fw-bold">Description</h3>
+      <p class="text-light">{{task.description}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-align-center">
+      <h3 class="text-light fw-bold">Start Date</h3>
+      <p class="text-light">{{task.startDate}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-align-center">
+      <h3 class="text-light fw-bold">End Date</h3>
+      <p class="text-light">{{task.endDate}}</p>
+    </div>
+  </div>
+</div>
