@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { LinksService, LinksResponse, UnauthorizedError } from './links.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppConfig, AppConfigService } from '../app-config/app-config.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('LinksService', () => {
   let service: LinksService;
@@ -87,6 +88,20 @@ describe('LinksService', () => {
     const links = await service.getLinks();
     expect(links).toEqual(expectedLinks._links);
   });
+
+  it('should let error bubble up if not 401', async () => {
+    try {
+      const linksRequest = service.getLinks();
+      await waitForRequest();
+      const request = httpTestingController.expectOne(baseUri);
+      request.flush(null, { status: 500, statusText: 'Internal Server Error' });
+      await linksRequest;
+      fail();
+    } catch (err) {
+      console.log(err);
+      expect(err).toBeInstanceOf(HttpErrorResponse);
+    }
+  })
 });
 
 async function waitForRequest() {
