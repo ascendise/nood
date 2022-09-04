@@ -16,3 +16,13 @@ button.btn-xxl {
 .large-icon {
   font-size: 2em;
 }
+
+.task {
+  margin: 0 10px;
+  border-radius: 5px;
+}
+
+.task:hover {
+  cursor: pointer;
+  background-color: $hover-color;
+}
