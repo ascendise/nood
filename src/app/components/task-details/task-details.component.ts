@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
