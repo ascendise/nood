@@ -1,7 +1,7 @@
 <div class="d-flex flex-row flex-wrap justify-content-around align-items-stretch">
   <div class="tasklist text-center text-light">
     <h4 class="fw-bold">All tasks</h4>
-    <p *ngFor="let task of tasks">
+    <p *ngFor="let task of tasks" [routerLink]="['/task-details']">
       {{task.name}}
     </p>
   </div>

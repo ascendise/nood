@@ -4,6 +4,7 @@ import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NewTaskComponent } from './components/new-task/new-task.component';
+import { TaskDetailsComponent } from './components/task-details/task-details.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,12 @@ const routes: Routes = [
   {
     path: 'new-task',
     component: NewTaskComponent,
+    canActivate: [AuthGuard],
+    data: { requiresLogin: true, redirectTo: '/'},
+  },
+  {
+    path: 'task-details',
+    component: TaskDetailsComponent,
     canActivate: [AuthGuard],
     data: { requiresLogin: true, redirectTo: '/'},
   },
