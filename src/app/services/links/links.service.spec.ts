@@ -101,7 +101,7 @@ describe('LinksService', () => {
       console.log(err);
       expect(err).toBeInstanceOf(HttpErrorResponse);
     }
-  })
+  });
 });
 
 async function waitForRequest() {

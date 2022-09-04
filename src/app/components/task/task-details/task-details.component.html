@@ -1,19 +1,19 @@
 <div class="container panel shadow mt-5">
   <div class="row flex-nowrap">
     <div class="col-3 m-2">
-      <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">
-        Back to Dashboard
-      </button>
+      <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">Back to Dashboard</button>
     </div>
     <div class="col-6 text-truncate">
-      <h1 class="text-light text-center fw-bold">{{task.name}}</h1>
+      <h1 class="text-light text-center fw-bold">{{ task.name }}</h1>
     </div>
     <div class="col-3"></div>
   </div>
   <div class="row">
     <div class="col">
       <h3 class="text-light fw-bold">Description</h3>
-      <div class="text-field p-1" *ngIf="!isNullOrWhitespace(task.description); else elseDescription">{{task.description}}</div>
+      <div class="text-field p-1" *ngIf="!isNullOrWhitespace(task.description); else elseDescription">
+        {{ task.description }}
+      </div>
       <ng-template #elseDescription>
         <div class="text-field p-1">(No Description)</div>
       </ng-template>
@@ -22,13 +22,15 @@
   <div class="row">
     <div class="col text-align-center">
       <h3 class="text-light fw-bold">Start Date</h3>
-      <div class="text-field p-1">{{task.startDate | date:'longDate'}}</div>
+      <div class="text-field p-1">{{ task.startDate | date: 'longDate' }}</div>
     </div>
   </div>
   <div class="row">
     <div class="col text-align-center">
       <h3 class="text-light fw-bold">End Date</h3>
-      <div class="text-field p-1" *ngIf="!isNullOrWhitespace(task.endDate); else elseEndDate">{{task.endDate | date:'longDate'}}</div>
+      <div class="text-field p-1" *ngIf="!isNullOrWhitespace(task.endDate); else elseEndDate">
+        {{ task.endDate | date: 'longDate' }}
+      </div>
       <ng-template #elseEndDate>
         <div class="text-field p-1">(No End Date)</div>
       </ng-template>
@@ -38,7 +40,14 @@
     <div class="col my-1 d-flex flex-column flex-gap-1">
       <button (click)="navigateToEdit()" class="btn btn-light btn-outline-primary">Edit</button>
       <div class="py-1"></div>
-      <button type="button" class="btn btn-light btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-dialog" >Delete</button>
+      <button
+        type="button"
+        class="btn btn-light btn-outline-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#delete-dialog"
+      >
+        Delete
+      </button>
     </div>
   </div>
 </div>
@@ -52,7 +61,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete task '{{task.name}}' ?</p>
+        <p>Are you sure you want to delete task '{{ task.name }}' ?</p>
       </div>
       <div class="modal-footer">
         <button (click)="delete()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete task</button>

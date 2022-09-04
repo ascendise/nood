@@ -15,7 +15,15 @@ import { TaskDetailsComponent } from './components/task/task-details/task-detail
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, AnonymousComponent, NewTaskComponent, NotInPastDirective, TaskDetailsComponent, EditTaskComponent],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    AnonymousComponent,
+    NewTaskComponent,
+    NotInPastDirective,
+    TaskDetailsComponent,
+    EditTaskComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot(), FormsModule],
   providers: [
     {

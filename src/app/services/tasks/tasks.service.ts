@@ -52,7 +52,7 @@ export class TasksService {
       name: task.name,
       description: task.description,
       startDate: TasksService.toDateString(task.startDate),
-      endDate: (task.endDate != null) ? TasksService.toDateString(task.endDate) : null,
+      endDate: task.endDate != null ? TasksService.toDateString(task.endDate) : null,
       done: task.done,
     };
   }

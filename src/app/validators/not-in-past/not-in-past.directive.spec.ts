@@ -3,7 +3,6 @@ import { FormControl, ValidationErrors } from '@angular/forms';
 import { NotInPastDirective } from './not-in-past.directive';
 
 describe('NotInPastDirective', () => {
-
   let directive: NotInPastDirective;
 
   beforeEach(() => {
@@ -11,7 +10,7 @@ describe('NotInPastDirective', () => {
       providers: [NotInPastDirective],
     });
     directive = TestBed.inject(NotInPastDirective);
-  })
+  });
 
   it('should create an instance', () => {
     const directive = new NotInPastDirective();
@@ -22,9 +21,9 @@ describe('NotInPastDirective', () => {
     const control = new FormControl();
     control.setValue('1/1/1900');
     const result = directive.validate(control);
-    const expectedResult: ValidationErrors = { notInPast: {value: control.value} };
+    const expectedResult: ValidationErrors = { notInPast: { value: control.value } };
     expect(result).toEqual(expectedResult);
-  })
+  });
 
   it('should return null if date is not in past', () => {
     const control = new FormControl();
@@ -32,6 +31,5 @@ describe('NotInPastDirective', () => {
     const result = directive.validate(control);
     const expectedResult = null;
     expect(result).toEqual(expectedResult);
-  })
+  });
 });
-

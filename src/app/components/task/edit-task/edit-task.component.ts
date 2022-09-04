@@ -5,10 +5,9 @@ import { Task, TaskEntity, TasksService } from 'src/app/services/tasks/tasks.ser
 @Component({
   selector: 'app-edit-task',
   templateUrl: './edit-task.component.html',
-  styleUrls: ['./edit-task.component.scss']
+  styleUrls: ['./edit-task.component.scss'],
 })
 export class EditTaskComponent {
-
   _task: TaskEntity;
 
   constructor(private router: Router, private tasksService: TasksService) {
@@ -26,8 +25,8 @@ export class EditTaskComponent {
       startDate: new Date(this._task.startDate),
       endDate: this._task.endDate != null ? new Date(this._task.endDate) : null,
       done: this._task.done,
-    }
+    };
     await this.tasksService.updateTask(taskDto, this._task._links);
-    this.router.navigateByUrl('/dashboard')
+    this.router.navigateByUrl('/dashboard');
   }
 }

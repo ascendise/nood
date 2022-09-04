@@ -175,7 +175,7 @@ describe('TasksService', () => {
     } catch (err) {
       expect(err).toBeInstanceOf(HttpErrorResponse);
     }
-  })
+  });
 
   it('should post task to api and return created resource', async () => {
     const newTask: Task = {
@@ -369,5 +369,5 @@ describe('TasksService', () => {
     expect(request.request.method).toEqual('POST');
     request.flush(expectedResponse, { status: 201, statusText: 'Created' });
     expect(await taskRequest).toEqual(expectedResponse);
-  })
+  });
 });

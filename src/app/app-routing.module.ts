@@ -24,19 +24,19 @@ const routes: Routes = [
     path: 'new-task',
     component: NewTaskComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/'},
+    data: { requiresLogin: true, redirectTo: '/' },
   },
   {
     path: 'task-details',
     component: TaskDetailsComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/'},
+    data: { requiresLogin: true, redirectTo: '/' },
   },
   {
     path: 'edit-task',
     component: EditTaskComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/'},
+    data: { requiresLogin: true, redirectTo: '/' },
   },
   { path: '**', redirectTo: '' },
 ];
