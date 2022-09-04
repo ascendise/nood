@@ -13,6 +13,16 @@ export class TaskDetailsComponent implements OnInit{
 
   constructor(private router: Router) {
     this._task = this.router.getCurrentNavigation()?.extras.state as TaskEntity;
+    if(this.isNullOrWhitespace(this._task.description)) {
+      this._task.description = "(No description)";
+    }
+    if(this.isNullOrWhitespace(this._task.endDate)) {
+      this._task.endDate = "(No end date)"
+    }
+  }
+
+  isNullOrWhitespace(str: string | null): boolean {
+    return str === null || str.match(/^ *$/) !== null;
   }
 
   ngOnInit(): void {
