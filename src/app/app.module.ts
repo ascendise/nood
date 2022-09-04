@@ -12,9 +12,10 @@ import { NewTaskComponent } from './components/new-task/new-task.component';
 import { FormsModule } from '@angular/forms';
 import { NotInPastDirective } from './validators/not-in-past.directive';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
+import { EditTaskComponent } from './components/edit-task/edit-task.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, AnonymousComponent, NewTaskComponent, NotInPastDirective, TaskDetailsComponent],
+  declarations: [AppComponent, DashboardComponent, AnonymousComponent, NewTaskComponent, NotInPastDirective, TaskDetailsComponent, EditTaskComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot(), FormsModule],
   providers: [
     {

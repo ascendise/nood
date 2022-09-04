@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NewTaskComponent } from './components/new-task/new-task.component';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
+import { EditTaskComponent } from './components/edit-task/edit-task.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,12 @@ const routes: Routes = [
   {
     path: 'task-details',
     component: TaskDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { requiresLogin: true, redirectTo: '/'},
+  },
+  {
+    path: 'edit-task',
+    component: EditTaskComponent,
     canActivate: [AuthGuard],
     data: { requiresLogin: true, redirectTo: '/'},
   },

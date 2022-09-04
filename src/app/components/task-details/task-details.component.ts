@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
@@ -38,6 +39,10 @@ export class TaskDetailsComponent implements OnInit{
   public async delete() {
     await this.tasksService.deleteTask(this._task._links);
     this.router.navigateByUrl('/dashboard');
+  }
+
+  public async navigateToEdit() {
+    this.router.navigateByUrl('/edit-task', { state: this._task })
   }
 
 }
