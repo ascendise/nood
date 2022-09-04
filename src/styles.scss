@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/scss/bootstrap';
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "src/colours.scss";
 
 .bg-grey {
   background-color: #f2f2f2;
@@ -8,4 +9,10 @@
 
 .fill {
   min-height: 100vh;
+}
+
+.panel {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgba($main-color, 0.8);
 }
