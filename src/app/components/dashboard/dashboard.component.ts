@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
 export class DashboardComponent implements OnInit {
   private _tasks: TaskEntity[] = [];
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private tasksService: TasksService,private router: Router) {}
 
   async ngOnInit() {
     this._tasks = await this.tasksService.getTasks();
@@ -18,4 +19,9 @@ export class DashboardComponent implements OnInit {
   public get tasks(): TaskEntity[] {
     return this._tasks;
   }
+
+  public navigateToTaskDetails(task: TaskEntity) {
+    this.router.navigateByUrl('/task-details', { state: task });
+  }
+
 }
