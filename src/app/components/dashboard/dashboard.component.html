@@ -2,7 +2,7 @@
   <div class="tasklist text-center text-light">
     <h4 class="fw-bold">All tasks</h4>
     <div *ngFor="let task of tasks">
-      <div class="task" (click)="navigateToTaskDetails(task)">
+      <div class="task text-truncate" (click)="navigateToTaskDetails(task)">
         {{task.name}}
       </div>
     </div>
