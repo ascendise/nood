@@ -10,7 +10,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { NewTaskComponent } from './components/task/new-task/new-task.component';
 import { FormsModule } from '@angular/forms';
-import { NotInPastDirective } from './validators/not-in-past.directive';
+import { NotInPastDirective } from './validators/not-in-past/not-in-past.directive';
 import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 
