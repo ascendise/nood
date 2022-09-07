@@ -12,33 +12,33 @@ const routes: Routes = [
     path: '',
     component: AnonymousComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: false, redirectTo: '/dashboard' },
+    data: { requiresLogin: false, redirectTo: '/dashboard', animation: 'home' },
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/' },
+    data: { requiresLogin: true, redirectTo: '/', animation: 'dashboard' },
   },
   {
     path: 'new-task',
     component: NewTaskComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/' },
+    data: { requiresLogin: true, redirectTo: '/', animation: 'new-task' },
   },
   {
     path: 'task-details',
     component: TaskDetailsComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/' },
+    data: { requiresLogin: true, redirectTo: '/', animation: 'task-details' },
   },
   {
     path: 'edit-task',
     component: EditTaskComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/' },
+    data: { requiresLogin: true, redirectTo: '/', animation: 'edit-task' },
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '', },
 ];
 
 @NgModule({
