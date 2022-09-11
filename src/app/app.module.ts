@@ -14,6 +14,7 @@ import { NotInPastDirective } from './validators/not-in-past/not-in-past.directi
 import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewChecklistComponent } from './components/checklist/new-checklist/new-checklist.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NotInPastDirective,
     TaskDetailsComponent,
     EditTaskComponent,
+    NewChecklistComponent,
   ],
   imports: [
     BrowserModule,

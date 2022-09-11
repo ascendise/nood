@@ -11,7 +11,28 @@
   </div>
 </div>
 <div class="position-absolute bottom-0 end-0 p-5">
-  <button routerLink="/new-task" class="btn btn-outline-primary rounded-circle btn-xxl">
+  <button class="btn btn-outline-primary rounded-circle btn-xxl" data-bs-toggle="modal" data-bs-target="#create-dialog">
     <i class="bi bi-plus-lg large-icon"></i>
-  </button>
+</button>
+</div>
+
+<!-- Modal for creating resource -->
+<div class="modal fade" id="create-dialog" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>What do you want to create?</p>
+      </div>
+      <div class="modal-footer">
+        <a routerLink="/new-task">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">New task</button>
+        </a>
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">New checklist</button>
+      </div>
+    </div>
+  </div>
 </div>
