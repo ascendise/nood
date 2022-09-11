@@ -38,7 +38,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { requiresLogin: true, redirectTo: '/', animation: 'edit-task' },
   },
-  { path: '**', redirectTo: '', },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

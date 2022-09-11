@@ -25,7 +25,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TaskDetailsComponent,
     EditTaskComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, OAuthModule.forRoot(), FormsModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    OAuthModule.forRoot(),
+    FormsModule,
+    BrowserAnimationsModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

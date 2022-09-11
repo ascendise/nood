@@ -8,16 +8,18 @@ import { AppConfig, AppConfigService } from './services/app-config/app-config.se
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [
-    routeAnimations,
-  ],
+  animations: [routeAnimations],
 })
 export class AppComponent implements OnInit {
   title = 'nood';
 
   private config: AppConfig | null = null;
 
-  constructor(private oauthService: OAuthService, private configService: AppConfigService, private contexts: ChildrenOutletContexts) {}
+  constructor(
+    private oauthService: OAuthService,
+    private configService: AppConfigService,
+    private contexts: ChildrenOutletContexts
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.config = await this.configService.loadConfig();
