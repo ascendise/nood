@@ -8,5 +8,7 @@
       <button *ngIf="isLoggedIn()" (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">Logout</button>
     </div>
   </div>
-  <router-outlet></router-outlet>
+  <div [@routeAnimations]="getRouteAnimationData()">
+    <router-outlet></router-outlet>
+  </div>
 </div>
