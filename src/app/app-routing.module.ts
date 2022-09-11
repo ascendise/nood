@@ -6,6 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NewTaskComponent } from './components/task/new-task/new-task.component';
 import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
+import { NewChecklistComponent } from './components/checklist/new-checklist/new-checklist.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,12 @@ const routes: Routes = [
     component: EditTaskComponent,
     canActivate: [AuthGuard],
     data: { requiresLogin: true, redirectTo: '/', animation: 'edit-task' },
+  },
+  {
+    path: 'new-checklist',
+    component: NewChecklistComponent,
+    canActivate: [AuthGuard],
+    data: { requiresLogin: true, redirectTo: '/', animation: 'new-checklist'},
   },
   { path: '**', redirectTo: '' },
 ];
