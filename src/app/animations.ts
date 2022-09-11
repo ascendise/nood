@@ -18,10 +18,10 @@ export const routeAnimations =
       query(':leave', animateChild()),
       group([
         query(':leave', [
-          animate('200ms ease-out', style({ right: '100%', opacity: 0 }))
+          animate('100ms ease-out', style({ right: '100%', opacity: 0 }))
         ]),
         query(':enter', [
-          animate('300ms ease-out', style({ right: '0%' }))
+          animate('100ms ease-out', style({ right: '0%' }))
         ]),
         query('@*', animateChild(), { optional: true })
       ]),
