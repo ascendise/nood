@@ -1,10 +1,12 @@
 <div class="d-flex flex-row flex-wrap justify-content-around align-items-stretch">
   <div class="tasklist text-center text-light">
-    <h4 class="fw-bold">All tasks</h4>
+    <h1 class="fw-bold list-title">All tasks</h1>
     <div *ngFor="let task of tasks">
-      <div class="task text-truncate" (click)="navigateToTaskDetails(task)">
-        {{ task.name }}
-      </div>
+      <a tabindex="0" (click)="navigateToTaskDetails(task)">
+        <div class="task text-truncate">
+          {{ task.name }}
+        </div>
+      </a>
     </div>
   </div>
 </div>

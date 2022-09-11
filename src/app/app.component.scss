@@ -6,10 +6,8 @@
   border-bottom-left-radius: 10px;
 }
 
-h1 {
+.title {
+  text-decoration: none;
+  font-size: 2.5em;
   font-weight: bolder;
-}
-
-.clickable:hover {
-  cursor: pointer;
 }
