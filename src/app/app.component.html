@@ -1,9 +1,7 @@
 <div class="container-fluid h-100">
   <div class="login row">
     <div class="col"></div>
-    <div class="col clickable" routerLink="/dashboard">
-      <h1 class="text-center text-light">NOOD</h1>
-    </div>
+    <a class="col title text-center text-light" routerLink="/dashboard">NOOD</a>
     <div class="col align-self-center text-center">
       <button *ngIf="isLoggedIn()" (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">Logout</button>
     </div>
