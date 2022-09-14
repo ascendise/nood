@@ -1,0 +1,25 @@
+<form #form="ngForm" (ngSubmit)="onSubmit.emit()">
+  <div class="container panel shadow mt-5">
+    <div class="row">
+      <div class="col-3 m-2">
+        <a routerLink="/dashboard">
+          <button class="btn btn-outline-primary rounded btn-light">
+            Back to Dashboard
+          </button>
+        </a>
+      </div>
+      <div class="col-6 text-truncate">
+        <h1 class="text-light text-center fw-bold">{{title}}</h1>
+      </div>
+    </div>
+    <div class="col-3"></div>
+    <div>
+      <<ng-content></ng-content>>
+    </div>
+    <div class="row m-1">
+      <button type="submit" class="btn btn-outline-primary rounded btn-light" [disabled]="!form.form.valid">
+        {{submitButtonText}}
+      </button>
+    </div>
+  </div>
+</form>

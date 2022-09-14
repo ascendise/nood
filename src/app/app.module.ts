@@ -15,6 +15,7 @@ import { TaskDetailsComponent } from './components/task/task-details/task-detail
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewChecklistComponent } from './components/checklist/new-checklist/new-checklist.component';
+import { FormComponent } from './components/form/form.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NewChecklistComponent } from './components/checklist/new-checklist/new-
     TaskDetailsComponent,
     EditTaskComponent,
     NewChecklistComponent,
+    FormComponent,
   ],
   imports: [
     BrowserModule,
