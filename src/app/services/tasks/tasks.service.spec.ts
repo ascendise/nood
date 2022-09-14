@@ -81,7 +81,7 @@ describe('TasksService', () => {
       },
     };
     const tasks = service.getTasks();
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
     expect(request.request.method).toEqual('GET');
     request.flush(response);
@@ -89,7 +89,7 @@ describe('TasksService', () => {
     expect(linkService.getLinks).toHaveBeenCalled();
   });
 
-  async function WaitForRequest() {
+  async function waitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
 
@@ -104,7 +104,7 @@ describe('TasksService', () => {
       },
     };
     const tasks = service.getTasks();
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
     expect(request.request.method).toEqual('GET');
     request.flush(response);
@@ -134,7 +134,7 @@ describe('TasksService', () => {
       tasks: { href: `${API_BASE_URI}/tasks` },
     };
     const taskRequest = service.getTask(taskLink);
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(taskLink.self.href);
     expect(request.request.method).toEqual('GET');
     request.flush(expectedTask);
@@ -148,7 +148,7 @@ describe('TasksService', () => {
     };
     try {
       const taskRequest = service.getTask(taskLink);
-      await WaitForRequest();
+      await waitForRequest();
       const request = httpTestingController.expectOne(taskLink.self.href);
       expect(request.request.method).toEqual('GET');
       request.flush('', { status: 404, statusText: 'Not Found' });
@@ -166,7 +166,7 @@ describe('TasksService', () => {
     };
     try {
       const taskRequest = service.getTask(taskLink);
-      await WaitForRequest();
+      await waitForRequest();
       const request = httpTestingController.expectOne(taskLink.self.href);
       expect(request.request.method).toEqual('GET');
       request.flush('', { status: 500, statusText: 'Internal Server Error' });
@@ -198,7 +198,7 @@ describe('TasksService', () => {
       },
     };
     const taskRequest = service.createTask(newTask);
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
     expect(request.request.method).toEqual('POST');
     request.flush(expectedResponse, { status: 201, statusText: 'Created' });
@@ -215,7 +215,7 @@ describe('TasksService', () => {
       done: false,
     };
     const taskRequest = service.createTask(newTask);
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
     expect(request.request.method).toEqual('POST');
     expect(request.request.body.startDate).toEqual('2023-01-01');
@@ -249,7 +249,7 @@ describe('TasksService', () => {
       tasks: { href: `${API_BASE_URI}/tasks` },
     };
     const taskRequest = service.updateTask(newTask, link);
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
     expect(request.request.method).toEqual('PUT');
     request.flush(expectedResponse, { status: 200, statusText: 'OK' });
@@ -269,7 +269,7 @@ describe('TasksService', () => {
       tasks: { href: `${API_BASE_URI}/tasks` },
     };
     const taskRequest = service.updateTask(newTask, link);
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
     const expectedBody = {
       name: 'My new task',
@@ -297,7 +297,7 @@ describe('TasksService', () => {
     };
     try {
       const taskRequest = service.updateTask(newTask, link);
-      await WaitForRequest();
+      await waitForRequest();
       const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
       request.flush('', { status: 404, statusText: 'Not Found' });
       await taskRequest;
@@ -321,7 +321,7 @@ describe('TasksService', () => {
     };
     try {
       const taskRequest = service.updateTask(newTask, link);
-      await WaitForRequest();
+      await waitForRequest();
       const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
       request.flush('', { status: 500, statusText: 'Internal Server Error' });
       await taskRequest;
@@ -364,7 +364,7 @@ describe('TasksService', () => {
       },
     };
     const taskRequest = service.createTask(newTask);
-    await WaitForRequest();
+    await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks`);
     expect(request.request.method).toEqual('POST');
     request.flush(expectedResponse, { status: 201, statusText: 'Created' });

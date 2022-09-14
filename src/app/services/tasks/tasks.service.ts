@@ -39,7 +39,6 @@ export class TasksService {
   }
 
   public async createTask(task: Task): Promise<TaskEntity> {
-    console.log(task);
     const taskDto = TasksService.toTaskDto(task);
     const link = await this.getTasksLink();
     const request = this.http.post<TaskEntity>(link, taskDto);
