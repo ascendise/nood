@@ -43,7 +43,7 @@ const routes: Routes = [
     path: 'new-checklist',
     component: NewChecklistComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/', animation: 'new-checklist'},
+    data: { requiresLogin: true, redirectTo: '/', animation: 'new-checklist' },
   },
   { path: '**', redirectTo: '' },
 ];

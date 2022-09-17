@@ -8,10 +8,9 @@ import { LinksService } from '../links/links.service';
 import { TaskEntity } from '../tasks/tasks.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChecklistsService {
-
   public constructor(private httpClient: HttpClient, private linksService: LinksService) {}
 
   public async getChecklists(): Promise<ChecklistEntity[]> {
@@ -23,7 +22,7 @@ export class ChecklistsService {
   }
 
   public async getChecklist(checklistLink: ChecklistLinks): Promise<ChecklistEntity> {
-    const request = this.httpClient.get<ChecklistEntity>(checklistLink.self.href)
+    const request = this.httpClient.get<ChecklistEntity>(checklistLink.self.href);
     return await firstValueFrom(request).catch((err: HttpErrorResponse) => {
       if (err.status === 404) {
         throw new EntityNotFoundError();
@@ -50,26 +49,26 @@ export class ChecklistsService {
 }
 
 export interface Checklist {
-  name: string,
+  name: string;
 }
 
 export interface ChecklistEntity extends HateoasEntity<ChecklistLinks> {
-  id: number,
-  name: string,
-  tasks: TaskEntity[],
+  id: number;
+  name: string;
+  tasks: TaskEntity[];
 }
 
 export interface Checklists {
-  checklists: ChecklistEntity[],
+  checklists: ChecklistEntity[];
 }
 
 export interface ChecklistLinks {
-  self: Link,
-  checklists: Link,
-  relations: Link,
+  self: Link;
+  checklists: Link;
+  relations: Link;
 }
 
 export interface ChecklistCollectionLinks {
-  self: Link,
-  relations: Link,
+  self: Link;
+  relations: Link;
 }

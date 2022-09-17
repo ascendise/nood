@@ -1,4 +1,4 @@
-<app-form title={{this.task.name}} submitButtonText="Update task" (onSubmit)=submit()>
+<app-form title="{{ this.task.name }}" submitButtonText="Update task" (onSubmit)="submit()">
   <div class="row m-2">
     <input
       type="text"
@@ -44,13 +44,6 @@
   </div>
   <div class="row m-2">
     <label for="endDate" class="text-light fw-bold">End Date (Optional)</label>
-    <input
-      type="date"
-      class="form-control"
-      id="endDate"
-      [(ngModel)]="task.endDate"
-      name="endDate"
-      #endDate="ngModel"
-    />
+    <input type="date" class="form-control" id="endDate" [(ngModel)]="task.endDate" name="endDate" #endDate="ngModel" />
   </div>
 </app-form>

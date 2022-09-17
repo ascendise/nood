@@ -5,7 +5,14 @@ import { EntityNotFoundError } from '../errors';
 import { HateoasCollection } from '../links/entity';
 import { LinksService, RootLinks } from '../links/links.service';
 
-import { Checklist, ChecklistCollectionLinks, ChecklistEntity, ChecklistLinks, Checklists, ChecklistsService } from './checklists.service';
+import {
+  Checklist,
+  ChecklistCollectionLinks,
+  ChecklistEntity,
+  ChecklistLinks,
+  Checklists,
+  ChecklistsService,
+} from './checklists.service';
 
 describe('ChecklistsService', () => {
   const API_BASE_URI = 'https://todoapi.com';
@@ -18,7 +25,7 @@ describe('ChecklistsService', () => {
     const linkServiceSpy = jasmine.createSpyObj('LinksService', ['getLinks']);
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ChecklistsService, {provide: LinksService, useValue: linkServiceSpy}],
+      providers: [ChecklistsService, { provide: LinksService, useValue: linkServiceSpy }],
     });
     service = TestBed.inject(ChecklistsService);
     linksService = TestBed.inject(LinksService) as jasmine.SpyObj<LinksService>;
@@ -28,7 +35,7 @@ describe('ChecklistsService', () => {
       checklists: { href: `${API_BASE_URI}/checklists` },
       relations: { href: '' },
     };
-    linkServiceSpy.getLinks.and.returnValue(Promise.resolve(links))
+    linkServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
   });
 
   it('should be created', () => {
@@ -63,7 +70,7 @@ describe('ChecklistsService', () => {
     request.flush(expectedResponse);
     expect(await checklist).toEqual(expectedResponse);
     expect(linksService.getLinks).toHaveBeenCalled();
-  })
+  });
 
   async function waitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
@@ -80,9 +87,9 @@ describe('ChecklistsService', () => {
         name: 'My awesome new checklist',
         tasks: [],
         _links: {
-          self: { href: `${API_BASE_URI}/checklists/1`, },
-          checklists: { href: `${API_BASE_URI}/checklists`, },
-          relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+          self: { href: `${API_BASE_URI}/checklists/1` },
+          checklists: { href: `${API_BASE_URI}/checklists` },
+          relations: { href: `${API_BASE_URI}/checklists/tasks` },
         },
       },
       {
@@ -90,29 +97,29 @@ describe('ChecklistsService', () => {
         name: 'Another checklist',
         tasks: [],
         _links: {
-          self: { href: `${API_BASE_URI}/checklists/2`, },
-          checklists: { href: `${API_BASE_URI}/checklists`, },
-          relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+          self: { href: `${API_BASE_URI}/checklists/2` },
+          checklists: { href: `${API_BASE_URI}/checklists` },
+          relations: { href: `${API_BASE_URI}/checklists/tasks` },
         },
       },
-    ]
+    ];
     const expectedResponse: HateoasCollection<Checklists, ChecklistCollectionLinks> = {
-        _embedded: {
-          checklists: expectedChecklists,
+      _embedded: {
+        checklists: expectedChecklists,
+      },
+      _links: {
+        self: {
+          href: `${API_BASE_URI}/api/tasks`,
         },
-        _links: {
-          self: {
-            href: `${API_BASE_URI}/api/tasks`,
-          },
-          relations: {
-            href: `${API_BASE_URI}/api/checklists/tasks`,
-          }
+        relations: {
+          href: `${API_BASE_URI}/api/checklists/tasks`,
         },
-    }
+      },
+    };
     request.flush(expectedResponse);
     expect(await checklists).toEqual(expectedChecklists);
     expect(linksService.getLinks).toHaveBeenCalled();
-  })
+  });
 
   it('should return empty array if there are no checklists', async () => {
     const checklists = service.getChecklists();
@@ -120,27 +127,27 @@ describe('ChecklistsService', () => {
     const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists`);
     expect(request.request.method).toEqual('GET');
     const expectedResponse: HateoasCollection<Checklists, ChecklistCollectionLinks> = {
-        _embedded: null,
-        _links: {
-          self: {
-            href: `${API_BASE_URI}/api/tasks`,
-          },
-          relations: {
-            href: `${API_BASE_URI}/api/checklists/tasks`,
-          }
+      _embedded: null,
+      _links: {
+        self: {
+          href: `${API_BASE_URI}/api/tasks`,
         },
-    }
+        relations: {
+          href: `${API_BASE_URI}/api/checklists/tasks`,
+        },
+      },
+    };
     request.flush(expectedResponse);
     expect(await checklists).toEqual([]);
     expect(linksService.getLinks).toHaveBeenCalled();
-  })
+  });
 
   it('should return specified checklist', async () => {
     const checklistLink: ChecklistLinks = {
       self: { href: `${API_BASE_URI}/checklists/123` },
-      checklists: { href: `${API_BASE_URI}/checklists`, },
-      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
-    }
+      checklists: { href: `${API_BASE_URI}/checklists` },
+      relations: { href: `${API_BASE_URI}/checklists/tasks` },
+    };
     const checklist = service.getChecklist(checklistLink);
     await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/123`);
@@ -150,41 +157,41 @@ describe('ChecklistsService', () => {
       name: 'Shopping list',
       tasks: [],
       _links: {
-        self: { href: `${API_BASE_URI}/checklists/123`, },
-        checklists: { href: `${API_BASE_URI}/checklists`, },
-        relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+        self: { href: `${API_BASE_URI}/checklists/123` },
+        checklists: { href: `${API_BASE_URI}/checklists` },
+        relations: { href: `${API_BASE_URI}/checklists/tasks` },
       },
-    }
+    };
     request.flush(expectedResponse);
     expect(await checklist).toEqual(expectedResponse);
-  })
+  });
 
   it('should return EntityNotFoundException if checklist does not exist', async () => {
     const checklistLink: ChecklistLinks = {
       self: { href: `${API_BASE_URI}/checklists/999` },
-      checklists: { href: `${API_BASE_URI}/checklists`, },
-      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
-    }
-    try{
+      checklists: { href: `${API_BASE_URI}/checklists` },
+      relations: { href: `${API_BASE_URI}/checklists/tasks` },
+    };
+    try {
       const checklist = service.getChecklist(checklistLink);
       await waitForRequest();
       const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/999`);
       request.flush('', { status: 404, statusText: 'Not Found' });
       await checklist;
       fail('Expected to throw EntityNotFoundError');
-    } catch(err) {
+    } catch (err) {
       expect(err).toEqual(new EntityNotFoundError());
     }
-  })
+  });
 
   it('should send request to update checklist', async () => {
     const checklistLink: ChecklistLinks = {
       self: { href: `${API_BASE_URI}/checklists/420` },
-      checklists: { href: `${API_BASE_URI}/checklists`, },
-      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+      checklists: { href: `${API_BASE_URI}/checklists` },
+      relations: { href: `${API_BASE_URI}/checklists/tasks` },
     };
     const updatedChecklist: Checklist = {
-      name: "Updated Checklist name",
+      name: 'Updated Checklist name',
     };
     const checklist = service.updateChecklist(updatedChecklist, checklistLink);
     await waitForRequest();
@@ -196,26 +203,26 @@ describe('ChecklistsService', () => {
       name: 'Updated Checklist name',
       tasks: [],
       _links: {
-        self: { href: `${API_BASE_URI}/checklists/420`, },
-        checklists: { href: `${API_BASE_URI}/checklists`, },
-        relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+        self: { href: `${API_BASE_URI}/checklists/420` },
+        checklists: { href: `${API_BASE_URI}/checklists` },
+        relations: { href: `${API_BASE_URI}/checklists/tasks` },
       },
-    }
+    };
     request.flush(expectedResponse);
     expect(await checklist).toEqual(expectedResponse);
-  })
+  });
 
   it('should send request to delete checklist', async () => {
     const checklistLink: ChecklistLinks = {
       self: { href: `${API_BASE_URI}/checklists/9001` },
-      checklists: { href: `${API_BASE_URI}/checklists`, },
-      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+      checklists: { href: `${API_BASE_URI}/checklists` },
+      relations: { href: `${API_BASE_URI}/checklists/tasks` },
     };
     const deleteRequest = service.deleteChecklist(checklistLink);
     await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/9001`);
     expect(request.request.method).toEqual('DELETE');
-    request.flush('', {status: 204, statusText: 'No Content'});
+    request.flush('', { status: 204, statusText: 'No Content' });
     await deleteRequest;
-  })
+  });
 });
