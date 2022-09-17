@@ -1,6 +1,7 @@
 // import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { EntityNotFoundError } from '../errors';
 import { LinksService, RootLinks } from '../links/links.service';
 
 import { Checklist, ChecklistEntity, ChecklistLinks, ChecklistsService } from './checklists.service';
@@ -121,6 +122,24 @@ describe('ChecklistsService', () => {
     }
     request.flush(expectedResponse);
     expect(await checklist).toEqual(expectedResponse);
+  })
+
+  it('should return EntityNotFoundException if checklist does not exist', async () => {
+    const checklistLink: ChecklistLinks = {
+      self: { href: `${API_BASE_URI}/checklists/999` },
+      checklists: { href: `${API_BASE_URI}/checklists`, },
+      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+    }
+    try{
+      const checklist = service.getChecklist(checklistLink);
+      await waitForRequest();
+      const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/999`);
+      request.flush('', { status: 404, statusText: 'Not Found' });
+      await checklist;
+      fail('Expected to throw EntityNotFoundError');
+    } catch(err) {
+      expect(err).toEqual(new EntityNotFoundError());
+    }
   })
 
 });

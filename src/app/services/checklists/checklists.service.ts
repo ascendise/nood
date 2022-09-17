@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { EntityNotFoundError } from '../errors';
 import { HateoasEntity } from '../links/entity';
 import { Link } from '../links/links';
 import { LinksService } from '../links/links.service';
@@ -20,8 +21,13 @@ export class ChecklistsService {
   }
 
   public async getChecklist(checklistLink: ChecklistLinks): Promise<ChecklistEntity> {
-    const request = this.httpClient.get<ChecklistEntity>(checklistLink.self.href);
-    return await firstValueFrom(request);
+    const request = this.httpClient.get<ChecklistEntity>(checklistLink.self.href)
+    return await firstValueFrom(request).catch((err: HttpErrorResponse) => {
+      if (err.status === 404) {
+        throw new EntityNotFoundError();
+      }
+      throw err;
+    });
   }
 
   public async createChecklist(checklist: Checklist): Promise<ChecklistEntity> {
