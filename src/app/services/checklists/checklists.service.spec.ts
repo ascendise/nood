@@ -114,6 +114,27 @@ describe('ChecklistsService', () => {
     expect(linksService.getLinks).toHaveBeenCalled();
   })
 
+  it('should return empty array if there are no checklists', async () => {
+    const checklists = service.getChecklists();
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists`);
+    expect(request.request.method).toEqual('GET');
+    const expectedResponse: HateoasCollection<Checklists, ChecklistCollectionLinks> = {
+        _embedded: null,
+        _links: {
+          self: {
+            href: `${API_BASE_URI}/api/tasks`,
+          },
+          relations: {
+            href: `${API_BASE_URI}/api/checklists/tasks`,
+          }
+        },
+    }
+    request.flush(expectedResponse);
+    expect(await checklists).toEqual([]);
+    expect(linksService.getLinks).toHaveBeenCalled();
+  })
+
   it('should return specified checklist', async () => {
     const checklistLink: ChecklistLinks = {
       self: { href: `${API_BASE_URI}/checklists/123` },
