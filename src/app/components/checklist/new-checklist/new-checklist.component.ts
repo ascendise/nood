@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Checklist, ChecklistsService } from 'src/app/services/checklists/checklists.service';
 
 @Component({
   selector: 'app-new-checklist',
   templateUrl: './new-checklist.component.html',
   styleUrls: ['./new-checklist.component.scss']
 })
-export class NewChecklistComponent implements OnInit {
+export class NewChecklistComponent {
 
-  constructor() { }
+  private _newChecklist: Checklist = { name: '' };
 
-  ngOnInit(): void {
+  constructor(private checklistService: ChecklistsService) { }
+
+  public get newChecklist() {
+    return this._newChecklist;
   }
 
+  public async submit() {
+    await this.checklistService.createChecklist(this.newChecklist);
+  }
 }
