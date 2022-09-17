@@ -142,4 +142,31 @@ describe('ChecklistsService', () => {
     }
   })
 
+  it('should send request to update checklist', async () => {
+    const checklistLink: ChecklistLinks = {
+      self: { href: `${API_BASE_URI}/checklists/420` },
+      checklists: { href: `${API_BASE_URI}/checklists`, },
+      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+    };
+    const updatedChecklist: Checklist = {
+      name: "Updated Checklist name",
+    };
+    const checklist = service.updateChecklist(updatedChecklist, checklistLink);
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/420`);
+    expect(request.request.method).toEqual('PUT');
+    expect(request.request.body).toEqual(updatedChecklist);
+    const expectedResponse: ChecklistEntity = {
+      id: 420,
+      name: 'Updated Checklist name',
+      tasks: [],
+      _links: {
+        self: { href: `${API_BASE_URI}/checklists/420`, },
+        checklists: { href: `${API_BASE_URI}/checklists`, },
+        relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+      },
+    }
+    request.flush(expectedResponse);
+    expect(await checklist).toEqual(expectedResponse);
+  })
 });

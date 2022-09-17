@@ -35,6 +35,11 @@ export class ChecklistsService {
     const request = this.httpClient.post<ChecklistEntity>(links.checklists.href, checklist);
     return await firstValueFrom(request);
   }
+
+  public async updateChecklist(checklist: Checklist, link: ChecklistLinks): Promise<ChecklistEntity> {
+    const request = this.httpClient.put<ChecklistEntity>(link.self.href, checklist);
+    return await firstValueFrom(request);
+  }
 }
 
 export interface Checklist {
