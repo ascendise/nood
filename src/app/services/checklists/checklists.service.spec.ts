@@ -169,4 +169,18 @@ describe('ChecklistsService', () => {
     request.flush(expectedResponse);
     expect(await checklist).toEqual(expectedResponse);
   })
+
+  it('should send request to delete checklist', async () => {
+    const checklistLink: ChecklistLinks = {
+      self: { href: `${API_BASE_URI}/checklists/9001` },
+      checklists: { href: `${API_BASE_URI}/checklists`, },
+      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+    };
+    const deleteRequest = service.deleteChecklist(checklistLink);
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/9001`);
+    expect(request.request.method).toEqual('DELETE');
+    request.flush('', {status: 204, statusText: 'No Content'});
+    await deleteRequest;
+  })
 });

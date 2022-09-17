@@ -40,6 +40,11 @@ export class ChecklistsService {
     const request = this.httpClient.put<ChecklistEntity>(link.self.href, checklist);
     return await firstValueFrom(request);
   }
+
+  public async deleteChecklist(link: ChecklistLinks) {
+    const request = this.httpClient.delete(link.self.href);
+    return await firstValueFrom(request);
+  }
 }
 
 export interface Checklist {
