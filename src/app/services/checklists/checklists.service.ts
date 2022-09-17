@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { EntityNotFoundError } from '../errors';
-import { HateoasEntity } from '../links/entity';
+import { HateoasCollection, HateoasEntity } from '../links/entity';
 import { Link } from '../links/links';
 import { LinksService } from '../links/links.service';
 import { TaskEntity } from '../tasks/tasks.service';
@@ -16,8 +16,10 @@ export class ChecklistsService {
 
   public async getChecklists(): Promise<ChecklistEntity[]> {
     const links = await this.linksService.getLinks();
-    const request = this.httpClient.get<ChecklistEntity[]>(links.checklists.href);
-    return await firstValueFrom(request);
+    const request = this.httpClient.get<HateoasCollection<Checklists, ChecklistCollectionLinks>>(links.checklists.href);
+    const response = await firstValueFrom(request);
+    const checklists = response._embedded?.checklists;
+    return checklists ? checklists : [];
   }
 
   public async getChecklist(checklistLink: ChecklistLinks): Promise<ChecklistEntity> {
@@ -57,8 +59,17 @@ export interface ChecklistEntity extends HateoasEntity<ChecklistLinks> {
   tasks: TaskEntity[],
 }
 
+export interface Checklists {
+  checklists: ChecklistEntity[],
+}
+
 export interface ChecklistLinks {
   self: Link,
   checklists: Link,
+  relations: Link,
+}
+
+export interface ChecklistCollectionLinks {
+  self: Link,
   relations: Link,
 }

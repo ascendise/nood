@@ -2,9 +2,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { EntityNotFoundError } from '../errors';
+import { HateoasCollection } from '../links/entity';
 import { LinksService, RootLinks } from '../links/links.service';
 
-import { Checklist, ChecklistEntity, ChecklistLinks, ChecklistsService } from './checklists.service';
+import { Checklist, ChecklistCollectionLinks, ChecklistEntity, ChecklistLinks, Checklists, ChecklistsService } from './checklists.service';
 
 describe('ChecklistsService', () => {
   const API_BASE_URI = 'https://todoapi.com';
@@ -73,7 +74,7 @@ describe('ChecklistsService', () => {
     await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists`);
     expect(request.request.method).toEqual('GET');
-    const expectedResponse: ChecklistEntity[] = [
+    const expectedChecklists: ChecklistEntity[] = [
       {
         id: 1,
         name: 'My awesome new checklist',
@@ -95,8 +96,21 @@ describe('ChecklistsService', () => {
         },
       },
     ]
+    const expectedResponse: HateoasCollection<Checklists, ChecklistCollectionLinks> = {
+        _embedded: {
+          checklists: expectedChecklists,
+        },
+        _links: {
+          self: {
+            href: `${API_BASE_URI}/api/tasks`,
+          },
+          relations: {
+            href: `${API_BASE_URI}/api/checklists/tasks`,
+          }
+        },
+    }
     request.flush(expectedResponse);
-    expect(await checklists).toEqual(expectedResponse);
+    expect(await checklists).toEqual(expectedChecklists);
     expect(linksService.getLinks).toHaveBeenCalled();
   })
 
