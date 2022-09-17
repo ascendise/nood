@@ -66,4 +66,36 @@ describe('ChecklistsService', () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
 
+  it('should return all available checklists', async () => {
+    const checklists = service.getChecklists();
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists`);
+    expect(request.request.method).toEqual('GET');
+    const expectedResponse: ChecklistEntity[] = [
+      {
+        id: 1,
+        name: 'My awesome new checklist',
+        tasks: [],
+        _links: {
+          self: { href: `${API_BASE_URI}/checklists/1`, },
+          checklists: { href: `${API_BASE_URI}/checklists`, },
+          relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+        },
+      },
+      {
+        id: 2,
+        name: 'Another checklist',
+        tasks: [],
+        _links: {
+          self: { href: `${API_BASE_URI}/checklists/2`, },
+          checklists: { href: `${API_BASE_URI}/checklists`, },
+          relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+        },
+      },
+    ]
+    request.flush(expectedResponse);
+    expect(await checklists).toEqual(expectedResponse);
+    expect(linksService.getLinks).toHaveBeenCalled();
+  })
+
 });

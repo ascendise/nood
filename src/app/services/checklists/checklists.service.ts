@@ -13,6 +13,12 @@ export class ChecklistsService {
 
   public constructor(private httpClient: HttpClient, private linksService: LinksService) {}
 
+  public async getChecklists(): Promise<ChecklistEntity[]> {
+    const links = await this.linksService.getLinks();
+    const request = this.httpClient.get<ChecklistEntity[]>(links.checklists.href);
+    return await firstValueFrom(request);
+  }
+
   public async createChecklist(checklist: Checklist): Promise<ChecklistEntity> {
     const links = await this.linksService.getLinks();
     const request = this.httpClient.post<ChecklistEntity>(links.checklists.href, checklist);
