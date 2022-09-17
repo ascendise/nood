@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { HateoasEntity } from '../links/entity';
 import { Link } from '../links/links';
@@ -16,6 +16,11 @@ export class ChecklistsService {
   public async getChecklists(): Promise<ChecklistEntity[]> {
     const links = await this.linksService.getLinks();
     const request = this.httpClient.get<ChecklistEntity[]>(links.checklists.href);
+    return await firstValueFrom(request);
+  }
+
+  public async getChecklist(checklistLink: ChecklistLinks): Promise<ChecklistEntity> {
+    const request = this.httpClient.get<ChecklistEntity>(checklistLink.self.href);
     return await firstValueFrom(request);
   }
 

@@ -1,8 +1,9 @@
+// import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { LinksService, RootLinks } from '../links/links.service';
 
-import { Checklist, ChecklistEntity, ChecklistsService } from './checklists.service';
+import { Checklist, ChecklistEntity, ChecklistLinks, ChecklistsService } from './checklists.service';
 
 describe('ChecklistsService', () => {
   const API_BASE_URI = 'https://todoapi.com';
@@ -96,6 +97,30 @@ describe('ChecklistsService', () => {
     request.flush(expectedResponse);
     expect(await checklists).toEqual(expectedResponse);
     expect(linksService.getLinks).toHaveBeenCalled();
+  })
+
+  it('should return specified checklist', async () => {
+    const checklistLink: ChecklistLinks = {
+      self: { href: `${API_BASE_URI}/checklists/123` },
+      checklists: { href: `${API_BASE_URI}/checklists`, },
+      relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+    }
+    const checklist = service.getChecklist(checklistLink);
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/123`);
+    expect(request.request.method).toEqual('GET');
+    const expectedResponse: ChecklistEntity = {
+      id: 123,
+      name: 'Shopping list',
+      tasks: [],
+      _links: {
+        self: { href: `${API_BASE_URI}/checklists/123`, },
+        checklists: { href: `${API_BASE_URI}/checklists`, },
+        relations: { href: `${API_BASE_URI}/checklists/tasks`, },
+      },
+    }
+    request.flush(expectedResponse);
+    expect(await checklist).toEqual(expectedResponse);
   })
 
 });
