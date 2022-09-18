@@ -43,7 +43,7 @@ describe('TasksService', () => {
         description: 'My First Task',
         startDate: '2022-08-15',
         endDate: '2022-08-15',
-        done: false,
+        isDone: false,
         _links: {
           self: {
             href: `${API_BASE_URI}/api/tasks/1`,
@@ -51,6 +51,7 @@ describe('TasksService', () => {
           tasks: {
             href: `${API_BASE_URI}/api/tasks`,
           },
+          removeTask: null,
         },
       },
       {
@@ -59,7 +60,7 @@ describe('TasksService', () => {
         description: 'My Second Task',
         startDate: '2022-08-15',
         endDate: '2022-08-15',
-        done: false,
+        isDone: false,
         _links: {
           self: {
             href: `${API_BASE_URI}/api/tasks/2`,
@@ -67,6 +68,7 @@ describe('TasksService', () => {
           tasks: {
             href: `${API_BASE_URI}/api/tasks`,
           },
+          removeTask: null,
         },
       },
     ];
@@ -119,7 +121,7 @@ describe('TasksService', () => {
       description: 'My First Task',
       startDate: '2022-08-15',
       endDate: '2022-08-15',
-      done: false,
+      isDone: false,
       _links: {
         self: {
           href: `${API_BASE_URI}/tasks/1`,
@@ -127,11 +129,13 @@ describe('TasksService', () => {
         tasks: {
           href: `${API_BASE_URI}/tasks`,
         },
+        removeTask: null,
       },
     };
     const taskLink: TaskLinks = {
       self: { href: `${API_BASE_URI}/tasks/1` },
       tasks: { href: `${API_BASE_URI}/tasks` },
+      removeTask: null,
     };
     const taskRequest = service.getTask(taskLink);
     await waitForRequest();
@@ -145,6 +149,7 @@ describe('TasksService', () => {
     const taskLink: TaskLinks = {
       self: { href: `${API_BASE_URI}/api/tasks/1` },
       tasks: { href: `${API_BASE_URI}/api/tasks` },
+      removeTask: null,
     };
     try {
       const taskRequest = service.getTask(taskLink);
@@ -163,6 +168,7 @@ describe('TasksService', () => {
     const taskLink: TaskLinks = {
       self: { href: `${API_BASE_URI}/api/tasks/1` },
       tasks: { href: `${API_BASE_URI}/api/tasks` },
+      removeTask: null,
     };
     try {
       const taskRequest = service.getTask(taskLink);
@@ -183,7 +189,7 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: new Date('2023-01-01'),
       endDate: new Date('2023-01-02'),
-      done: false,
+      isDone: false,
     };
     const expectedResponse: TaskEntity = {
       id: 123,
@@ -191,10 +197,11 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: '2023-01-01',
       endDate: '2023-01-02',
-      done: false,
+      isDone: false,
       _links: {
         self: { href: `${API_BASE_URI}/tasks/123` },
         tasks: { href: `${API_BASE_URI}/tasks` },
+        removeTask: null,
       },
     };
     const taskRequest = service.createTask(newTask);
@@ -212,7 +219,7 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: new Date('2023-01-01'),
       endDate: new Date('2023-01-21'),
-      done: false,
+      isDone: false,
     };
     const taskRequest = service.createTask(newTask);
     await waitForRequest();
@@ -230,7 +237,7 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: new Date('2023-01-01'),
       endDate: new Date('2023-01-02'),
-      done: false,
+      isDone: false,
     };
     const expectedResponse: TaskEntity = {
       id: 123,
@@ -238,15 +245,17 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: '2023-01-01',
       endDate: '2023-01-02',
-      done: false,
+      isDone: false,
       _links: {
         self: { href: `${API_BASE_URI}/tasks/123` },
         tasks: { href: `${API_BASE_URI}/api/tasks` },
+        removeTask: null,
       },
     };
     const link: TaskLinks = {
       self: { href: `${API_BASE_URI}/tasks/123` },
       tasks: { href: `${API_BASE_URI}/tasks` },
+      removeTask: null,
     };
     const taskRequest = service.updateTask(newTask, link);
     await waitForRequest();
@@ -262,11 +271,12 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: new Date('2023-01-01'),
       endDate: new Date('2023-01-02'),
-      done: false,
+      isDone: false,
     };
     const link: TaskLinks = {
       self: { href: `${API_BASE_URI}/tasks/123` },
       tasks: { href: `${API_BASE_URI}/tasks` },
+      removeTask: null,
     };
     const taskRequest = service.updateTask(newTask, link);
     await waitForRequest();
@@ -276,7 +286,7 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: '2023-01-01',
       endDate: '2023-01-02',
-      done: false,
+      isDone: false,
     };
     expect(request.request.body).toEqual(expectedBody);
     request.flush('');
@@ -289,11 +299,12 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: new Date('2023-01-01'),
       endDate: new Date('2023-01-02'),
-      done: false,
+      isDone: false,
     };
     const link: TaskLinks = {
       self: { href: `${API_BASE_URI}/tasks/123` },
       tasks: { href: `${API_BASE_URI}/tasks` },
+      removeTask: null,
     };
     try {
       const taskRequest = service.updateTask(newTask, link);
@@ -313,11 +324,12 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: new Date('2023-01-01'),
       endDate: new Date('2023-01-02'),
-      done: false,
+      isDone: false,
     };
     const link: TaskLinks = {
       self: { href: `${API_BASE_URI}/tasks/123` },
       tasks: { href: `${API_BASE_URI}/tasks` },
+      removeTask: null,
     };
     try {
       const taskRequest = service.updateTask(newTask, link);
@@ -335,6 +347,7 @@ describe('TasksService', () => {
     const link: TaskLinks = {
       self: { href: `${API_BASE_URI}/tasks/123` },
       tasks: { href: `${API_BASE_URI}/tasks` },
+      removeTask: null,
     };
     const taskRequest = service.deleteTask(link);
     const request = httpTestingController.expectOne(`${API_BASE_URI}/tasks/123`);
@@ -349,7 +362,7 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: new Date('2023-01-01'),
       endDate: null,
-      done: false,
+      isDone: false,
     };
     const expectedResponse: TaskEntity = {
       id: 123,
@@ -357,10 +370,11 @@ describe('TasksService', () => {
       description: 'This is my new task',
       startDate: '2023-01-01',
       endDate: null,
-      done: false,
+      isDone: false,
       _links: {
         self: { href: `${API_BASE_URI}/tasks/123` },
         tasks: { href: `${API_BASE_URI}/tasks` },
+        removeTask: null,
       },
     };
     const taskRequest = service.createTask(newTask);

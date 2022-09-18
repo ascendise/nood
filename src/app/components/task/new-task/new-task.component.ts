@@ -13,7 +13,7 @@ export class NewTaskComponent {
     description: '',
     startDate: new Date(),
     endDate: null,
-    done: false,
+    isDone: false,
   };
 
   constructor(private router: Router, private tasksService: TasksService) {}
