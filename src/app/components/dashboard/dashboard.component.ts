@@ -26,8 +26,4 @@ export class DashboardComponent implements OnInit {
   public get checklists(): ChecklistEntity[] {
     return this._checklists;
   }
-
-  public navigateToTaskDetails(task: TaskEntity) {
-    this.router.navigateByUrl('/task-details', { state: task });
-  }
 }

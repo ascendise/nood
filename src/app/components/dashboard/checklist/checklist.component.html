@@ -1,0 +1,10 @@
+<div class="checklist h-100 text-center text-light">
+  <h1 class="fw-bold list-title">{{title}}</h1>
+  <div *ngFor="let task of tasks">
+    <a tabindex="0" (click)="navigateToTaskDetails(task)">
+      <div class="task text-truncate">
+        {{ task.name }}
+      </div>
+    </a>
+  </div>
+</div>

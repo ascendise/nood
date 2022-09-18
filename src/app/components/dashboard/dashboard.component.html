@@ -1,27 +1,9 @@
 <div class="d-flex flex-row flex-wrap justify-content-around align-items-stretch mt-5">
   <div class="col my-2">
-    <div class="tasklist h-100 text-center text-light">
-      <h1 class="fw-bold list-title">All tasks</h1>
-      <div *ngFor="let task of tasks">
-        <a tabindex="0" (click)="navigateToTaskDetails(task)">
-          <div class="task text-truncate">
-            {{ task.name }}
-          </div>
-        </a>
-      </div>
-    </div>
+    <app-checklist [tasks]=tasks title="All tasks" ></app-checklist>
   </div>
   <div class="col my-2" *ngFor="let checklist of checklists">
-    <div class="tasklist h-100 text-center text-light">
-      <h1 class="fw-bold list-title">{{checklist.name}}</h1>
-      <div *ngFor="let task of checklist.tasks">
-        <a tabindex="0" (click)="navigateToTaskDetails(task)">
-          <div class="task text-truncate">
-            {{ task.name }}
-          </div>
-        </a>
-      </div>
-    </div>
+    <app-checklist [tasks]=checklist.tasks title={{checklist.name}}></app-checklist>
   </div>
 </div>
 <div class="position-absolute bottom-0 end-0 p-5">
