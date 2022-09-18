@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Checklist, ChecklistEntity } from '../checklists/checklists.service';
+import { ChecklistEntity } from '../checklists/checklists.service';
 import { LinksService, RootLinks } from '../links/links.service';
 import { TaskLinks } from '../tasks/tasks.service';
 
@@ -97,6 +97,18 @@ describe('RelationsService', () => {
       tasks: [],
     };
     request.flush(response, {status: 200, statusText: 'OK'})
+    await deleteRequest;
+  })
+
+  it('should ignore call if task has no link for removing from checklist', async () => {
+    const link: TaskLinks = {
+      self: { href: '' },
+      tasks: { href: ''},
+      removeTask: null
+    }
+    const deleteRequest = service.removeTaskFromChecklist(link);
+    await waitForRequest();
+    httpTestingController.verify();
     await deleteRequest;
   })
 });
