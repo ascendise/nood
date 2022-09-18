@@ -1,7 +1,8 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ChecklistEntity } from '../checklists/checklists.service';
+import { Checklist, ChecklistEntity } from '../checklists/checklists.service';
 import { LinksService, RootLinks } from '../links/links.service';
+import { TaskLinks } from '../tasks/tasks.service';
 
 import { Relation, RelationsService } from './relations.service';
 
@@ -61,7 +62,7 @@ describe('RelationsService', () => {
           _links: {
             self: { href: `${API_BASE_URI}/tasks/123` },
             tasks: { href: `${API_BASE_URI}/tasks` },
-            removeTask: {href: `${API_BASE_URI}/checklists/456tasks/123` },
+            removeTask: {href: `${API_BASE_URI}/checklists/456/tasks/123` },
           }
         },
       ],
@@ -79,4 +80,23 @@ describe('RelationsService', () => {
   async function waitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
+
+  it('should send request to remove task from checklist', async () => {
+    const link: TaskLinks = {
+      self: { href: '' },
+      tasks: { href: ''},
+      removeTask: { href: `${API_BASE_URI}/checklists/456/tasks/123` },
+    };
+    const deleteRequest = service.removeTaskFromChecklist(link);
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/checklists/456/tasks/123`);
+    expect(request.request.method).toEqual('DELETE');
+    const response = {
+      id: 456,
+      name: 'Checklist',
+      tasks: [],
+    };
+    request.flush(response, {status: 200, statusText: 'OK'})
+    await deleteRequest;
+  })
 });
