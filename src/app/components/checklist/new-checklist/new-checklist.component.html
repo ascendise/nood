@@ -15,4 +15,7 @@
       <div *ngIf="name.errors?.['pattern']">Name cannot be empty</div>
     </div>
   </div>
+  <div class="row m-1">
+    <select-list [options]="taskOptions"></select-list>
+  </div>
 </app-form>

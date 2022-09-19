@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewChecklistComponent } from './components/checklist/new-checklist/new-checklist.component';
 import { FormComponent } from './components/form/form.component';
 import { ChecklistComponent } from './components/dashboard/checklist/checklist.component';
+import { SelectListComponent } from './components/select-list/select-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ChecklistComponent } from './components/dashboard/checklist/checklist.c
     NewChecklistComponent,
     FormComponent,
     ChecklistComponent,
+    SelectListComponent,
   ],
   imports: [
     BrowserModule,

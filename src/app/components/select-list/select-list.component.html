@@ -1,0 +1,5 @@
+<div class="bg-light p-1 rounded">
+  <div *ngFor="let option of options" class="entry p-1" (click)="select(option)">
+    {{option.displayText}}
+  </div>
+</div>
