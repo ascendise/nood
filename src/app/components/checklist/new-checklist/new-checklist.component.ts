@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Checklist, ChecklistsService } from 'src/app/services/checklists/checklists.service';
+import { Relation, RelationsService } from 'src/app/services/relations/relations.service';
 import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
 import { SelectListComponent } from '../../select-list/select-list.component';
 
@@ -13,7 +14,9 @@ export class NewChecklistComponent implements OnInit{
   private _tasks: TaskEntity[] = [];
   @ViewChild('taskList') taskList?: SelectListComponent<TaskEntity>;
 
-  constructor(private checklistService: ChecklistsService, private tasksService: TasksService) {}
+  constructor(private checklistService: ChecklistsService,
+    private tasksService: TasksService,
+    private relationService: RelationsService) {}
 
   async ngOnInit() {
     this._tasks = await this.tasksService.getTasks();
@@ -28,7 +31,15 @@ export class NewChecklistComponent implements OnInit{
   }
 
   public async submit() {
-    console.log(this.taskList?.selectedItems);
-    await this.checklistService.createChecklist(this.newChecklist);
+    const checklist = await this.checklistService.createChecklist(this.newChecklist);
+    this.taskList?.selectedItems
+      .forEach(async (t) => {
+        const relation: Relation = {
+          taskId: t.id,
+          checklistId: checklist.id,
+        };
+        await this.relationService.addTaskToChecklist(relation);
+      });
+
   }
 }
