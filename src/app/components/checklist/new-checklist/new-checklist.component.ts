@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Checklist, ChecklistsService } from 'src/app/services/checklists/checklists.service';
 import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
-import { SelectListOption } from '../../select-list/select-list.component';
 
 @Component({
   selector: 'app-new-checklist',
@@ -22,14 +21,8 @@ export class NewChecklistComponent implements OnInit{
     return this._newChecklist;
   }
 
-  public get taskOptions() {
-    return this._tasks.map((t) => {
-      return  {
-        displayText: t.name,
-        item: t,
-        selected: false,
-      } as SelectListOption<TaskEntity>;
-    })
+  public get tasks() {
+    return this._tasks;
   }
 
   public async submit() {

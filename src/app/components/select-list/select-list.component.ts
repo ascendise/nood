@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, ContentChildren, QueryList } from '@angular/core';
+import { SelectOptionComponent } from './select-option/select-option.component';
 
 @Component({
   selector: 'select-list',
@@ -7,16 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 
 export class SelectListComponent<T> {
-  @Input() public options: SelectListOption<T>[] = [];
 
-  public select(option: SelectListOption<T>){
-    option.selected = (option.selected !== true);
-    console.log(this.options);
-  }
-}
-
-export interface SelectListOption<T> {
-  displayText: string,
-  item: T,
-  selected: boolean,
+  @ContentChildren(SelectOptionComponent<T>) public options?: QueryList<SelectOptionComponent<T>>;
 }

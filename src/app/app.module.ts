@@ -18,6 +18,7 @@ import { NewChecklistComponent } from './components/checklist/new-checklist/new-
 import { FormComponent } from './components/form/form.component';
 import { ChecklistComponent } from './components/dashboard/checklist/checklist.component';
 import { SelectListComponent } from './components/select-list/select-list.component';
+import { SelectOptionComponent } from './components/select-list/select-option/select-option.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SelectListComponent } from './components/select-list/select-list.compon
     FormComponent,
     ChecklistComponent,
     SelectListComponent,
+    SelectOptionComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,5 @@
+@import 'src/colours.scss';
+
+.entry:hover {
+  background-color: $hover-color;
+}

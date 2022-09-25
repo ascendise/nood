@@ -16,6 +16,11 @@
     </div>
   </div>
   <div class="row m-1">
-    <select-list [options]="taskOptions"></select-list>
+    <select-list>
+      <select-option *ngFor="let task of tasks"
+        [item]="task"
+        [title]="task.name">
+      </select-option>
+    </select-list>
   </div>
 </app-form>
