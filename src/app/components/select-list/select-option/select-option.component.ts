@@ -17,6 +17,6 @@ export class SelectOptionComponent<T> {
   }
 
   public select() {
-    this._isSelected = true;
+    this._isSelected = !this._isSelected;
   }
 }
