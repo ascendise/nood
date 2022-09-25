@@ -7,6 +7,7 @@ import { NewTaskComponent } from './components/task/new-task/new-task.component'
 import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 import { NewChecklistComponent } from './components/checklist/new-checklist/new-checklist.component';
+import { EditChecklistComponent } from './components/checklist/edit-checklist/edit-checklist.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,12 @@ const routes: Routes = [
     component: NewChecklistComponent,
     canActivate: [AuthGuard],
     data: { requiresLogin: true, redirectTo: '/', animation: 'new-checklist' },
+  },
+  {
+    path: 'edit-checklist',
+    component: EditChecklistComponent,
+    canActivate: [AuthGuard],
+    data: { requiresLogin: true, redirectTo: '/', animation: 'edit-checklist' },
   },
   { path: '**', redirectTo: '' },
 ];

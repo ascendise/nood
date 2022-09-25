@@ -8,7 +8,7 @@ import { Task, TaskEntity, TasksService } from 'src/app/services/tasks/tasks.ser
   styleUrls: ['./edit-task.component.scss'],
 })
 export class EditTaskComponent {
-  _task: TaskEntity;
+  private _task: TaskEntity;
 
   constructor(private router: Router, private tasksService: TasksService) {
     this._task = router.getCurrentNavigation()?.extras.state as TaskEntity;

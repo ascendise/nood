@@ -19,6 +19,7 @@ import { FormComponent } from './components/form/form.component';
 import { ChecklistComponent } from './components/dashboard/checklist/checklist.component';
 import { SelectListComponent } from './components/select-list/select-list.component';
 import { SelectOptionComponent } from './components/select-list/select-option/select-option.component';
+import { EditChecklistComponent } from './components/checklist/edit-checklist/edit-checklist.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SelectOptionComponent } from './components/select-list/select-option/se
     ChecklistComponent,
     SelectListComponent,
     SelectOptionComponent,
+    EditChecklistComponent,
   ],
   imports: [
     BrowserModule,
