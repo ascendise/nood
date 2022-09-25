@@ -8,6 +8,11 @@ import { SelectOptionComponent } from './select-option/select-option.component';
 })
 
 export class SelectListComponent<T> {
-
   @ContentChildren(SelectOptionComponent<T>) public options?: QueryList<SelectOptionComponent<T>>;
+
+  public get selectedItems() {
+    return this.options?.filter((o) => o.isSelected)
+    .filter((o) => o.item != null)
+    .map((o) => o.item) as T[];
+  }
 }
