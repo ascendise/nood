@@ -40,6 +40,5 @@ export class NewChecklistComponent implements OnInit{
         };
         await this.relationService.addTaskToChecklist(relation);
       });
-
   }
 }
