@@ -17,9 +17,10 @@
   </div>
   <div class="row m-1">
     <select-list #taskList>
-      <select-option *ngFor="let task of checklist.tasks"
+      <select-option *ngFor="let task of tasks"
         [item]="task"
-        [title]="task.name">
+        [title]="task.name"
+        [isSelected]=isInChecklist(task)>
       </select-option>
     </select-list>
   </div>

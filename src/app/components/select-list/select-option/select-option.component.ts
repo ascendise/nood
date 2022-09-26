@@ -9,8 +9,11 @@ export class SelectOptionComponent<T> {
 
   @Input() public title = '';
   @Input() public item: T | null = null;
-
   private _isSelected = false;
+
+  @Input() public set isSelected(selected: boolean) {
+    this._isSelected = selected;
+  }
 
   public get isSelected() {
     return this._isSelected;
