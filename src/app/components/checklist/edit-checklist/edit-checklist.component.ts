@@ -44,6 +44,7 @@ export class EditChecklistComponent implements OnInit{
     // };
     // await this.checklistService.updateChecklist(checklist, this._checklist._links);
     await this.updateRelations();
+    this.router.navigateByUrl('dashboard');
   }
 
   private async updateRelations() {

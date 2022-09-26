@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Checklist, ChecklistsService } from 'src/app/services/checklists/checklists.service';
 import { Relation, RelationsService } from 'src/app/services/relations/relations.service';
 import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
@@ -16,7 +17,8 @@ export class NewChecklistComponent implements OnInit{
 
   constructor(private checklistService: ChecklistsService,
     private tasksService: TasksService,
-    private relationService: RelationsService) {}
+    private relationService: RelationsService,
+    private router: Router) {}
 
   async ngOnInit() {
     this._tasks = await this.tasksService.getTasks();
@@ -40,5 +42,6 @@ export class NewChecklistComponent implements OnInit{
         };
         await this.relationService.addTaskToChecklist(relation);
       });
+    this.router.navigateByUrl('dashboard');
   }
 }
