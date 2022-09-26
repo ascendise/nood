@@ -26,4 +26,15 @@ export class DashboardComponent implements OnInit {
   public get checklists(): ChecklistEntity[] {
     return this._checklists;
   }
+
+  public getUniqueName(checklist: ChecklistEntity) {
+    if(this.hasUniqueName(checklist)) {
+      return checklist.name;
+    }
+    return `${checklist.name}#${checklist.id}`
+  }
+
+  private hasUniqueName(checklist: ChecklistEntity) {
+    return this.checklists.filter((c) => c.name.trim() === checklist.name.trim()).length <= 1
+  }
 }
