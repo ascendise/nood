@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Checklist, ChecklistEntity, ChecklistsService } from 'src/app/services/checklists/checklists.service';
+import { ChecklistEntity, ChecklistsService } from 'src/app/services/checklists/checklists.service';
 import { Relation, RelationsService } from 'src/app/services/relations/relations.service';
 import { TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
 import { SelectListComponent } from '../../select-list/select-list.component';
-import { SelectOptionComponent } from '../../select-list/select-option/select-option.component';
 
 @Component({
   selector: 'app-edit-checklist',

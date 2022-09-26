@@ -20,6 +20,7 @@ import { ChecklistComponent } from './components/dashboard/checklist/checklist.c
 import { SelectListComponent } from './components/select-list/select-list.component';
 import { SelectOptionComponent } from './components/select-list/select-option/select-option.component';
 import { EditChecklistComponent } from './components/checklist/edit-checklist/edit-checklist.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { EditChecklistComponent } from './components/checklist/edit-checklist/ed
     SelectListComponent,
     SelectOptionComponent,
     EditChecklistComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
