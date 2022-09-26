@@ -38,3 +38,9 @@
     </div>
   </div>
 </app-form>
+
+<confirm-dialog
+  message="Are you sure you want to delete checklist '{checklist.name}' ?"
+  confirmButtonText="Delete checklist"
+  (confirmed)="delete()"
+></confirm-dialog>

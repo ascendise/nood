@@ -49,10 +49,8 @@ export class EditChecklistComponent implements OnInit{
   private async updateRelations() {
     for (const option of this.taskList.changedOptions) {
       if (option.isSelected) {
-        console.log("Add", option.item)
         await this.addTaskToChecklist(option.item);
       } else {
-        console.log("Remove", option.item)
         await this.removeTaskFromChecklist(option.item);
       }
     }
@@ -75,5 +73,10 @@ export class EditChecklistComponent implements OnInit{
 
   public isInChecklist(task: TaskEntity) {
     return this.checklist.tasks.some((t) => t.id === task.id)
+  }
+
+  public async delete() {
+    await this.checklistService.deleteChecklist(this.checklist._links);
+    this.router.navigateByUrl('dashboard');
   }
 }
