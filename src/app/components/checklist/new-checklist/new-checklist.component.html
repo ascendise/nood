@@ -17,10 +17,7 @@
   </div>
   <div class="row m-1">
     <select-list #taskList>
-      <select-option *ngFor="let task of tasks"
-        [item]="task"
-        [title]="task.name">
-      </select-option>
+      <select-option *ngFor="let task of tasks" [item]="task" [title]="task.name"> </select-option>
     </select-list>
   </div>
 </app-form>

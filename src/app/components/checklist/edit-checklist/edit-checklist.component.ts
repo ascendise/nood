@@ -8,18 +8,19 @@ import { SelectListComponent } from '../../select-list/select-list.component';
 @Component({
   selector: 'app-edit-checklist',
   templateUrl: './edit-checklist.component.html',
-  styleUrls: ['./edit-checklist.component.scss']
+  styleUrls: ['./edit-checklist.component.scss'],
 })
-export class EditChecklistComponent implements OnInit{
-
+export class EditChecklistComponent implements OnInit {
   private _checklist: ChecklistEntity;
   private _tasks: TaskEntity[] = [];
   @ViewChild('taskList') taskList!: SelectListComponent<TaskEntity>;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private taskService: TasksService,
     private checklistService: ChecklistsService,
-    private relationService: RelationsService,) {
+    private relationService: RelationsService
+  ) {
     this._checklist = router.getCurrentNavigation()?.extras.state as ChecklistEntity;
   }
 
@@ -64,15 +65,15 @@ export class EditChecklistComponent implements OnInit{
     await this.relationService.addTaskToChecklist(relation);
   }
 
-    private async removeTaskFromChecklist(task: TaskEntity) {
-      const taskFromChecklist = this.checklist.tasks.find((t) => t.id === task.id);
-      if (taskFromChecklist) {
-        await this.relationService.removeTaskFromChecklist(taskFromChecklist._links);
-      }
+  private async removeTaskFromChecklist(task: TaskEntity) {
+    const taskFromChecklist = this.checklist.tasks.find((t) => t.id === task.id);
+    if (taskFromChecklist) {
+      await this.relationService.removeTaskFromChecklist(taskFromChecklist._links);
     }
+  }
 
   public isInChecklist(task: TaskEntity) {
-    return this.checklist.tasks.some((t) => t.id === task.id)
+    return this.checklist.tasks.some((t) => t.id === task.id);
   }
 
   public async delete() {

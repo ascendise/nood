@@ -32,7 +32,7 @@ describe('RelationsService', () => {
 
   afterEach(() => {
     httpTestingController.verify();
-  })
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -62,8 +62,8 @@ describe('RelationsService', () => {
           _links: {
             self: { href: `${API_BASE_URI}/tasks/123` },
             tasks: { href: `${API_BASE_URI}/tasks` },
-            removeTask: {href: `${API_BASE_URI}/checklists/456/tasks/123` },
-          }
+            removeTask: { href: `${API_BASE_URI}/checklists/456/tasks/123` },
+          },
         },
       ],
       _links: {
@@ -71,7 +71,7 @@ describe('RelationsService', () => {
         checklists: { href: `${API_BASE_URI}/checklists` },
         relations: { href: `${API_BASE_URI}/checklists/tasks` },
       },
-    }
+    };
     request.flush(response);
     expect(await checklist).toEqual(response);
     expect(linkService.getLinks).toHaveBeenCalled();
@@ -84,7 +84,7 @@ describe('RelationsService', () => {
   it('should send request to remove task from checklist', async () => {
     const link: TaskLinks = {
       self: { href: '' },
-      tasks: { href: ''},
+      tasks: { href: '' },
       removeTask: { href: `${API_BASE_URI}/checklists/456/tasks/123` },
     };
     const deleteRequest = service.removeTaskFromChecklist(link);
@@ -96,19 +96,19 @@ describe('RelationsService', () => {
       name: 'Checklist',
       tasks: [],
     };
-    request.flush(response, {status: 200, statusText: 'OK'})
+    request.flush(response, { status: 200, statusText: 'OK' });
     await deleteRequest;
-  })
+  });
 
   it('should ignore call if task has no link for removing from checklist', async () => {
     const link: TaskLinks = {
       self: { href: '' },
-      tasks: { href: ''},
-      removeTask: null
-    }
+      tasks: { href: '' },
+      removeTask: null,
+    };
     const deleteRequest = service.removeTaskFromChecklist(link);
     await waitForRequest();
     httpTestingController.verify();
     await deleteRequest;
-  })
+  });
 });

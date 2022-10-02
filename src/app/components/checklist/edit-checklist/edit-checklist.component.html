@@ -1,4 +1,4 @@
-<app-form [title]="checklist.name" submitButtonText='Update checklist' (onSubmit)="submit()">
+<app-form [title]="checklist.name" submitButtonText="Update checklist" (onSubmit)="submit()">
   <div class="row m-2">
     <input
       type="text"
@@ -17,10 +17,7 @@
   </div>
   <div class="row m-1">
     <select-list #taskList>
-      <select-option *ngFor="let task of tasks"
-        [item]="task"
-        [title]="task.name"
-        [isSelected]=isInChecklist(task)>
+      <select-option *ngFor="let task of tasks" [item]="task" [title]="task.name" [isSelected]="isInChecklist(task)">
       </select-option>
     </select-list>
   </div>

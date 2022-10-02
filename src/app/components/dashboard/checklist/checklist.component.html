@@ -1,6 +1,6 @@
 <div class="checklist h-100 text-center text-light">
   <a tabindex="0" (click)="navigateToChecklist()">
-    <h1 class="fw-bold list-title">{{title}} </h1>
+    <h1 class="fw-bold list-title">{{ title }}</h1>
   </a>
   <div *ngFor="let task of tasks">
     <a tabindex="0" (click)="navigateToTaskDetails(task)">

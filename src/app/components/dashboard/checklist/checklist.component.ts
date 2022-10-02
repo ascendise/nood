@@ -6,10 +6,9 @@ import { TaskEntity } from 'src/app/services/tasks/tasks.service';
 @Component({
   selector: 'app-checklist',
   templateUrl: './checklist.component.html',
-  styleUrls: ['./checklist.component.scss']
+  styleUrls: ['./checklist.component.scss'],
 })
 export class ChecklistComponent {
-
   @Input() public tasks: TaskEntity[] = [];
   @Input() public title = '';
   @Input() public checklist?: ChecklistEntity;
@@ -21,6 +20,6 @@ export class ChecklistComponent {
   }
 
   public navigateToChecklist() {
-    this.router.navigateByUrl('/edit-checklist', {state: this.checklist})
+    this.router.navigateByUrl('/edit-checklist', { state: this.checklist });
   }
 }
