@@ -200,7 +200,7 @@ describe('ChecklistsService', () => {
     } catch (err) {
       expect(err).toBeInstanceOf(HttpErrorResponse);
     }
-  })
+  });
 
   it('should send request to update checklist', async () => {
     const checklistLink: ChecklistLinks = {

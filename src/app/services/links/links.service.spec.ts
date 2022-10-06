@@ -52,7 +52,6 @@ describe('LinksService', () => {
       await linksRequest;
       fail();
     } catch (err) {
-      console.log(err);
       expect(err).toBeInstanceOf(UnauthorizedError);
     }
   });
@@ -98,7 +97,6 @@ describe('LinksService', () => {
       await linksRequest;
       fail();
     } catch (err) {
-      console.log(err);
       expect(err).toBeInstanceOf(HttpErrorResponse);
     }
   });

@@ -18,7 +18,6 @@ export class RelationsService {
   }
 
   public async removeTaskFromChecklist(link: TaskLinks) {
-    console.log(link.removeTask?.href);
     if (link.removeTask?.href) {
       const request = this.httpClient.delete(link.removeTask?.href);
       await firstValueFrom(request);
