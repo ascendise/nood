@@ -1,0 +1,26 @@
+@import 'src/colours.scss';
+
+.checklist {
+  width: 20em;
+  background-color: rgba($main-color, 0.8);
+  border-radius: 5px;
+}
+
+.list-title {
+  font-size: 2em;
+}
+
+.list-title:hover {
+  cursor: pointer;
+  font-size: 2.1em;
+}
+
+.task {
+  margin: 0 10px;
+  border-radius: 5px;
+}
+
+.task:hover {
+  cursor: pointer;
+  background-color: $hover-color;
+}

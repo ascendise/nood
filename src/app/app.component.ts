@@ -52,7 +52,6 @@ export class AppComponent implements OnInit {
 
   public getRouteAnimationData(): string {
     const animation = this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'] as string;
-    console.log('animation: ', animation);
     return animation;
   }
 }

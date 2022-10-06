@@ -1,17 +1,37 @@
-<div class="d-flex flex-row flex-wrap justify-content-around align-items-stretch">
-  <div class="tasklist text-center text-light">
-    <h1 class="fw-bold list-title">All tasks</h1>
-    <div *ngFor="let task of tasks">
-      <a tabindex="0" (click)="navigateToTaskDetails(task)">
-        <div class="task text-truncate">
-          {{ task.name }}
-        </div>
-      </a>
-    </div>
+<div class="d-flex flex-row flex-wrap justify-content-around align-items-stretch mt-5">
+  <div class="col my-2 d-flex justify-content-center">
+    <app-checklist [tasks]="tasks" title="All tasks"></app-checklist>
+  </div>
+  <div class="col my-2 d-flex justify-content-center" *ngFor="let checklist of checklists">
+    <app-checklist [tasks]="checklist.tasks" [title]="getUniqueName(checklist)" [checklist]="checklist">
+    </app-checklist>
   </div>
 </div>
 <div class="position-absolute bottom-0 end-0 p-5">
-  <button routerLink="/new-task" class="btn btn-outline-primary rounded-circle btn-xxl">
+  <button class="btn btn-outline-primary rounded-circle btn-xxl" data-bs-toggle="modal" data-bs-target="#create-dialog">
     <i class="bi bi-plus-lg large-icon"></i>
   </button>
+</div>
+
+<!-- Modal for creating resource -->
+<div class="modal fade" id="create-dialog" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>What do you want to create?</p>
+      </div>
+      <div class="modal-footer">
+        <a routerLink="/new-task">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">New task</button>
+        </a>
+        <a routerLink="/new-checklist">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">New checklist</button>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

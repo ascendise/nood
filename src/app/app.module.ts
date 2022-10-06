@@ -14,6 +14,13 @@ import { NotInPastDirective } from './validators/not-in-past/not-in-past.directi
 import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewChecklistComponent } from './components/checklist/new-checklist/new-checklist.component';
+import { FormComponent } from './components/form/form.component';
+import { ChecklistComponent } from './components/dashboard/checklist/checklist.component';
+import { SelectListComponent } from './components/select-list/select-list.component';
+import { SelectOptionComponent } from './components/select-list/select-option/select-option.component';
+import { EditChecklistComponent } from './components/checklist/edit-checklist/edit-checklist.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +31,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NotInPastDirective,
     TaskDetailsComponent,
     EditTaskComponent,
+    NewChecklistComponent,
+    FormComponent,
+    ChecklistComponent,
+    SelectListComponent,
+    SelectOptionComponent,
+    EditChecklistComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

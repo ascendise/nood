@@ -1,0 +1,43 @@
+<app-form [title]="checklist.name" submitButtonText="Update checklist" (onSubmit)="submit()">
+  <div class="row m-2">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Checklist name"
+      name="name"
+      #name="ngModel"
+      [(ngModel)]="checklist.name"
+      required
+      pattern="^(?!\s*$).+"
+    />
+    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+      <div *ngIf="name.errors?.['required']">Name is required</div>
+      <div *ngIf="name.errors?.['pattern']">Name cannot be empty</div>
+    </div>
+  </div>
+  <div class="row m-1">
+    <select-list #taskList>
+      <select-option *ngFor="let task of tasks" [item]="task" [title]="task.name" [isSelected]="isInChecklist(task)">
+      </select-option>
+    </select-list>
+  </div>
+  <div class="row">
+    <div class="col my-1 d-flex flex-column flex-gap-1">
+      <div class="py-1"></div>
+      <button
+        type="button"
+        class="btn btn-light btn-outline-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#delete-dialog"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</app-form>
+
+<confirm-dialog
+  message="Are you sure you want to delete checklist '{checklist.name}' ?"
+  confirmButtonText="Delete checklist"
+  (confirmed)="delete()"
+></confirm-dialog>
