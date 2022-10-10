@@ -21,7 +21,7 @@ import { SelectListComponent } from './components/select-list/select-list.compon
 import { SelectOptionComponent } from './components/select-list/select-option/select-option.component';
 import { EditChecklistComponent } from './components/checklist/edit-checklist/edit-checklist.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [

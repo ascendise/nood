@@ -8,7 +8,7 @@ import { TaskDetailsComponent } from './components/task/task-details/task-detail
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 import { NewChecklistComponent } from './components/checklist/new-checklist/new-checklist.component';
 import { EditChecklistComponent } from './components/checklist/edit-checklist/edit-checklist.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   {
