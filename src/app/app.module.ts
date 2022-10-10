@@ -21,6 +21,7 @@ import { SelectListComponent } from './components/select-list/select-list.compon
 import { SelectOptionComponent } from './components/select-list/select-option/select-option.component';
 import { EditChecklistComponent } from './components/checklist/edit-checklist/edit-checklist.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     SelectOptionComponent,
     EditChecklistComponent,
     ConfirmDialogComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

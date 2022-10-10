@@ -4,7 +4,9 @@
     <a class="col title text-center text-light" routerLink="/dashboard">NOOD</a>
     <div class="col align-self-center text-center">
       <span *ngIf="isLoggedIn()">
-        <button class="btn btn-outline-primary btn-light ms-auto"><i class="bi bi-person"></i></button>
+        <a routerLink="/profile">
+          <button class="btn btn-outline-primary btn-light ms-auto"><i class="bi bi-person"></i></button>
+        </a>
         <button (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">Logout</button>
       </span>
     </div>
