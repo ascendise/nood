@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./confirm-dialog.component.scss'],
 })
 export class ConfirmDialogComponent {
+  @Input() public title = 'Confirm';
   @Input() public message = 'Please confirm action';
   @Input() public confirmButtonText = 'Confirm';
   @Output() public confirmed = new EventEmitter();

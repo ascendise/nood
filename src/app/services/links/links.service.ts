@@ -37,6 +37,7 @@ export interface RootLinks {
   tasks: Link;
   checklists: Link;
   relations: Link;
+  user: Link;
 }
 
 export interface LinksResponse {

@@ -27,6 +27,7 @@ describe('TasksService', () => {
       tasks: { href: `${API_BASE_URI}/tasks` },
       checklists: { href: '' },
       relations: { href: '' },
+      user: { href: '' },
     };
     linkService.getLinks.and.returnValue(Promise.resolve(links));
   });

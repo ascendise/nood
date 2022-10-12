@@ -3,7 +3,12 @@
     <div class="col"></div>
     <a class="col title text-center text-light" routerLink="/dashboard">NOOD</a>
     <div class="col align-self-center text-center">
-      <button *ngIf="isLoggedIn()" (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">Logout</button>
+      <span *ngIf="isLoggedIn()">
+        <a routerLink="/profile">
+          <button class="btn btn-outline-primary btn-light ms-auto"><i class="bi bi-person"></i></button>
+        </a>
+        <button (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">Logout</button>
+      </span>
     </div>
   </div>
   <div [@routeAnimations]="getRouteAnimationData()">
