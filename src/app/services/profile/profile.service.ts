@@ -16,6 +16,11 @@ export class ProfileService {
     const user = await firstValueFrom(this.httpClient.get<User>(links.user.href));
     return user;
   }
+
+  public async deleteUser() {
+    const links = await this.linksService.getLinks();
+    await firstValueFrom(this.httpClient.delete(links.user.href));
+  }
 }
 
 export interface User {

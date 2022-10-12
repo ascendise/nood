@@ -47,6 +47,15 @@ describe('ProfileService', () => {
     expect(linksService.getLinks).toHaveBeenCalled();
   })
 
+  it('should delete user', async () => {
+    const deletionRequest = service.deleteUser();
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/user`);
+    expect(request.request.method).toEqual('DELETE');
+    request.flush('', { status: 204, statusText: 'No Content' });
+    await deletionRequest;
+  })
+
   async function waitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
