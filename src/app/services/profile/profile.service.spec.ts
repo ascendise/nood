@@ -1,5 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { LinksService, RootLinks } from '../links/links.service';
 
 import { ProfileService, User } from './profile.service';
@@ -9,15 +10,23 @@ describe('ProfileService', () => {
 
   let service: ProfileService;
   let linksService: jasmine.SpyObj<LinksService>;
+  let oauthService: jasmine.SpyObj<OAuthService>;
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     const linkServiceSpy = jasmine.createSpyObj('LinksService', ['getLinks']);
+    const oauthServiceSpy = jasmine.createSpyObj('OAuthService', ['logOut'])
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ProfileService, { provide: LinksService, useValue: linkServiceSpy }],
+      providers: [
+        ProfileService,
+        { provide: LinksService, useValue: linkServiceSpy },
+        {provide: OAuthService, useValue: oauthServiceSpy},
+      ],
     });
     service = TestBed.inject(ProfileService);
+    oauthService = TestBed.inject(OAuthService) as jasmine.SpyObj<OAuthService>;
     linksService = TestBed.inject(LinksService) as jasmine.SpyObj<LinksService>;
     httpTestingController = TestBed.inject(HttpTestingController);
     const links: RootLinks = {
@@ -59,4 +68,13 @@ describe('ProfileService', () => {
   async function waitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
+
+  it('should clear oauth information after deletion', async () => {
+    const deletionRequest = service.deleteUser();
+    await waitForRequest();
+    const request = httpTestingController.expectOne(`${API_BASE_URI}/user`);
+    request.flush('', { status: 204, statusText: 'No Content' });
+    await deletionRequest
+    expect(oauthService.logOut).toHaveBeenCalled();
+  })
 });

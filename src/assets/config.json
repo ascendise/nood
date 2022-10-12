@@ -1,5 +1,5 @@
 {
-  "apiBaseUri": "http://localhost:5051/api/",
+  "apiBaseUri": "http://localhost:8080/",
   "oauth": {
     "issuer": "https://dev-ypizy20t.us.auth0.com/",
     "redirectUri": "http://localhost:4200",
