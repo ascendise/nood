@@ -34,6 +34,7 @@ describe('ChecklistsService', () => {
       tasks: { href: '' },
       checklists: { href: `${API_BASE_URI}/checklists` },
       relations: { href: '' },
+      user: { href: '' }
     };
     linkServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
   });
