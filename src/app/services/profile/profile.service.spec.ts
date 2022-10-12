@@ -15,14 +15,14 @@ describe('ProfileService', () => {
 
   beforeEach(() => {
     const linkServiceSpy = jasmine.createSpyObj('LinksService', ['getLinks']);
-    const oauthServiceSpy = jasmine.createSpyObj('OAuthService', ['logOut'])
+    const oauthServiceSpy = jasmine.createSpyObj('OAuthService', ['logOut']);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
         ProfileService,
         { provide: LinksService, useValue: linkServiceSpy },
-        {provide: OAuthService, useValue: oauthServiceSpy},
+        { provide: OAuthService, useValue: oauthServiceSpy },
       ],
     });
     service = TestBed.inject(ProfileService);
@@ -33,8 +33,8 @@ describe('ProfileService', () => {
       tasks: { href: '' },
       checklists: { href: '' },
       relations: { href: '' },
-      user: { href: `${API_BASE_URI}/user` }
-    }
+      user: { href: `${API_BASE_URI}/user` },
+    };
     linkServiceSpy.getLinks.and.returnValue(Promise.resolve(links));
   });
 
@@ -54,7 +54,7 @@ describe('ProfileService', () => {
     request.flush(expectedUser);
     expect(await user).toEqual(expectedUser);
     expect(linksService.getLinks).toHaveBeenCalled();
-  })
+  });
 
   it('should delete user', async () => {
     const deletionRequest = service.deleteUser();
@@ -63,7 +63,7 @@ describe('ProfileService', () => {
     expect(request.request.method).toEqual('DELETE');
     request.flush('', { status: 204, statusText: 'No Content' });
     await deletionRequest;
-  })
+  });
 
   async function waitForRequest() {
     await new Promise((resolve) => setTimeout(resolve, 0));
@@ -74,7 +74,7 @@ describe('ProfileService', () => {
     await waitForRequest();
     const request = httpTestingController.expectOne(`${API_BASE_URI}/user`);
     request.flush('', { status: 204, statusText: 'No Content' });
-    await deletionRequest
+    await deletionRequest;
     expect(oauthService.logOut).toHaveBeenCalled();
-  })
+  });
 });

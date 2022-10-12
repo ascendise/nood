@@ -5,14 +5,10 @@ import { firstValueFrom } from 'rxjs';
 import { LinksService } from '../links/links.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ProfileService {
-
-  constructor(private httpClient: HttpClient,
-    private linksService: LinksService,
-    private oauthService: OAuthService) { }
+  constructor(private httpClient: HttpClient, private linksService: LinksService, private oauthService: OAuthService) {}
 
   public async getUser(): Promise<User> {
     const links = await this.linksService.getLinks();

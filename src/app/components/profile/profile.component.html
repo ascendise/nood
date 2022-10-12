@@ -1,8 +1,12 @@
 <div class="container h-100 my-5 p-3 border rounded shadow">
-  <h1 class="text-center">Profile of {{user.username}}</h1>
+  <h1 class="text-center">Profile of {{ user.username }}</h1>
   <div class="mx-5">
-    <div>Your username is <span class="fw-bold">{{user.username}}</span></div>
-    <div>Your id is <span class="fw-bold">{{user.subject}}</span></div>
+    <div>
+      Your username is <span class="fw-bold">{{ user.username }}</span>
+    </div>
+    <div>
+      Your id is <span class="fw-bold">{{ user.subject }}</span>
+    </div>
     <button class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#delete-dialog">Delete Profile</button>
   </div>
 </div>
@@ -11,4 +15,5 @@
   title="Are you sure you want to delete your profile"
   message="Your tasks and checklists will be permanently removed!"
   confirmButtonText="Delete profile"
-  (confirmed)="deleteProfile()"></confirm-dialog>
+  (confirmed)="deleteProfile()"
+></confirm-dialog>

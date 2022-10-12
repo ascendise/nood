@@ -5,13 +5,12 @@ import { ProfileService, User } from 'src/app/services/profile/profile.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-
   private _user!: User;
 
-  constructor(private profileService: ProfileService, private router: Router) { }
+  constructor(private profileService: ProfileService, private router: Router) {}
 
   async ngOnInit() {
     this._user = await this.profileService.getUser();
@@ -25,5 +24,4 @@ export class ProfileComponent implements OnInit {
     await this.profileService.deleteUser();
     this.router.navigateByUrl('/');
   }
-
 }

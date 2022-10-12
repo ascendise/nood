@@ -57,7 +57,7 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true, redirectTo: '/', animation: 'profile'},
+    data: { requiresLogin: true, redirectTo: '/', animation: 'profile' },
   },
   { path: '**', redirectTo: '' },
 ];

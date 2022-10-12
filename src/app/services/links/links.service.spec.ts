@@ -62,7 +62,7 @@ describe('LinksService', () => {
         tasks: { href: `${baseUri}tasks` },
         checklists: { href: `${baseUri}checklists` },
         relations: { href: `${baseUri}checklists/tasks` },
-        user: { href:  `${baseUri}user` }
+        user: { href: `${baseUri}user` },
       },
     };
     const linksRequest = service.getLinks();
@@ -78,7 +78,7 @@ describe('LinksService', () => {
         tasks: { href: `${baseUri}tasks` },
         checklists: { href: `${baseUri}checklists` },
         relations: { href: `${baseUri}checklists/tasks` },
-        user: { href:  `${baseUri}user` }
+        user: { href: `${baseUri}user` },
       },
     };
     const firstFetchLinks = service.getLinks();
