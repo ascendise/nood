@@ -1,12 +1,13 @@
-<div class="checklist h-100 text-center text-light">
+<div class="checklist h-100 text-light">
   <a tabindex="0" (click)="navigateToChecklist()">
-    <h1 class="fw-bold list-title">{{ title }}</h1>
+    <h1 class="fw-bold list-title text-center">{{ title }}</h1>
   </a>
-  <div *ngFor="let task of tasks">
+  <div class="mx-5 text-truncate" *ngFor="let task of tasks">
+    <input class="form-check-input" type="checkbox">
     <a tabindex="0" (click)="navigateToTaskDetails(task)">
-      <div class="task text-truncate">
+      <span class="task">
         {{ task.name }}
-      </div>
+      </span>
     </a>
   </div>
 </div>
