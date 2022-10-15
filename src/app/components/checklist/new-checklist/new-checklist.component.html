@@ -4,7 +4,7 @@
       type="text"
       class="form-control"
       placeholder="Checklist name"
-      name="name"
+      formControlName="name"
     />
     <div [hidden]="newChecklistForm.get('name')?.valid || newChecklistForm.get('name')?.pristine" class="alert alert-danger">
       <div *ngIf="newChecklistForm.get('name')?.errors?.['required']">Name is required</div>
