@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ChecklistEntity, ChecklistsService } from 'src/app/services/checklists/checklists.service';
 import { Relation, RelationsService } from 'src/app/services/relations/relations.service';
@@ -13,15 +14,23 @@ import { SelectListComponent } from '../../select-list/select-list.component';
 export class EditChecklistComponent implements OnInit {
   private _checklist: ChecklistEntity;
   private _tasks: TaskEntity[] = [];
-  @ViewChild('taskList') taskList!: SelectListComponent<TaskEntity>;
+  @ViewChild('taskList') private taskList!: SelectListComponent<TaskEntity>;
+  private _checklistForm: FormGroup;
 
   constructor(
+    private formBuilder: FormBuilder,
     private router: Router,
     private taskService: TasksService,
     private checklistService: ChecklistsService,
     private relationService: RelationsService
   ) {
     this._checklist = router.getCurrentNavigation()?.extras.state as ChecklistEntity;
+    this._checklistForm = this.formBuilder.group({
+      name: [
+        this._checklist.name,
+        Validators.required,
+      ]
+    })
   }
 
   public get checklist() {
@@ -32,11 +41,16 @@ export class EditChecklistComponent implements OnInit {
     return this._tasks;
   }
 
+  public get checklistForm() {
+    return this._checklistForm;
+  }
+
   public async ngOnInit() {
     this._tasks = await this.taskService.getTasks();
   }
 
   public async submit() {
+    this._checklist.name = this._checklistForm.get('name')?.value
     //TODO: Add again after editing checklists via API won't remove all tasks from checklist
     //PS: The API Dev is a f*cking idiot
     // const checklist: Checklist = {
