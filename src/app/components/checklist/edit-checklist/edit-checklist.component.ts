@@ -29,6 +29,7 @@ export class EditChecklistComponent implements OnInit {
       name: [
         this._checklist.name,
         Validators.required,
+        Validators.pattern('^(?!\\s*$).+'),
       ]
     })
   }
