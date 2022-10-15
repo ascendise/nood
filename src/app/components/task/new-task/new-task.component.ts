@@ -29,7 +29,7 @@ export class NewTaskComponent {
           new Date(),
           [
             Validators.required,
-            NotInPastDirective,
+            new NotInPastDirective(),
           ],
         ],
         endDate: [

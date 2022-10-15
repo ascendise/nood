@@ -31,7 +31,7 @@ export class EditTaskComponent {
           this._task.startDate,
           [
             Validators.required,
-            NotInPastDirective,
+            new NotInPastDirective(),
           ],
         ],
         endDate: [ this._task.endDate ],
