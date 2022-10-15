@@ -25,11 +25,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private mapSameReference() {
-    this._checklists.map(c => {
+    this._checklists.map((c) => {
       for (let i = 0; i < c.tasks.length; i++) {
-        const task = this._tasks.find(t => t.id === c.tasks[i].id);
+        const task = this._tasks.find((t) => t.id === c.tasks[i].id);
         if (!task) {
-          throw Error("Checklist has unknown task");
+          throw Error('Checklist has unknown task');
         }
         c.tasks[i] = task;
       }
