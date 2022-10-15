@@ -26,8 +26,10 @@ export class NewChecklistComponent implements OnInit {
     this._newChecklistForm = this.formBuilder.group({
       name: [
         '',
-        Validators.required,
-        Validators.pattern('^(?!\\s*$).+'),
+        [
+          Validators.required,
+          Validators.pattern('^(?!\\s*$).+'),
+        ],
       ],
     })
   }

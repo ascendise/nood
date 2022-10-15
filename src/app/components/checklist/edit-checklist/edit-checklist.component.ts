@@ -28,9 +28,11 @@ export class EditChecklistComponent implements OnInit {
     this._checklistForm = this.formBuilder.group({
       name: [
         this._checklist.name,
-        Validators.required,
-        Validators.pattern('^(?!\\s*$).+'),
-      ]
+        [
+          Validators.required,
+          Validators.pattern('^(?!\\s*$).+'),
+        ],
+      ],
     })
   }
 

@@ -21,14 +21,18 @@ export class EditTaskComponent {
       this._editTaskForm = this.formBuilder.group({
         name: [
           this._task.name,
-          Validators.required,
-          Validators.pattern(emptyOrWhitespacePattern),
+          [
+            Validators.required,
+            Validators.pattern(emptyOrWhitespacePattern),
+          ],
         ],
         description: [ this._task.description ],
         startDate: [
           this._task.startDate,
-          Validators.required,
-          NotInPastDirective,
+          [
+            Validators.required,
+            NotInPastDirective,
+          ],
         ],
         endDate: [ this._task.endDate ],
       })

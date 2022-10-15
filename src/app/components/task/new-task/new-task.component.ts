@@ -19,14 +19,18 @@ export class NewTaskComponent {
       this._newTaskForm = this.formBuilder.group({
         name: [
           '',
-          Validators.required,
-          Validators.pattern(emptyOrWhitespacePattern),
+          [
+            Validators.required,
+            Validators.pattern(emptyOrWhitespacePattern),
+          ],
         ],
         description: [''],
         startDate: [
           new Date(),
-          Validators.required,
-          NotInPastDirective,
+          [
+            Validators.required,
+            NotInPastDirective,
+          ],
         ],
         endDate: [
           null,
