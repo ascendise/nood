@@ -25,7 +25,7 @@ export class ChecklistComponent {
 
   public async toggleDone(task: TaskEntity) {
     //TODO: Add method to TaskEntity to get task from it
-    task.isDone = true;
+    task.isDone = !task.isDone
     const updatedTask: Task = {
       name: task.name,
       description: task.description,
