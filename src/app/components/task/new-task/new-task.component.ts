@@ -10,13 +10,6 @@ import { NotInPastDirective } from 'src/app/validators/not-in-past/not-in-past.d
   styleUrls: ['./new-task.component.scss'],
 })
 export class NewTaskComponent {
-  private _newTask: Task = {
-    name: '',
-    description: '',
-    startDate: new Date(),
-    endDate: null,
-    isDone: false,
-  };
   private _newTaskForm: FormGroup;
 
   constructor(private router: Router,
@@ -47,8 +40,8 @@ export class NewTaskComponent {
   }
 
   public async submit() {
-    const task = this.newTaskForm.value as Task
-    await this.tasksService.createTask(this.newTask);
+    const newTask = this.newTaskForm.value as Task
+    await this.tasksService.createTask(newTask);
     this.router.navigateByUrl('dashboard');
   }
 }

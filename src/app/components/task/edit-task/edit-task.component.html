@@ -1,27 +1,23 @@
-<app-form title="{{ this.task.name }}" submitButtonText="Update task" (onSubmit)="submit()">
+<app-form title="{{ this.editTaskForm.get('name')?.value }}" submitButtonText="Update task" [formGroup]="editTaskForm" (onSubmit)="submit()">
   <div class="row m-2">
     <input
       type="text"
       class="form-control"
       placeholder="Task name"
       name="name"
-      #name="ngModel"
-      required
-      [(ngModel)]="task.name"
-      pattern="^(?!\s*$).+"
+      formControlName="name"
     />
-    <div [hidden]="name.valid" class="alert alert-danger">
-      <div *ngIf="name.errors?.['required']">Name is required</div>
-      <div *ngIf="name.errors?.['pattern']">Name cannot be empty</div>
+    <div [hidden]="this.editTaskForm.get('name')?.valid || this.editTaskForm.get('name')?.pristine" class="alert alert-danger">
+      <div *ngIf="this.editTaskForm.get('name')?.errors?.['required']">Name is required</div>
+      <div *ngIf="this.editTaskForm.get('name')?.errors?.['pattern']">Name cannot be empty</div>
     </div>
   </div>
   <div class="row m-2">
     <textarea
       class="form-control"
       placeholder="Describe your task (optional)"
-      [(ngModel)]="task.description"
       name="description"
-      #description="ngModel"
+      formControlName="description"
     >
     </textarea>
   </div>
@@ -32,18 +28,15 @@
       class="form-control"
       id="startdate"
       name="startDate"
-      #startDate="ngModel"
-      required
-      [(ngModel)]="task.startDate"
-      notInPast
+      formControlName="startDate"
     />
-    <div [hidden]="startDate.valid" class="alert alert-danger">
-      <div *ngIf="startDate.errors?.['required']">Start Date is required</div>
-      <div *ngIf="startDate.errors?.['notInPast']">Start date cannot be in the past</div>
+    <div [hidden]="this.editTaskForm.get('startDate')?.valid || this.editTaskForm.get('startDate')?.pristine" class="alert alert-danger">
+      <div *ngIf="this.editTaskForm.get('startDate')?.errors?.['required']">Start Date is required</div>
+      <div *ngIf="this.editTaskForm.get('startDate')?.errors?.['notInPast']">Start date cannot be in the past</div>
     </div>
   </div>
   <div class="row m-2">
     <label for="endDate" class="text-light fw-bold">End Date (Optional)</label>
-    <input type="date" class="form-control" id="endDate" [(ngModel)]="task.endDate" name="endDate" #endDate="ngModel" />
+    <input type="date" class="form-control" id="endDate" name="endDate" formControlName="endDate" />
   </div>
 </app-form>
