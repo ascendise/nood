@@ -21,6 +21,19 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     this._tasks = await this.tasksService.getTasks();
     this._checklists = await this.checklistsService.getChecklists();
+    this.mapSameReference();
+  }
+
+  private mapSameReference() {
+    this._checklists.map((c) => {
+      for (let i = 0; i < c.tasks.length; i++) {
+        const task = this._tasks.find((t) => t.id === c.tasks[i].id);
+        if (!task) {
+          throw Error('Checklist has unknown task');
+        }
+        c.tasks[i] = task;
+      }
+    });
   }
 
   public get tasks(): TaskEntity[] {
