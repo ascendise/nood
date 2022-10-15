@@ -3,7 +3,7 @@
     <h1 class="fw-bold list-title text-center">{{ title }}</h1>
   </a>
   <div class="mx-5 text-truncate" *ngFor="let task of tasks">
-    <input class="form-check-input" type="checkbox" [value]="task.isDone" (click)="toggleDone(task)">
+    <input class="form-check-input" type="checkbox" [checked]="task.isDone" (click)="toggleDone(task)">
     <a tabindex="0" (click)="navigateToTaskDetails(task)">
       <span class="task">
         {{ task.name }}
