@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Task, TaskEntity, TasksService } from 'src/app/services/tasks/tasks.service';
-import { NotInPastDirective } from 'src/app/validators/not-in-past/not-in-past.directive';
+import { DateValidator } from 'src/app/validators/not-before-date/not-before-date.validator';
 
 @Component({
   selector: 'app-edit-task',
@@ -31,7 +31,7 @@ export class EditTaskComponent {
           this._task.startDate,
           [
             Validators.required,
-            new NotInPastDirective(),
+            DateValidator.notBefore(new Date(this._task.startDate)),
           ],
         ],
         endDate: [ this._task.endDate ],

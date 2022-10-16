@@ -32,7 +32,7 @@
     />
     <div [hidden]="this.editTaskForm.get('startDate')?.valid || this.editTaskForm.get('startDate')?.pristine" class="alert alert-danger">
       <div *ngIf="this.editTaskForm.get('startDate')?.errors?.['required']">Start Date is required</div>
-      <div *ngIf="this.editTaskForm.get('startDate')?.errors?.['notInPast']">Start date cannot be in the past</div>
+      <div *ngIf="this.editTaskForm.get('startDate')?.errors?.['notBeforeDate']">Start date cannot be set earlier</div>
     </div>
   </div>
   <div class="row m-2">
