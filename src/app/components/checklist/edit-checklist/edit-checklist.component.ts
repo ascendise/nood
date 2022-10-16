@@ -26,14 +26,8 @@ export class EditChecklistComponent implements OnInit {
   ) {
     this._checklist = router.getCurrentNavigation()?.extras.state as ChecklistEntity;
     this._checklistForm = this.formBuilder.group({
-      name: [
-        this._checklist.name,
-        [
-          Validators.required,
-          Validators.pattern('^(?!\\s*$).+'),
-        ],
-      ],
-    })
+      name: [this._checklist.name, [Validators.required, Validators.pattern('^(?!\\s*$).+')]],
+    });
   }
 
   public get checklist() {
@@ -53,7 +47,7 @@ export class EditChecklistComponent implements OnInit {
   }
 
   public async submit() {
-    this._checklist.name = this._checklistForm.get('name')?.value
+    this._checklist.name = this._checklistForm.get('name')?.value;
     //TODO: Add again after editing checklists via API won't remove all tasks from checklist
     //PS: The API Dev is a f*cking idiot
     // const checklist: Checklist = {

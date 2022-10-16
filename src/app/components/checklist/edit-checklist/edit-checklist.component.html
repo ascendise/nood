@@ -1,12 +1,11 @@
-<app-form [title]="checklist.name" [formGroup]="checklistForm" submitButtonText="Update checklist" (onSubmit)="submit()">
+<app-form
+  [title]="checklist.name"
+  [formGroup]="checklistForm"
+  submitButtonText="Update checklist"
+  (onSubmit)="submit()"
+>
   <div class="row m-2">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Checklist name"
-      name="name"
-      formControlName="name"
-    />
+    <input type="text" class="form-control" placeholder="Checklist name" name="name" formControlName="name" />
     <div [hidden]="checklistForm.get('name')?.valid || checklistForm.get('name')?.pristine" class="alert alert-danger">
       <div *ngIf="checklistForm.get('name')?.hasError('required')">Name is required</div>
       <div *ngIf="checklistForm.get('name')?.hasError('pattern')">Name cannot be empty</div>

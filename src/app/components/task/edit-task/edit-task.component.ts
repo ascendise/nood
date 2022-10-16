@@ -13,29 +13,15 @@ export class EditTaskComponent {
   private _editTaskForm: FormGroup;
   private _task: TaskEntity;
 
-  constructor(private router: Router,
-    private formBuilder: FormBuilder,
-    private tasksService: TasksService) {
-      this._task = router.getCurrentNavigation()?.extras.state as TaskEntity;
-      const emptyOrWhitespacePattern = '^(?!\\s*$).+';
-      this._editTaskForm = this.formBuilder.group({
-        name: [
-          this._task.name,
-          [
-            Validators.required,
-            Validators.pattern(emptyOrWhitespacePattern),
-          ],
-        ],
-        description: [ this._task.description ],
-        startDate: [
-          this._task.startDate,
-          [
-            Validators.required,
-            DateValidator.notBefore(new Date(this._task.startDate)),
-          ],
-        ],
-        endDate: [ this._task.endDate ],
-      })
+  constructor(private router: Router, private formBuilder: FormBuilder, private tasksService: TasksService) {
+    this._task = router.getCurrentNavigation()?.extras.state as TaskEntity;
+    const emptyOrWhitespacePattern = '^(?!\\s*$).+';
+    this._editTaskForm = this.formBuilder.group({
+      name: [this._task.name, [Validators.required, Validators.pattern(emptyOrWhitespacePattern)]],
+      description: [this._task.description],
+      startDate: [this._task.startDate, [Validators.required, DateValidator.notBefore(new Date(this._task.startDate))]],
+      endDate: [this._task.endDate],
+    });
   }
 
   public get editTaskForm() {

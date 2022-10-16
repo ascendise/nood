@@ -12,31 +12,15 @@ import { DateValidator } from 'src/app/validators/not-before-date/not-before-dat
 export class NewTaskComponent {
   private _newTaskForm: FormGroup;
 
-  constructor(private router: Router,
-    private formBuilder: FormBuilder,
-    private tasksService: TasksService) {
-      const emptyOrWhitespacePattern = '^(?!\\s*$).+';
-      this._newTaskForm = this.formBuilder.group({
-        name: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(emptyOrWhitespacePattern),
-          ],
-        ],
-        description: [''],
-        startDate: [
-          new Date(),
-          [
-            Validators.required,
-            DateValidator.notBefore(new Date(Date.now())),
-          ],
-        ],
-        endDate: [
-          null,
-        ],
-        isDone: [false],
-      })
+  constructor(private router: Router, private formBuilder: FormBuilder, private tasksService: TasksService) {
+    const emptyOrWhitespacePattern = '^(?!\\s*$).+';
+    this._newTaskForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.pattern(emptyOrWhitespacePattern)]],
+      description: [''],
+      startDate: [new Date(), [Validators.required, DateValidator.notBefore(new Date(Date.now()))]],
+      endDate: [null],
+      isDone: [false],
+    });
   }
 
   public get newTaskForm() {
@@ -44,7 +28,7 @@ export class NewTaskComponent {
   }
 
   public async submit() {
-    const newTask = this.newTaskForm.value as Task
+    const newTask = this.newTaskForm.value as Task;
     await this.tasksService.createTask(newTask);
     this.router.navigateByUrl('dashboard');
   }
