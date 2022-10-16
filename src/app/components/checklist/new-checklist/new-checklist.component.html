@@ -1,18 +1,17 @@
-<app-form title="New Checklist" submitButtonText="Create Checklist" (onSubmit)="submit()">
+<app-form
+  title="New Checklist"
+  submitButtonText="Create Checklist"
+  [formGroup]="newChecklistForm"
+  (onSubmit)="submit()"
+>
   <div class="row m-2">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Checklist name"
-      name="name"
-      #name="ngModel"
-      [(ngModel)]="newChecklist.name"
-      required
-      pattern="^(?!\s*$).+"
-    />
-    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-      <div *ngIf="name.errors?.['required']">Name is required</div>
-      <div *ngIf="name.errors?.['pattern']">Name cannot be empty</div>
+    <input type="text" class="form-control" placeholder="Checklist name" formControlName="name" />
+    <div
+      [hidden]="newChecklistForm.get('name')?.valid || newChecklistForm.get('name')?.pristine"
+      class="alert alert-danger"
+    >
+      <div *ngIf="newChecklistForm.get('name')?.errors?.['required']">Name is required</div>
+      <div *ngIf="newChecklistForm.get('name')?.errors?.['pattern']">Name cannot be empty</div>
     </div>
   </div>
   <div class="row m-1">

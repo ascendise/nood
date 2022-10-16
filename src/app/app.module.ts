@@ -9,8 +9,7 @@ import { AuthorizationInterceptor } from './interceptors/authorization.intercept
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnonymousComponent } from './components/anonymous/anonymous.component';
 import { NewTaskComponent } from './components/task/new-task/new-task.component';
-import { FormsModule } from '@angular/forms';
-import { NotInPastDirective } from './validators/not-in-past/not-in-past.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TaskDetailsComponent } from './components/task/task-details/task-details.component';
 import { EditTaskComponent } from './components/task/edit-task/edit-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +28,6 @@ import { ProfileComponent } from './components/profile/profile.component';
     DashboardComponent,
     AnonymousComponent,
     NewTaskComponent,
-    NotInPastDirective,
     TaskDetailsComponent,
     EditTaskComponent,
     NewChecklistComponent,
@@ -48,6 +46,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     OAuthModule.forRoot(),
     FormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

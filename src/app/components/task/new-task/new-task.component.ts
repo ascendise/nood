@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Task, TasksService } from 'src/app/services/tasks/tasks.service';
+import { DateValidator } from 'src/app/validators/not-before-date/not-before-date.validator';
 
 @Component({
   selector: 'app-new-task',
@@ -8,22 +10,26 @@ import { Task, TasksService } from 'src/app/services/tasks/tasks.service';
   styleUrls: ['./new-task.component.scss'],
 })
 export class NewTaskComponent {
-  private _newTask: Task = {
-    name: '',
-    description: '',
-    startDate: new Date(),
-    endDate: null,
-    isDone: false,
-  };
+  private _newTaskForm: FormGroup;
 
-  constructor(private router: Router, private tasksService: TasksService) {}
+  constructor(private router: Router, private formBuilder: FormBuilder, private tasksService: TasksService) {
+    const emptyOrWhitespacePattern = '^(?!\\s*$).+';
+    this._newTaskForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.pattern(emptyOrWhitespacePattern)]],
+      description: [''],
+      startDate: [new Date(), [Validators.required, DateValidator.notBefore(new Date(Date.now()))]],
+      endDate: [null],
+      isDone: [false],
+    });
+  }
 
-  public get newTask() {
-    return this._newTask;
+  public get newTaskForm() {
+    return this._newTaskForm;
   }
 
   public async submit() {
-    await this.tasksService.createTask(this.newTask);
+    const newTask = this.newTaskForm.value as Task;
+    await this.tasksService.createTask(newTask);
     this.router.navigateByUrl('dashboard');
   }
 }
