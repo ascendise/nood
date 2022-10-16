@@ -32,5 +32,12 @@ describe('NotBeforeDateValidator', () => {
     const result = DateValidator.notBefore(new Date('1/1/1900'))(control);
     expect(result).toBeNull();
   });
+
+  it('should ignore time of date', () => {
+    const control = new FormControl();
+    control.setValue('1/1/1900 2:00:00');
+    const result = DateValidator.notBefore(new Date('1/1/1900 4:00:00'))(control);
+    expect(result).toBeNull();
+  })
 })
 
