@@ -1,0 +1,4 @@
+localhost
+
+file_server
+rewrite * /index.html
