@@ -19,7 +19,6 @@ describe('LinksService', () => {
       logoutUrl: '',
       clientId: '',
     },
-    appDomain: '',
   };
   const baseUri = config.apiBaseUri;
 

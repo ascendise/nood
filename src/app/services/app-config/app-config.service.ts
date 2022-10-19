@@ -18,7 +18,6 @@ export class AppConfigService {
 export interface AppConfig {
   apiBaseUri: string;
   oauth: OAuthConfig;
-  appDomain: string;
 }
 
 export interface OAuthConfig {

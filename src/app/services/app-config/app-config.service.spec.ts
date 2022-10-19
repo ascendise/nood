@@ -36,7 +36,6 @@ describe('AppConfigService', () => {
         loginUrl: 'https://nood.auth0.com/authorize',
         audience: 'https://nood.com',
       },
-      appDomain: 'https://nood.com/',
     };
     const request = httpTestingController.expectOne('/assets/config.json');
     request.flush(expectedConfig);

@@ -7,6 +7,5 @@
     "logoutUrl": "",
     "loginUrl": "",
     "audience": ""
-  },
-  "appDomain": "{where this app resides in}"
+  }
 }

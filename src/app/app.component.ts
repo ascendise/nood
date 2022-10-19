@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
 
   public logout() {
     this.oauthService.logOut({
-      returnTo: this.config?.appDomain,
+      returnTo: location.origin,
     });
   }
 
