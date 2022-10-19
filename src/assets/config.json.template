@@ -1,0 +1,12 @@
+{
+  "apiBaseUri": "",
+  "oauth": {
+    "issuer": "",
+    "redirectUri": "",
+    "clientId": "",
+    "logoutUrl": "",
+    "loginUrl": "",
+    "audience": ""
+  },
+  "appDomain": "{where this app resides in}"
+}
