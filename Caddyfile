@@ -1,4 +1,4 @@
-localhost
+:80
 
 file_server
-rewrite * /index.html
+try_files {path} /
