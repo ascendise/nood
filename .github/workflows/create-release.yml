@@ -16,7 +16,7 @@ jobs:
       - name: Run Tests
         run: npx ng test --browsers FirefoxHeadless --watch false
       - name: Build dist
-        run: npx ng Build
+        run: npx ng build
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
