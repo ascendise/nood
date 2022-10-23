@@ -1,6 +1,6 @@
 <div class="d-flex flex-row flex-wrap justify-content-around align-items-stretch mt-5">
   <div class="col my-2 d-flex justify-content-center">
-    <app-checklist [tasks]="tasks" title="All tasks"></app-checklist>
+    <app-checklist [tasks]="tasksWithoutChecklist" title="All tasks"></app-checklist>
   </div>
   <div class="col my-2 d-flex justify-content-center" *ngFor="let checklist of checklists">
     <app-checklist [tasks]="checklist.tasks" [title]="getUniqueName(checklist)" [checklist]="checklist">
