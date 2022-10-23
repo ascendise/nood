@@ -40,13 +40,13 @@ export class DashboardComponent implements OnInit {
     return this._tasks;
   }
 
-  public get tasksWithoutChecklist() : TaskEntity[] {
-    return this.tasks.filter(t => !this.isInChecklist(t))
+  public get tasksWithoutChecklist(): TaskEntity[] {
+    return this.tasks.filter((t) => !this.isInChecklist(t));
   }
 
   private isInChecklist(task: TaskEntity) {
-    for(const c of this.checklists) {
-      if(c.tasks.includes(task)) {
+    for (const c of this.checklists) {
+      if (c.tasks.includes(task)) {
         return true;
       }
     }
