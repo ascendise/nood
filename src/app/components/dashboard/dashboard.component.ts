@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
         if (!task) {
           throw Error('Checklist has unknown task');
         }
+        task._links.removeTask = c.tasks[i]._links.removeTask;
         c.tasks[i] = task;
       }
     });
