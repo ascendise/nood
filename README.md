@@ -28,7 +28,7 @@ services:
   todolistapi:
     depends_on:
       - mysql
-    image: "ascendise/todolistapi:v2.0"
+    image: "ascendise/todolistapi:2.0"
     ports:
       - "5050:8080"
     links:
