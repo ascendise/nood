@@ -14,7 +14,7 @@ jobs:
       id: gettags
       with:
         githubToken: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
-        prefix: "${{secrets.DOCKER_USERNAME}}/todolistapi:"
+        prefix: "${{secrets.DOCKER_USERNAME}}/nood:"
         branchRegex: "^[^/]+$"
     - name: Login to docker
       uses: docker/login-action@v2
