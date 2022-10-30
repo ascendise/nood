@@ -28,7 +28,7 @@ services:
   todolistapi:
     depends_on:
       - mysql
-    image: "ascendise/todolistapi:v2.0.7"
+    image: "ascendise/todolistapi:v2.0"
     ports:
       - "5050:8080"
     links:
@@ -47,7 +47,7 @@ services:
   nood:
     depends_on:
       - todolistapi
-    image: "ascendise/nood:1.0.0"
+    image: "ascendise/nood:1"
     ports:
       - "4200:80"
     environment:
