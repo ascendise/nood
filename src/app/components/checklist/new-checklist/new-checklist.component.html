@@ -5,7 +5,7 @@
   (onSubmit)="submit()"
 >
   <div class="row m-2">
-    <input type="text" class="form-control" placeholder="Checklist name" formControlName="name" />
+    <input type="text" class="form-control" placeholder="Checklist name" formControlName="name" [maxlength]="255" />
     <div
       [hidden]="newChecklistForm.get('name')?.valid || newChecklistForm.get('name')?.pristine"
       class="alert alert-danger"
