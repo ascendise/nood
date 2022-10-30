@@ -1,4 +1,7 @@
-@import '../colours.scss';
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/_mixins.scss';
+@import 'src/colours.scss';
 
 .login {
   background-color: $main-color;
@@ -8,6 +11,9 @@
 
 .title {
   text-decoration: none;
-  font-size: 2.5em;
+  font-size: 2em;
   font-weight: bolder;
+  @include media-breakpoint-up(lg) {
+    font-size: 2.5em;
+  }
 }
