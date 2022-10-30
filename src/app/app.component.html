@@ -1,5 +1,5 @@
 <div class="container-fluid h-100">
-  <div class="login row">
+  <div class="sticky-top login row">
     <div class="col"></div>
     <a class="col title text-center text-light" routerLink="/dashboard">NOOD</a>
     <div class="col align-self-center text-center">
@@ -7,7 +7,10 @@
         <a routerLink="/profile">
           <button class="btn btn-outline-primary btn-light ms-auto"><i class="bi bi-person"></i></button>
         </a>
-        <button (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">Logout</button>
+        <button aria-label="Logout" (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">
+          <span class="d-none d-lg-inline">Logout</span>
+          <i class="d-lg-none bi bi-box-arrow-left"></i>
+        </button>
       </span>
     </div>
   </div>

@@ -1,7 +1,10 @@
 <div class="container panel shadow mt-5">
   <div class="row flex-nowrap">
     <div class="col-3 m-2">
-      <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">Back to Dashboard</button>
+      <button routerLink="/dashboard" class="btn btn-outline-primary rounded btn-light">
+        <span class="d-none d-lg-inline">Back to Dashboard</span>
+        <i class="d-lg-none bi bi-arrow-return-left"></i>
+      </button>
     </div>
     <div class="col-6 text-truncate">
       <h1 class="text-light text-center fw-bold">{{ task.name }}</h1>
@@ -38,8 +41,6 @@
   </div>
   <div class="row">
     <div class="col my-1 d-flex flex-column flex-gap-1">
-      <button (click)="navigateToEdit()" class="btn btn-light btn-outline-primary">Edit</button>
-      <div class="py-1"></div>
       <button
         type="button"
         class="btn btn-light btn-outline-danger"
@@ -48,6 +49,8 @@
       >
         Delete
       </button>
+      <div class="py-1"></div>
+      <button (click)="navigateToEdit()" class="btn btn-light btn-outline-primary">Edit</button>
     </div>
   </div>
 </div>
