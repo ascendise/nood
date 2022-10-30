@@ -14,9 +14,13 @@
   <div class="row">
     <div class="col">
       <h3 class="text-light fw-bold">Description</h3>
-      <div class="text-field p-1" *ngIf="!isNullOrWhitespace(task.description); else elseDescription">
-        {{ task.description }}
-      </div>
+      <textarea
+        *ngIf="!isNullOrWhitespace(task.description); else elseDescription"
+        class="form-control"
+        [value]="task.description"
+        readonly="true"
+      >
+      </textarea>
       <ng-template #elseDescription>
         <div class="text-field p-1">(No Description)</div>
       </ng-template>
