@@ -7,7 +7,10 @@
         <a routerLink="/profile">
           <button class="btn btn-outline-primary btn-light ms-auto"><i class="bi bi-person"></i></button>
         </a>
-        <button (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">Logout</button>
+        <button aria-label="Logout" (click)="logout()" class="btn btn-outline-primary btn-light ms-auto">
+          <span class="d-none d-lg-inline">Logout</span>
+          <i class="d-lg-none bi bi-box-arrow-left"></i>
+        </button>
       </span>
     </div>
   </div>
