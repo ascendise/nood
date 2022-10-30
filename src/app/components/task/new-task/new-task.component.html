@@ -1,6 +1,6 @@
 <app-form title="New task" submitButtonText="Create task" [formGroup]="newTaskForm" (onSubmit)="submit()">
   <div class="row m-2">
-    <input type="text" class="form-control" placeholder="Task name" formControlName="name" />
+    <input type="text" class="form-control" placeholder="Task name" formControlName="name" [maxlength]="255"/>
     <div [hidden]="newTaskForm.get('name')?.valid || newTaskForm.get('name')?.pristine" class="alert alert-danger">
       <div *ngIf="newTaskForm.get('name')?.errors?.['required']">Name is required</div>
       <div *ngIf="newTaskForm.get('name')?.errors?.['pattern']">Name cannot be empty</div>
@@ -12,12 +12,13 @@
       placeholder="Describe your task (optional)"
       name="description"
       formControlName="description"
+      [maxLength]="255"
     >
     </textarea>
   </div>
   <div class="row m-2">
     <label for="startDate" class="text-light fw-bold">Start Date</label>
-    <input type="date" class="form-control" id="startdate" name="startDate" formControlName="startDate" />
+    <input type="date" class="form-control" id="startdate" name="startDate" formControlName="startDate"/>
     <div
       [hidden]="newTaskForm.get('startDate')?.valid || newTaskForm.get('startDate')?.pristine"
       class="alert alert-danger"

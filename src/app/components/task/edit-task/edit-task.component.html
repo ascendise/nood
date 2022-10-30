@@ -5,7 +5,7 @@
   (onSubmit)="submit()"
 >
   <div class="row m-2">
-    <input type="text" class="form-control" placeholder="Task name" name="name" formControlName="name" />
+    <input type="text" class="form-control" placeholder="Task name" name="name" formControlName="name" [maxLength]="255"/>
     <div
       [hidden]="this.editTaskForm.get('name')?.valid || this.editTaskForm.get('name')?.pristine"
       class="alert alert-danger"
@@ -20,6 +20,7 @@
       placeholder="Describe your task (optional)"
       name="description"
       formControlName="description"
+      [maxLength]="255"
     >
     </textarea>
   </div>
