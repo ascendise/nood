@@ -16,9 +16,9 @@
       <h3 class="text-light fw-bold">Description</h3>
       <textarea
         *ngIf="!isNullOrWhitespace(task.description); else elseDescription"
-        class="form-control"
+        class="form-control bg-white"
         [value]="task.description"
-        readonly="true"
+        readonly
       >
       </textarea>
       <ng-template #elseDescription>
