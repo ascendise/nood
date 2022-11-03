@@ -18,10 +18,10 @@ export class ChecklistComponent {
 
   public get tasksSortedByEndDate() {
     return this.tasks.sort((t1, t2) => {
-      if(!t1.endDate) return 1;
-      if(!t2.endDate) return -1;
+      if (!t1.endDate) return 1;
+      if (!t2.endDate) return -1;
       return new Date(t1.endDate).getTime() - new Date(t2.endDate).getTime();
-    })
+    });
   }
 
   public navigateToTaskDetails(task: TaskEntity) {
@@ -46,7 +46,7 @@ export class ChecklistComponent {
   }
 
   public isDueSoon(task: TaskEntity) {
-    if(!task.endDate) {
+    if (!task.endDate) {
       return false;
     }
     const date = DateTime.fromISO(task.endDate);
@@ -54,10 +54,10 @@ export class ChecklistComponent {
   }
 
   public isDue(task: TaskEntity) {
-    if(!task.endDate) {
+    if (!task.endDate) {
       return false;
     }
     const date = DateTime.fromISO(task.endDate);
-    return date.diffNow('days').days <= 0
+    return date.diffNow('days').days <= 0;
   }
 }

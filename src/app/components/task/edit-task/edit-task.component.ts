@@ -20,7 +20,10 @@ export class EditTaskComponent {
     this._editTaskForm = this.formBuilder.group({
       name: [this._task.name, [Validators.required, Validators.pattern(emptyOrWhitespacePattern)]],
       description: [this._task.description],
-      startDate: [this._task.startDate, [Validators.required, DateValidator.notBefore(DateTime.fromISO(this._task.startDate))]],
+      startDate: [
+        this._task.startDate,
+        [Validators.required, DateValidator.notBefore(DateTime.fromISO(this._task.startDate))],
+      ],
       endDate: [this._task.endDate],
     });
   }
@@ -34,7 +37,9 @@ export class EditTaskComponent {
       name: this.editTaskForm.get('name')?.value,
       description: this.editTaskForm.get('description')?.value,
       startDate: DateTime.fromISO(this.editTaskForm.get('startDate')?.value),
-      endDate: this.editTaskForm.get('endDate')?.value ? DateTime.fromISO(this.editTaskForm.get('endDate')?.value) : null,
+      endDate: this.editTaskForm.get('endDate')?.value
+        ? DateTime.fromISO(this.editTaskForm.get('endDate')?.value)
+        : null,
       isDone: this.editTaskForm.get('isDone')?.value,
     };
     await this.tasksService.updateTask(taskDto, this._task._links);
