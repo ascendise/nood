@@ -16,6 +16,14 @@ export class ChecklistComponent {
 
   constructor(private taskService: TasksService, private router: Router) {}
 
+  public get tasksSortedByEndDate() {
+    return this.tasks.sort((t1, t2) => {
+      if(!t1.endDate) return 1;
+      if(!t2.endDate) return -1;
+      return new Date(t1.endDate).getTime() - new Date(t2.endDate).getTime();
+    })
+  }
+
   public navigateToTaskDetails(task: TaskEntity) {
     this.router.navigateByUrl('/task-details', { state: task });
   }
