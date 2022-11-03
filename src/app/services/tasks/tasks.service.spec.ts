@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { DateTime } from 'luxon';
 import { EntityNotFoundError } from '../errors';
 import { HateoasCollection } from '../links/entity';
 import { LinksService, RootLinks } from '../links/links.service';
@@ -188,8 +189,8 @@ describe('TasksService', () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-01-02'),
+      startDate: DateTime.fromISO('2023-01-01'),
+      endDate: DateTime.fromISO('2023-01-02'),
       isDone: false,
     };
     const expectedResponse: TaskEntity = {
@@ -218,8 +219,8 @@ describe('TasksService', () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-01-21'),
+      startDate: DateTime.fromISO('2023-01-01'),
+      endDate: DateTime.fromISO('2023-01-21'),
       isDone: false,
     };
     const taskRequest = service.createTask(newTask);
@@ -236,8 +237,8 @@ describe('TasksService', () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-01-02'),
+      startDate: DateTime.fromISO('2023-01-01'),
+      endDate: DateTime.fromISO('2023-01-02'),
       isDone: false,
     };
     const expectedResponse: TaskEntity = {
@@ -270,8 +271,8 @@ describe('TasksService', () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-01-02'),
+      startDate: DateTime.fromISO('2023-01-01'),
+      endDate: DateTime.fromISO('2023-01-02'),
       isDone: false,
     };
     const link: TaskLinks = {
@@ -298,8 +299,8 @@ describe('TasksService', () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-01-02'),
+      startDate: DateTime.fromISO('2023-01-01'),
+      endDate: DateTime.fromISO('2023-01-02'),
       isDone: false,
     };
     const link: TaskLinks = {
@@ -323,8 +324,8 @@ describe('TasksService', () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
-      startDate: new Date('2023-01-01'),
-      endDate: new Date('2023-01-02'),
+      startDate: DateTime.fromISO('2023-01-01'),
+      endDate: DateTime.fromISO('2023-01-02'),
       isDone: false,
     };
     const link: TaskLinks = {
@@ -361,7 +362,7 @@ describe('TasksService', () => {
     const newTask: Task = {
       name: 'My new task',
       description: 'This is my new task',
-      startDate: new Date('2023-01-01'),
+      startDate: DateTime.fromISO('2023-01-01'),
       endDate: null,
       isDone: false,
     };

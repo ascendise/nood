@@ -1,9 +1,10 @@
 import { AbstractControl } from '@angular/forms';
+import { DateTime } from 'luxon';
 
 export class DateValidator {
-  public static notBefore(minDate: Date) {
+  public static notBefore(minDate: DateTime) {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      let date = new Date(control.value);
+      let date = DateTime.fromJSDate(new Date(control.value));
       date = DateValidator.removeTime(date);
       minDate = DateValidator.removeTime(minDate);
       if (date < minDate) {
@@ -13,7 +14,7 @@ export class DateValidator {
     };
   }
 
-  private static removeTime(date: Date): Date {
-    return new Date(date.toDateString());
+  private static removeTime(date: DateTime): DateTime {
+    return date.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
   }
 }

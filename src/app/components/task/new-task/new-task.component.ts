@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DateTime } from 'luxon';
 import { Task, TasksService } from 'src/app/services/tasks/tasks.service';
 import { DateValidator } from 'src/app/validators/not-before-date/not-before-date.validator';
 
@@ -17,7 +18,7 @@ export class NewTaskComponent {
     this._newTaskForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern(emptyOrWhitespacePattern)]],
       description: [''],
-      startDate: [new Date(), [Validators.required, DateValidator.notBefore(new Date(Date.now()))]],
+      startDate: [DateTime.now(), [Validators.required, DateValidator.notBefore(DateTime.now())]],
       endDate: [null],
       isDone: [false],
     });
@@ -28,8 +29,19 @@ export class NewTaskComponent {
   }
 
   public async submit() {
-    const newTask = this.newTaskForm.value as Task;
+    const newTask = this.getTaskFromForm();
     await this.tasksService.createTask(newTask);
     this.router.navigateByUrl('dashboard');
+  }
+
+  private getTaskFromForm(): Task {
+    const values = this.newTaskForm.value;
+    return {
+      name: values.name,
+      description: values.description,
+      startDate: DateTime.fromISO(values.startDate),
+      endDate: values.endDate ? DateTime.fromISO(values.endDate) : null,
+      isDone: values.isDone,
+    };
   }
 }
