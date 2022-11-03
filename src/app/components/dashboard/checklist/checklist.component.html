@@ -9,6 +9,10 @@
     <input class="form-check-input" type="checkbox" [checked]="task.isDone" (click)="toggleDone(task)" />
     <a tabindex="0" (click)="navigateToTaskDetails(task)">
       <span class="task" [ngClass]="{ 'text-decoration-line-through': task.isDone }">
+        <span *ngIf="!task.isDone">
+          <i *ngIf="!isDue(task) && isDueSoon(task)" class="bi bi-exclamation-triangle-fill text-warning"></i>
+          <i *ngIf="isDue(task)" class="bi bi-exclamation-circle-fill text-danger"></i>
+        </span>
         {{ task.name }}
       </span>
     </a>

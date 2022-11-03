@@ -36,4 +36,20 @@ export class ChecklistComponent {
     };
     await this.taskService.updateTask(updatedTask, task._links);
   }
+
+  public isDueSoon(task: TaskEntity) {
+    if(!task.endDate) {
+      return false;
+    }
+    const date = DateTime.fromISO(task.endDate);
+    return date.diffNow('days').days <= 3;
+  }
+
+  public isDue(task: TaskEntity) {
+    if(!task.endDate) {
+      return false;
+    }
+    const date = DateTime.fromISO(task.endDate);
+    return date.diffNow('days').days <= 0
+  }
 }
