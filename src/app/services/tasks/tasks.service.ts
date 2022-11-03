@@ -61,10 +61,6 @@ export class TasksService {
     return date.toFormat('yyyy-MM-dd');
   }
 
-  private static pad2Digits(value: number) {
-    return value < 10 ? `0${value}` : value.toString();
-  }
-
   public async updateTask(task: Task, link: TaskLinks): Promise<TaskEntity> {
     const taskDto = TasksService.toTaskDto(task);
     const request = this.http.put<TaskEntity>(link.self.href, taskDto);
