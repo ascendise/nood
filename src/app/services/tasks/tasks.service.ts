@@ -5,6 +5,7 @@ import { EntityNotFoundError } from '../errors';
 import { HateoasCollection, HateoasEntity } from '../links/entity';
 import { Link } from '../links/links';
 import { LinksService, RootLinks } from '../links/links.service';
+import { DateTime } from 'luxon';
 
 @Injectable({
   providedIn: 'root',
@@ -56,14 +57,8 @@ export class TasksService {
     };
   }
 
-  private static toDateString(date: Date) {
-    const dateObj = new Date(date);
-    const year = dateObj.getFullYear();
-    const month = dateObj.getMonth() + 1;
-    const monthString = TasksService.pad2Digits(month);
-    const day = dateObj.getDate();
-    const dayString = TasksService.pad2Digits(day);
-    return `${year}-${monthString}-${dayString}`;
+  private static toDateString(date: DateTime) {
+    return date.toFormat('yyyy-MM-dd');
   }
 
   private static pad2Digits(value: number) {
@@ -110,8 +105,8 @@ export interface TaskEntity extends HateoasEntity<TaskLinks> {
 export interface Task {
   name: string;
   description: string;
-  startDate: Date;
-  endDate: Date | null;
+  startDate: DateTime;
+  endDate: DateTime | null;
   isDone: boolean;
 }
 
