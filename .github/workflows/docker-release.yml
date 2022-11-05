@@ -4,6 +4,7 @@ on:
     workflows: ["create-release"]
     types:
       - completed
+    branches: [main]
 
 jobs:
   docker-release:
