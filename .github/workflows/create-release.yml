@@ -1,7 +1,7 @@
+name: Create new release
 on:
   push:
-    tags:
-       - '*'
+    branches: [main]
 
 jobs:
   build:
@@ -12,23 +12,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+          cache: 'npm'
       - run: npm ci
       - name: Run Tests
         run: npx ng test --browsers FirefoxHeadless --watch false
-      - name: Build dist
-        run: npx ng build
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: ./dist/
-      - name: Create release on GitHub
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifacts: ./dist/
-          name: "Nood ${{github.ref_name}}"
-          generateReleaseNotes: true
-          commit: "main"
-          tag: ${{github.ref_name}}
-          token: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
+      - name: Create tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
+        run: npx semantic-release -t ${version} -b main
