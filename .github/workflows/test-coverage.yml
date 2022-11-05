@@ -22,7 +22,5 @@ jobs:
           firefox-version: 'latest'
       - run: npm ci
       - run: npm run build --if-present
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
       - name: Check Test Coverage
-        run: ng test --browsers FirefoxHeadless --no-watch --code-coverage
+        run: npx ng test --browsers FirefoxHeadless --no-watch --code-coverage
