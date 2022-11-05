@@ -1,10 +1,8 @@
 name: publish-docker-image
 on:
-  workflow_run:
-    workflows: ["create-release"]
-    types:
-      - completed
-    branches: [main]
+  push:
+    tags:
+      - "*"
 
 jobs:
   docker-release:
