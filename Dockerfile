@@ -4,7 +4,7 @@ COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 RUN npm ci
 COPY . .
-RUN npx ng build
+RUN npx ng build --configuration production
 
 FROM caddy:alpine
 COPY --from=build /app/Caddyfile /etc/caddy/Caddyfile
