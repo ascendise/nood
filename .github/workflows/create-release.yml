@@ -1,11 +1,14 @@
 name: Create new release
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["run-tests"]
+    types:
+      - completed
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node
@@ -14,8 +17,6 @@ jobs:
           node-version: 16.x
           cache: 'npm'
       - run: npm ci
-      - name: Run Tests
-        run: npx ng test --browsers FirefoxHeadless --watch false
       - name: Create tag
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
