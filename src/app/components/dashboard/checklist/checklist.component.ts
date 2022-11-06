@@ -18,9 +18,9 @@ export class ChecklistComponent {
 
   public get tasksSortedByEndDate() {
     return this.tasks.sort((t1, t2) => {
-      if (!t1.endDate) return 1;
-      if (!t2.endDate) return -1;
-      return new Date(t1.endDate).getTime() - new Date(t2.endDate).getTime();
+      const t1Date: number = t1.endDate ? DateTime.fromISO(t1.endDate).toMillis() : Number.MAX_VALUE;
+      const t2Date: number = t2.endDate ? DateTime.fromISO(t2.endDate).toMillis() : Number.MAX_VALUE;
+      return t1Date - t2Date;
     });
   }
 
