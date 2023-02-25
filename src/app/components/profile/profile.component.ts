@@ -28,6 +28,6 @@ export class ProfileComponent implements OnInit {
 }
 
 interface Identity {
-  given_name: string,
-  sub: string,
+  given_name: string;
+  sub: string;
 }
