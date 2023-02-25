@@ -48,7 +48,7 @@ services:
   nood:
     depends_on:
       - todolistapi
-    image: "ascendise/nood:1"
+    image: "ascendise/nood:2"
     ports:
       - "4200:80"
     environment:
