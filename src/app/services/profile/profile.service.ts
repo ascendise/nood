@@ -25,5 +25,4 @@ export class ProfileService {
 
 export interface User {
   subject: string;
-  username: string;
 }

@@ -8,7 +8,7 @@ export class AuthorizationInterceptor implements HttpInterceptor {
   constructor(private oauthService: OAuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const idToken = this.oauthService.getIdToken();
+    const idToken = this.oauthService.getAccessToken();
     request = request.clone({
       setHeaders: { Authorization: `Bearer ${idToken}` },
     });
