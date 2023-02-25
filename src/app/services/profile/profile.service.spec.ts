@@ -47,7 +47,6 @@ describe('ProfileService', () => {
     await waitForRequest();
     const expectedUser: User = {
       subject: 'myoauth-subject12345',
-      username: 'anon123',
     };
     const request = httpTestingController.expectOne(`${API_BASE_URI}/user`);
     expect(request.request.method).toEqual('GET');

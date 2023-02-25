@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileService, User } from 'src/app/services/profile/profile.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,20 +9,25 @@ import { ProfileService, User } from 'src/app/services/profile/profile.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  private _user!: User;
+  private _identity!: Identity;
 
-  constructor(private profileService: ProfileService, private router: Router) {}
+  constructor(private profileService: ProfileService, private authService: OAuthService, private router: Router) {}
 
   async ngOnInit() {
-    this._user = await this.profileService.getUser();
+    this._identity = this.authService.getIdentityClaims() as Identity;
   }
 
-  public get user() {
-    return this._user;
+  public get identity() {
+    return this._identity;
   }
 
   public async deleteProfile() {
     await this.profileService.deleteUser();
     this.router.navigateByUrl('/');
   }
+}
+
+interface Identity {
+  given_name: string,
+  sub: string,
 }
