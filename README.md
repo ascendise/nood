@@ -28,7 +28,7 @@ services:
   todolistapi:
     depends_on:
       - mysql
-    image: "ascendise/todolistapi:2.0"
+    image: "ascendise/todolistapi:3.0"
     ports:
       - "5050:8080"
     links:
@@ -44,6 +44,7 @@ services:
       server.servlet.context-path: "/api"
       spring.output.ansi.enabled: "DETECT"
       logging.level.org.springframework.web: DEBUG
+      oauth2.audience: "{placeholder}"
   nood:
     depends_on:
       - todolistapi
